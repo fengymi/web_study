@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <setting name="cacheEnabled" value="true" /><!-- 全局映射器启用缓存 -->
+        <setting name="useGeneratedKeys" value="true" />
+        <setting name="localCacheScope" value="STATEMENT"/>
+        <setting name="callSettersOnNulls" value="true"/> <!--null和空映射-->
+        <!--fuck cnm <setting name="defaultExecutorType" value="REUSE" />-->
+    </settings>
+    <typeAliases>
+        <!-- 对象映射 -->
+        <typeAlias type="com.fym.utils.data.HashPageData" alias="hash"/>
+        <!-- 对象映射 -->
+        <typeAlias type="com.fym.utils.data.TreePageData" alias="tree"/>
+        <typeAlias type="com.fym.utils.data.PageData" alias="pd"/>
+    </typeAliases>
+
+</configuration>
