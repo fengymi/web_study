@@ -22,8 +22,8 @@ public class TestController extends BaseController {
     @RequestMapping(value = "/test", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object test(){
-        System.out.println(new TreePageData(getRequest()));
-        System.out.println(new HashPageData(getRequest()));
+        System.out.println("tree:"+new TreePageData(getRequest()));
+        System.out.println("hash:"+new HashPageData(getRequest()));
 
         testService.test();
         return getBasePath();

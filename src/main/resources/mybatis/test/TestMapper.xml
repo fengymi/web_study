@@ -8,8 +8,5 @@
     <select id="findAllTree" resultType="tree">
         SELECT * FROM test;
     </select>
-    <select id="findAllData" resultType="pd">
-        SELECT * FROM test;
-    </select>
 
 </mapper>
