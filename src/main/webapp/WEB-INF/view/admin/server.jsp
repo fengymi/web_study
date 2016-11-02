@@ -71,10 +71,14 @@
         // Configuration for jqGrid Example 2
         $("#table_data").jqGrid({
             jsonReader : {
-                page: "pageNum",
-                total: "pages",
-                rows: "list",
-                records: "total"
+                root:"list",
+                page:"pageNum",
+                total:"pages",
+                records:"total"
+//                page: "pageNum",
+//                total: "pages",
+//                rows: "list",
+//                records: "total"
             },
             url : '<%=basePath%>admin/server/get_data?pageNum=2&pageSize=10',
             datatype : "json",
