@@ -14,12 +14,12 @@ public class TreePageData extends TreeMap {
     private HttpServletRequest request;
 
     public TreePageData(){
-        map = new TreeMap<>();
+        map = new TreeMap();
     }
     public TreePageData(HttpServletRequest request){
         this.request = request;
         Map<String,String[]> params = request.getParameterMap();
-        map = new TreeMap<>();
+        map = new TreeMap();
 
         Set<String> keys = params.keySet();
         for (String key : keys) {
@@ -44,7 +44,7 @@ public class TreePageData extends TreeMap {
 
     @Override
     public Object get(Object key) {
-        Object obj = null;
+        Object obj;
         if(map.get(key) instanceof Object[]) {
             Object[] arr = (Object[])map.get(key);
             obj = request == null ? arr:(request.getParameter((String)key) == null ? arr:arr[0]);

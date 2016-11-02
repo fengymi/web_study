@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fym.entity.User">
+    <resultMap id="userMap" type="com.fym.entity.User">
+        <id property="id" column="USER_ID"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <!-- 进行 多表关联插叙，先关联user和role -->
+        <collection property="roleSet" column="role_id" ofType="com.fym.entity.Role">
+            <id property="id" column="ROLE_ID"/>
+            <result property="name" column="NAME"/>
+            <!-- 再在role中关联role和permission -->
+            <collection property="permissionSet" column="permission_id" ofType="com.fym.entity.Permission">
+                <id property="id" column="permission_id"/>
+                <result property="name" column="permission_name"/>
+            </collection>
+        </collection>
+
+    </resultMap>
+
+
+    <!--  通过User来查找Role   -->
+    <!-- <select id="selectRoleByUser" parameterType="int" resultMap="RoleMap">
+        select * from tbl_role_user user_id  = #{id}
+    </select>
+
+
+    <resultMap  id="roleMap" type="com.jay.demo.bean.User">
+        <result property="id" column="ROLE_ID" />
+        <result property="name" column="ROLE_NAME" />
+    </resultMap>
+
+    <resultMap id="permissionMap" type="com.jay.demo.bean.Permission">
+        <result property="id" column="PERMISSION_ID" />
+        <result property="name" column="PERMISSION_NAME" />
+    </resultMap> -->
+
+
+    <sql id="select-base-01">
+        SELECT
+        u.USER_ID,
+        u.USERNAME,
+        u.PASSWORD,
+        r.ROLE_ID,
+        r.ROLE_NAME,
+        p.PERMISSION_ID,
+        p.PERMISSION_NAME
+        FROM
+        sys_user as u,
+        sys_role as r,
+        sys_permission as p,
+        sys_permission_role as pr,
+        sys_role_user as ru
+        WHERE
+        u.USER_ID = ru.USER_ID
+        AND
+        r.ROLE_ID = ru.ROLE_ID
+        AND
+        p.PERMISSION_ID = pr.PERMISSION_ID
+        AND
+        r.ROLE_ID = pr.ROLE_ID
+    </sql>
+
+    <select id="findUserByUsername" parameterType="string" resultMap="userMap">
+        <include refid="select-base-01"/>
+        AND
+        u.USER_USERNAME = #{username}
+    </select>
+
+</mapper>

@@ -21,4 +21,5 @@
     </bean>
 
     <import resource="spring-database.xml"/>
+    <import resource="spring-shiro.xml"/>
 </beans>

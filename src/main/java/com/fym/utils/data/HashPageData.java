@@ -14,12 +14,12 @@ public class HashPageData extends HashMap {
     private HttpServletRequest request;
 
     public HashPageData(){
-        map = new HashMap<>();
+        map = new HashMap();
     }
     public HashPageData(HttpServletRequest request){
         this.request = request;
         Map<String,String[]> params = request.getParameterMap();
-        map = new HashMap<>();
+        map = new HashMap();
 
         Set<String> keys = params.keySet();
         for (String key : keys) {

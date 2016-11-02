@@ -15,7 +15,7 @@
         <typeAlias type="com.fym.utils.data.HashPageData" alias="hash"/>
         <!-- 对象映射 -->
         <typeAlias type="com.fym.utils.data.TreePageData" alias="tree"/>
-        <typeAlias type="com.fym.utils.data.PageData" alias="pd"/>
+        <!--<typeAlias type="com.fym.utils.data.PageData" alias="pd"/>-->
     </typeAliases>
 
 </configuration>
