@@ -44,19 +44,19 @@
         <property name="configLocation" value="classpath:mybatis/mybatis.xml"/>
         <!--自动扫描mybatis mapper文件-->
         <property name="mapperLocations" value="classpath:mybatis/**/*Mapper.xml"/>
-        <!--&lt;!&ndash;分页插件&ndash;&gt;-->
-        <!--<property name="plugins">-->
-        <!--<array>-->
-        <!--<bean class="com.github.pagehelper.PageHelper">-->
-        <!--<property name="properties">-->
-        <!--<value>-->
-        <!--dialect=mysql-->
-        <!--</value>-->
-        <!--</property>-->
-        <!--</bean>-->
-        <!--</array>-->
-        <!--</property>-->
-        <!--  null也可以映射  -->
+        <!--分页插件-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        <value>
+                            dialect=mysql
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+        <!--null也可以映射  -->
         <property name="configurationProperties">
             <props>
                 <prop key="CallSettersOnNulls">true</prop>

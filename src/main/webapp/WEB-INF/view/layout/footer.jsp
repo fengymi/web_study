@@ -11,9 +11,6 @@
 <script src="static/admin/js/hAdmin.js?v=4.1.0"></script>
 <script type="text/javascript" src="static/admin/js/index.js"></script>
 
-<!-- 第三方插件 -->
-<script src="static/admin/js/plugins/pace/pace.min.js"></script>
-
 </body>
 
 </html>
