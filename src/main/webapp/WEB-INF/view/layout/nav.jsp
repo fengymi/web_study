@@ -33,12 +33,12 @@
             <li>
                 <a href="#">
                     <i class="fa fa fa-bar-chart-o"></i>
-                    <span class="nav-label">统计图表</span>
+                    <span class="nav-label">服务器</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a class="J_menuItem" href="http://www.baidu.com">百度ECharts</a>
+                        <a class="J_menuItem" href="admin/server/list">服务器列表</a>
                     </li>
                     <li>
                         <a class="J_menuItem" href="static/admin/graph_flot.html">Flot</a>
