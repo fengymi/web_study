@@ -1,6 +1,5 @@
 package com.fym.controller.guacamole;
 
-import com.fym.controller.BaseController;
 import org.glyptodon.guacamole.GuacamoleException;
 import org.glyptodon.guacamole.net.GuacamoleSocket;
 import org.glyptodon.guacamole.net.GuacamoleTunnel;
@@ -26,12 +25,14 @@ public class TutorialGuacamoleTunnelServlet
         config.setProtocol("ssh");
         config.setParameter("hostname", "115.159.55.209");
         config.setParameter("port", "22");
-        config.setParameter("username", "root");
-        config.setParameter("password", "feng1234");
+//        config.setParameter("username", "root");
+//        config.setParameter("password", "feng1234");
 
         // Connect to guacd - everything is hard-coded here.
-        GuacamoleSocket socket = new ConfiguredGuacamoleSocket(
-                new InetGuacamoleSocket("192.168.182.137", 4822),
+        GuacamoleSocket socket = null;
+        socket = new ConfiguredGuacamoleSocket(
+//                new InetGuacamoleSocket("192.168.182.137", 4822),
+                new InetGuacamoleSocket("192.168.68.140", 4822),
                 config
         );
         System.out.println("end");
