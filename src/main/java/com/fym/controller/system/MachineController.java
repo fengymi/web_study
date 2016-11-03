@@ -2,7 +2,7 @@ package com.fym.controller.system;
 
 import com.alibaba.fastjson.JSON;
 import com.fym.controller.BaseController;
-import com.fym.service.admin.ServerService;
+import com.fym.service.system.ServerService;
 import com.fym.utils.config.Constant;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

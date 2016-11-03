@@ -1,9 +1,9 @@
-package com.fym.service.admin;
+package com.fym.service.system;
 
-import com.fym.dao.admin.BaseOper;
-import com.fym.dao.admin.MachineDao;
-import com.fym.dao.admin.MachineUserDao;
-import com.fym.dao.admin.ServerDao;
+import com.fym.dao.base.BaseOper;
+import com.fym.dao.system.MachineDao;
+import com.fym.dao.system.MachineUserDao;
+import com.fym.dao.system.ServerDao;
 import com.fym.entity.utils.OperEntity;
 import com.fym.entity.utils.PageEntity;
 import com.fym.utils.config.Constant;

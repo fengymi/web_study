@@ -1,4 +1,4 @@
-package com.fym.dao.admin;
+package com.fym.dao.base;
 
 import com.fym.utils.data.HashPageData;
 
