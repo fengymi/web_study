@@ -1,5 +1,8 @@
 package com.fym.controller;
 
+import com.fym.entity.utils.OperEntity;
+import com.fym.entity.utils.PageEntity;
+import com.fym.utils.data.HashPageData;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -17,6 +20,34 @@ public class BaseController {
      */
     protected HttpServletRequest getRequest(){
         return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    }
+
+    /**
+     * 获取操作数据库对象
+     * @return 操作数据库的对象
+     */
+    protected OperEntity getOper(){
+        OperEntity operEntity = new OperEntity();
+        HashPageData data = new HashPageData(getRequest());
+        operEntity.setData(data);
+        operEntity.setOper(data.getString("oper"));
+        data.remove("oper");
+        return operEntity;
+    }
+
+    /**
+     * 获取分页信息
+     * @return 分页信息
+     */
+    protected PageEntity getPage(){
+        PageEntity page = new PageEntity();
+        HttpServletRequest request = getRequest();
+
+        page.setPageNum(Integer.parseInt(request.getParameter("pageNum")+""));
+        page.setPageSize(Integer.parseInt(request.getParameter("pageSize")+""));
+        page.setOrder(request.getParameter("order"));
+        page.setSidx(request.getParameter("sidx"));
+        return page;
     }
 
     /**

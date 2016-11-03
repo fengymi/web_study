@@ -76,7 +76,7 @@
                     <li><a href="#" data-nav-section="press"><span>软件安装</span></a></li>
                     <li><a href="#" data-nav-section="testimonials"><span>常见问题</span></a></li>
                     <li><a href="#" data-nav-section="pricing"><span>云免服务器</span></a></li>
-                    <li><a href="index/login" class="btn btn-primary btn-sm">登录</a></li>
+                    <li><a href="index/admin" class="btn btn-primary btn-sm">登录</a></li>
                     <li><a target="_blank" href="" class="btn btn-primary btn-sm">注册</a></li>
                 </ul>
             </div>

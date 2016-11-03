@@ -23,7 +23,7 @@ public class IndexController extends BaseController{
     }
     @RequestMapping("/admin_auth")
     public ModelAndView adminAuth(){
-        ModelAndView mv = new ModelAndView("admin/home");
+        ModelAndView mv = new ModelAndView("redirect:/admin/home");
         boolean success = true;
 
         if(success){ //登录成功

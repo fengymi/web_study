@@ -22,56 +22,42 @@
                 </div>
             </li>
             <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                <span class="ng-scope">分类</span>
+                <span class="ng-scope">系统管理</span>
             </li>
             <li>
-                <a class="J_menuItem" href="static/admin/index_v1.html">
+                <a class="J_menuItem" href="admin/index">
                     <i class="fa fa-home"></i>
                     <span class="nav-label">主页</span>
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <i class="fa fa fa-bar-chart-o"></i>
+                    <i class="fa fa-server"></i>
                     <span class="nav-label">服务器</span>
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a class="J_menuItem" href="admin/server/list">服务器列表</a>
+                        <a class="J_menuItem" href="system/server/list">代理服务器</a>
                     </li>
                     <li>
-                        <a class="J_menuItem" href="static/admin/graph_flot.html">Flot</a>
+                        <a class="J_menuItem" href="system/machine/list">远程虚拟机</a>
                     </li>
                     <li>
-                        <a class="J_menuItem" href="static/admin/graph_morris.html">Morris.js</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="static/admin/graph_rickshaw.html">Rickshaw</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="static/admin/graph_peity.html">Peity</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="static/admin/graph_sparkline.html">Sparkline</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="static/admin/graph_metrics.html">图表组合</a>
+                        <a class="J_menuItem" href="system/machine_user/list">虚拟机登录账号</a>
                     </li>
                 </ul>
             </li>
-            <li class="line dk"></li>
-            <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                <span class="ng-scope">分类</span>
-            </li>
             <li>
-                <a href="static/admin/mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">信箱 </span><span class="label label-warning pull-right">16</span></a>
+                <a href="javascript:;">
+                    <i class="fa fa-user-secret"></i> <span class="nav-label">系统用户 </span><span class="fa arrow"></span>
+                </a>
                 <ul class="nav nav-second-level">
-                    <li><a class="J_menuItem" href="static/admin/mailbox.html">收件箱</a>
+                    <li><a class="J_menuItem" href="static/admin/mailbox.html">系统用户</a>
                     </li>
-                    <li><a class="J_menuItem" href="static/admin/mail_detail.html">查看邮件</a>
+                    <li><a class="J_menuItem" href="static/admin/mail_detail.html">角色管理</a>
                     </li>
-                    <li><a class="J_menuItem" href="static/admin/mail_compose.html">写信</a>
+                    <li><a class="J_menuItem" href="static/admin/mail_compose.html">权限管理</a>
                     </li>
                 </ul>
             </li>

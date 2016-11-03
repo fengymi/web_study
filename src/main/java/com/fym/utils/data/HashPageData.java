@@ -44,7 +44,7 @@ public class HashPageData extends HashMap {
 
     @Override
     public Object get(Object key) {
-        Object obj = null;
+        Object obj;
         if(map.get(key) instanceof Object[]) {
             Object[] arr = (Object[])map.get(key);
             obj = request == null ? arr:(request.getParameter((String)key) == null ? arr:arr[0]);
@@ -52,6 +52,11 @@ public class HashPageData extends HashMap {
             obj = map.get(key);
         }
         return obj;
+    }
+
+    public String getString(Object key) {
+        Object obj = get(key);
+        return obj==null?null:obj.toString();
     }
 
     @Override

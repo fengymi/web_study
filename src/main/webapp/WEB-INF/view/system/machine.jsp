@@ -14,22 +14,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title> - jqGird</title>
+    <title>${title}</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
     <%@include file="../layout/style.jsp"%>
     <!-- jqgrid-->
-    <link href="static/admin/css/plugins/jqgrid/ui.jqgrid.css?0820" rel="stylesheet">
+    <link href="static/admin/css/plugins/jqgrid/ui.jqgrid.css" rel="stylesheet">
 
-
-    <style>
-        /* Additional style to fix warning dialog position */
-
-        #alertmod_table_list_2 {
-            top: 900px !important;
-        }
-    </style>
 
 </head>
 
@@ -57,11 +49,12 @@
 <script src="static/admin/js/plugins/peity/jquery.peity.min.js"></script>
 
 <!-- jqGrid -->
-<script src="static/admin/js/plugins/jqgrid/i18n/grid.locale-cn.js?0820"></script>
-<script src="static/admin/js/plugins/jqgrid/jquery.jqGrid.min.js?0820"></script>
+<script src="static/admin/js/plugins/jqgrid/i18n/grid.locale-cn.js"></script>
+<script src="static/admin/js/plugins/jqgrid/jquery.jqGrid.min.js"></script>
 
 <!-- 自定义js -->
-<script src="static/admin/js/content.js?v=1.0.0"></script>
+<script src="static/admin/js/content.js"></script>
+<script src="static/js/design/design.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -69,74 +62,64 @@
         $.jgrid.defaults.styleUI = 'Bootstrap';
 
         // Configuration for jqGrid Example 2
-        $("#table_data").jqGrid({
-            jsonReader : {
-                root:"list",
-                page:"pageNum",
-                total:"pages",
-                records:"total"
-//                page: "pageNum",
-//                total: "pages",
-//                rows: "list",
-//                records: "total"
-            },
-            url : '<%=basePath%>admin/server/get_data?pageNum=2&pageSize=10',
-            datatype : "json",
-            height: 300,
-            autowidth: true,
-            shrinkToFit: true,
-            rowNum: 10,
-            colNames: ['id','主机', '名称', '端口'],
+        $("#table_data").jqGrid(getJqGirdInit({
+            url : '<%=basePath%>system/machine/get_data',
+            editurl:"<%=basePath%>system/machine/edit_data",
+            sortname:"machine_id",
+            caption: "${title}",
+//            colNames: ['虚拟机id','主机', '名称', '端口'],
             colModel: [
                 {
-                    name: 'server_id',
-                    index: 'server_id',
+                    label:"虚拟机id",
+                    name: 'machine_id',
+                    index: 'machine_id',
                     editable: false,
-                    sorttype: "int"
+                    sorttype: "int",
+                    align: 'center',
+                    key:true
                 },
                 {
-                    name: 'host',
-                    index: 'host',
-                    editable: true
-                },
-                {
+                    label:'名称',
                     name: 'name',
                     index: 'name',
+                    align: 'center',
                     editable: true
                 },
                 {
+                    label:'主机',
+                    name: 'host',
+                    index: 'host',
+                    align: 'center',
+                    editable: true
+                },
+                {
+                    label:'端口',
                     name: 'port',
                     index: 'port',
+                    align: 'center',
                     editable: true
+                },
+                {
+                    label:'操作',
+                    align: 'center',
+                    sortable: false,
+                    editable: false,
+                    formatter: function (cellvalue, options, rowObject) {
+                        var value = '<a class="J_menuItem" href="system/machine_user/list?machine_id='+rowObject.machine_id+'">查看</a>';
+                        return value;
+                    }
                 }
-            ],
+            ]
+        }));
 
-            pager: "#pager_list",
-            viewrecords: true,
-            caption: "${title}",
-            add: true,
-            edit: true,
-            addtext: 'Add',
-            edittext: 'Edit',
-            hidegrid: false
-        });
-
-        // Add selection
-        $("#table_data").setSelection(4, true);
-
-
-        // Setup buttons
         $("#table_data").jqGrid('navGrid', '#pager_list', {
             edit: true,
             add: true,
             del: true,
             search: true
         }, {
-            height: 300,
             reloadAfterSubmit: true
         });
-
-        // Add responsive to jqGrid
         $(window).bind('resize', function () {
             var width = $('.jqGrid_wrapper').width();
             $('#table_data').setGridWidth(width);

@@ -2,8 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fym.dao.admin.MachineDao">
 
+    <insert id="add" parameterType="hash">
+        INSERT INTO `machine`(host,name,port) VALUES (#{host},#{name},#{port})
+    </insert>
+    <insert id="delete" parameterType="hash">
+        DELETE FROM `machine` WHERE machine_id in (#{id})
+    </insert>
+    <insert id="update" parameterType="hash">
+        UPDATE `machine` SET host=#{host},name=#{name},port=#{port} WHERE machine_id=#{id}
+    </insert>
 
     <select id="getAllMachines" resultType="hash">
-        SELECT * FROM `machine`
+        SELECT * FROM `machine` ORDER BY ${sidx} ${order}
     </select>
 </mapper>

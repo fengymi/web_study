@@ -1,5 +1,9 @@
 package com.fym.utils.config;
 
-public class Constant {
-    public static final int PAGE_SIZE = 10;
+public interface Constant {
+
+    //操作对象
+    int OPER_SERVER = 100;
+    int OPER_MACHINE = 101;
+    int OPER_MACHINE_USER = 102;
 }

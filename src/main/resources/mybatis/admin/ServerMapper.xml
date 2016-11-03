@@ -2,8 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fym.dao.admin.ServerDao">
 
+    <insert id="add" parameterType="hash">
+        INSERT INTO `proxy_server`(host,name,port) VALUES (#{host},#{name},#{port})
+    </insert>
+    <insert id="delete" parameterType="hash">
+        DELETE FROM `proxy_server` WHERE server_id in (#{id})
+    </insert>
+    <insert id="update" parameterType="hash">
+        UPDATE `proxy_server` SET host=#{host},name=#{name},port=#{port} WHERE server_id=#{id}
+    </insert>
 
     <select id="getAllServers" resultType="hash">
-        SELECT * FROM `proxy_server`
+        SELECT * FROM `proxy_server` ORDER BY ${sidx} ${order}
     </select>
 </mapper>
