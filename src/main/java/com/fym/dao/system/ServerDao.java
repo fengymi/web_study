@@ -10,7 +10,7 @@ public interface ServerDao extends BaseOper {
 
     List<HashPageData> getAllServers(PageEntity page);
 
-    void add(HashPageData data);
+    int add(HashPageData data);
     void delete(HashPageData data);
     void update(HashPageData data);
 

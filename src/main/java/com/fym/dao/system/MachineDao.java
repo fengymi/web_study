@@ -11,7 +11,7 @@ public interface MachineDao extends BaseOper {
 
     List<HashPageData> getAllMachines(PageEntity page);
 
-    void add(HashPageData data);
+    int add(HashPageData data);
 
     void delete(HashPageData data);
 

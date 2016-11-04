@@ -32,7 +32,9 @@ public class TutorialGuacamoleTunnelServlet
         GuacamoleSocket socket = null;
         socket = new ConfiguredGuacamoleSocket(
 //                new InetGuacamoleSocket("192.168.182.137", 4822),
-                new InetGuacamoleSocket("192.168.68.140", 4822),
+//                new InetGuacamoleSocket("192.168.182.138", 4822),
+                new InetGuacamoleSocket("developfym.yundanche.cn", 80),
+//                new InetGuacamoleSocket("192.168.68.140", 4822),
                 config
         );
         System.out.println("end");

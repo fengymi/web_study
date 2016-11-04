@@ -63,77 +63,33 @@
 
         // Configuration for jqGrid Example 2
         $("#table_data").jqGrid(getJqGirdInit({
-            url : '<%=basePath%>system/machine_user/get_data?machine_id=${machine_id}',
-            editurl:"<%=basePath%>system/machine_user/edit_data",
-            sortname:"mu_id",
-            caption: "${title}",
-//            colNames: ['虚拟机id','主机', '名称', '端口'],
+            url : '<%=basePath%>system/server/get_data',
+            editurl:"<%=basePath%>system/server/edit_data",
+            sortname:"role_id",
             colModel: [
                 {
-                    label:"账号id",
-                    name: 'mu_id',
-                    index: 'mu_id',
+                    label:"角色id",
+                    name: 'role_id',
+                    index: 'role_id',
                     editable: false,
-                    sorttype: "int",
                     align: 'center',
                     key:true
-                },{
-                    label:"虚拟机id",
-                    name: 'machine_id',
-                    index: 'machine_id',
-                    editrules:{required:true,number:true},
-                    editable: true,
-                    edittype:'select',
-                    editoptions:{
-                        dataUrl:'<%=basePath%>system/machine/get_select',
-                        buildSelect: function (response) {
-                            var data = eval(response);
-                            return selectFormat(data,"machine_id","name","暂无可用虚拟机");
-                        }
-                    },
-                    sorttype: "int",
-                    align: 'center'
                 },
                 {
-                    label:'账号',
-                    name: 'username',
-                    index: 'username',
-                    editrules:{required:true},
-                    align: 'center',
-                    editable: true
-                },
-                {
-                    label:'密码',
-                    name: 'password',
-                    index: 'password',
-                    editrules:{required:true},
+                    label:'角色名称',
+                    name: 'role_name',
+                    index: 'role_name',
                     align: 'center',
                     editable: true
                 },
                 {
                     label:'状态',
-                    name: 'status',
-                    index: 'status',
+                    name: 'available',
+                    index: 'available',
                     align: 'center',
-                    editrules:{required:true},
-                    editable: true,
                     edittype:'select',
-                    editoptions:{value:"1:可用;-1:禁用"},
-                    formatter: function (cellvalue, options, rowObject) {
-                        var value;
-                        switch (cellvalue){
-                            case "1":
-                                value = "可用";
-                                break;
-                            case "0":
-                                value = "使用中";
-                                break;
-                            default :
-                                value = "异常";
-                                break;
-                        }
-                        return value;
-                    }
+                    editoptions:{value:"1:可用;2:不可用"},
+                    editable: true
                 },
                 {
                     label:'操作',
@@ -150,11 +106,8 @@
         $("#table_data").jqGrid('navGrid', '#pager_list', {
             edit: true,
             add: true,
-            del: true,
-            search: true
+            del: true
         }, {
-            boolean:true,
-            closeAfterEdit:true,
             reloadAfterSubmit: true
         });
         $(window).bind('resize', function () {

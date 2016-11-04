@@ -53,7 +53,7 @@
                     <i class="fa fa-user-secret"></i> <span class="nav-label">系统用户 </span><span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li><a class="J_menuItem" href="static/admin/mailbox.html">系统用户</a>
+                    <li><a class="J_menuItem" href="system/user/list">系统用户</a>
                     </li>
                     <li><a class="J_menuItem" href="static/admin/mail_detail.html">角色管理</a>
                     </li>

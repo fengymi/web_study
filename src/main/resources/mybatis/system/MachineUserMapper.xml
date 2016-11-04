@@ -17,6 +17,8 @@
         <if test="extend.machine_id!=null and extend.machine_id>0">
             WHERE machine_id = #{extend.machine_id}
         </if>
-        ORDER BY ${sidx} ${order}
+        <if test="sidx!=null and sidx!=''">
+            ORDER BY ${sidx} ${order}
+        </if>
     </select>
 </mapper>

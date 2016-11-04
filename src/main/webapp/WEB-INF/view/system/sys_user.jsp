@@ -63,77 +63,40 @@
 
         // Configuration for jqGrid Example 2
         $("#table_data").jqGrid(getJqGirdInit({
-            url : '<%=basePath%>system/machine_user/get_data?machine_id=${machine_id}',
-            editurl:"<%=basePath%>system/machine_user/edit_data",
-            sortname:"mu_id",
-            caption: "${title}",
-//            colNames: ['虚拟机id','主机', '名称', '端口'],
+            url : '<%=basePath%>system/user/get_data',
+            editurl:"<%=basePath%>system/user/edit_data",
+            sortname:"user_id",
             colModel: [
                 {
-                    label:"账号id",
-                    name: 'mu_id',
-                    index: 'mu_id',
+                    label:"用户id",
+                    name: 'user_id',
+                    index: 'user_id',
                     editable: false,
-                    sorttype: "int",
                     align: 'center',
                     key:true
-                },{
-                    label:"虚拟机id",
-                    name: 'machine_id',
-                    index: 'machine_id',
-                    editrules:{required:true,number:true},
-                    editable: true,
-                    edittype:'select',
-                    editoptions:{
-                        dataUrl:'<%=basePath%>system/machine/get_select',
-                        buildSelect: function (response) {
-                            var data = eval(response);
-                            return selectFormat(data,"machine_id","name","暂无可用虚拟机");
-                        }
-                    },
-                    sorttype: "int",
-                    align: 'center'
                 },
                 {
-                    label:'账号',
-                    name: 'username',
-                    index: 'username',
-                    editrules:{required:true},
+                    label:'用户',
+                    name: 'nickname',
+                    index: 'nickname',
                     align: 'center',
                     editable: true
                 },
                 {
-                    label:'密码',
-                    name: 'password',
-                    index: 'password',
-                    editrules:{required:true},
+                    label:'用户名',
+                    name: 'username',
+                    index: 'username',
                     align: 'center',
                     editable: true
                 },
                 {
                     label:'状态',
-                    name: 'status',
-                    index: 'status',
+                    name: 'locked',
+                    index: 'locked',
                     align: 'center',
-                    editrules:{required:true},
-                    editable: true,
                     edittype:'select',
-                    editoptions:{value:"1:可用;-1:禁用"},
-                    formatter: function (cellvalue, options, rowObject) {
-                        var value;
-                        switch (cellvalue){
-                            case "1":
-                                value = "可用";
-                                break;
-                            case "0":
-                                value = "使用中";
-                                break;
-                            default :
-                                value = "异常";
-                                break;
-                        }
-                        return value;
-                    }
+                    editoptions:{value:"0:正常;1:锁定"},
+                    editable: true
                 },
                 {
                     label:'操作',
@@ -141,7 +104,11 @@
                     sortable: false,
                     editable: false,
                     formatter: function (cellvalue, options, rowObject) {
-                        return "操作";
+                        var id = rowObject.user_id;
+                        var con =   '<a class="J_menuItem" href="system/user/manager">' +
+                                    '   <i class="fa fa-edit"></i>'+
+                                    '</a>';
+                        return con;
                     }
                 }
             ]
@@ -150,11 +117,8 @@
         $("#table_data").jqGrid('navGrid', '#pager_list', {
             edit: true,
             add: true,
-            del: true,
-            search: true
+            del: true
         }, {
-            boolean:true,
-            closeAfterEdit:true,
             reloadAfterSubmit: true
         });
         $(window).bind('resize', function () {

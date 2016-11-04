@@ -13,6 +13,9 @@
     </insert>
 
     <select id="getAllServers" resultType="hash">
-        SELECT * FROM `proxy_server` ORDER BY ${sidx} ${order}
+        SELECT * FROM `proxy_server`
+        <if test="sidx!=null and sidx!=''">
+            ORDER BY ${sidx} ${order}
+        </if>
     </select>
 </mapper>

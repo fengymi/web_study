@@ -55,6 +55,9 @@ public class ServerService {
         }
         return new PageInfo<>(machines);
     }
+    public List<HashPageData> getMachines(){
+        return machineDao.getAllMachines(null);
+    }
     /**
      * 获取服务器列表
      * @param page 分页信息

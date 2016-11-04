@@ -42,9 +42,12 @@ public class BaseController {
     protected PageEntity getPage(){
         PageEntity page = new PageEntity();
         HttpServletRequest request = getRequest();
-
-        page.setPageNum(Integer.parseInt(request.getParameter("pageNum")+""));
-        page.setPageSize(Integer.parseInt(request.getParameter("pageSize")+""));
+        try {
+            page.setPageNum(Integer.parseInt(request.getParameter("pageNum")+""));
+            page.setPageSize(Integer.parseInt(request.getParameter("pageSize")+""));
+        }catch (Exception e){
+            return null;
+        }
         page.setOrder(request.getParameter("order"));
         page.setSidx(request.getParameter("sidx"));
         return page;

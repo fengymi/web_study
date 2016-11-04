@@ -43,8 +43,8 @@
 </div>
 <!-- 全局js -->
 <%@include file="../layout/main_js.jsp"%>
-<!-- Flot -->
 <script src="static/admin/js/plugins/flot/jquery.flot.js"></script>
+<script src="static/js/design/design.js"></script>
 <!--flotdemo-->
 <script type="text/javascript">
     $(function() {
@@ -118,7 +118,10 @@
             }
         });
 
-        // Update the random dataset at 25FPS for a smoothly-animating chart
+        initToast();
+        toastr["info"]("Hi, welcome to Inspinia. This is example of Toastr notification box.");
+
+
 
         setInterval(function updateRandom() {
             series[0].data = getRandomData();
@@ -126,6 +129,7 @@
             plot.draw();
         }, 40);
     });
+
 
 </script>
 </body>

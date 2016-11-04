@@ -11,40 +11,32 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 
-/**
- * 虚拟机
- */
 @Controller
-@RequestMapping("/system/machine")
-public class MachineController extends BaseController{
+@RequestMapping("/system/permission")
+public class PermissionController extends BaseController{
 
     @Resource
     private ServerService serverService;
 
     @RequestMapping("/list")
     public ModelAndView list(){
-        ModelAndView mv = new ModelAndView("system/machine");
-        mv.addObject("title","远程虚拟机");
+        ModelAndView mv = new ModelAndView("system/machine_user");
+        mv.addObject("title","虚拟机登录账号");
+        mv.addObject("machine_id",getRequest().getParameter("machine_id"));
         return mv;
     }
 
     @RequestMapping("/get_data")
     @ResponseBody
     public Object getList(){
-        return JSON.toJSON(serverService.getMachines(getPage()));
-    }
-
-    @RequestMapping("/get_select")
-    @ResponseBody
-    public Object getSelect(){
-        return JSON.toJSON(serverService.getMachines());
+        String machine_id = getRequest().getParameter("machine_id");
+        return JSON.toJSON(serverService.getMachineUsers(getPage().setExtend("machine_id",machine_id)));
     }
 
     @RequestMapping("/edit_data")
     @ResponseBody
     public Object edit(){
-        serverService.editServers(getOper(), Constant.OPER_MACHINE);
+        serverService.editServers(getOper(), Constant.OPER_MACHINE_USER);
         return true;
     }
-
 }

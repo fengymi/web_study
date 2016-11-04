@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fym.dao.system.SystemUserDao">
+
+    <insert id="add" parameterType="hash">
+        INSERT INTO `sys_user`(nickname,username,password,locked) VALUES (#{nickname},#{username},#{password},#{locked})
+    </insert>
+    <insert id="delete" parameterType="hash">
+        DELETE FROM `sys_user` WHERE user_id in (#{id})
+    </insert>
+    <insert id="update" parameterType="hash">
+        UPDATE `sys_user` SET nickname=#{nickname},password=#{password},locked=#{locked} WHERE user_id=#{id}
+    </insert>
+
+    <select id="getAllUsers" resultType="hash">
+        SELECT * FROM `sys_user`
+        <if test="sidx!=null and sidx!=''">
+            ORDER BY ${sidx} ${order}
+        </if>
+    </select>
+
+    <select id="getUsersByRole" resultType="hash">
+        SELECT r.*,u.* FROM
+          sys_role r,sys_user u,sys_user_role ru
+        WHERE
+          r.role_id = ru.role_id
+        AND
+          ru.user_id = u.user_id
+        AND r.role_id=#{extend.role_id}
+        AND r.is_sys=1
+        and r.available=1
+        <if test="sidx!=null and sidx!=''">
+            ORDER BY ${sidx} ${order}
+        </if>
+    </select>
+</mapper>

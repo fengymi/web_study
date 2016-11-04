@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>服务器列表</title>
+    <title>${title}</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 

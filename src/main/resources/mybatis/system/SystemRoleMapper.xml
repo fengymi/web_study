@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fym.dao.system.MachineDao">
+<mapper namespace="com.fym.dao.system.SystemRoleDao">
 
     <insert id="add" parameterType="hash">
-        INSERT INTO `machine`(host,name,port) VALUES (#{host},#{name},#{port})
+        INSERT INTO `sys_role`(role_name,available,is_sys) VALUES (#{role_name},#{available},#{is_sys},#{locked})
     </insert>
     <insert id="delete" parameterType="hash">
-        DELETE FROM `machine` WHERE machine_id in (#{id})
+        DELETE FROM `sys_role` WHERE role_id in (#{id})
     </insert>
     <insert id="update" parameterType="hash">
-        UPDATE `machine` SET host=#{host},name=#{name},port=#{port} WHERE machine_id=#{id}
+        UPDATE `sys_role` SET role_name=#{role_name},available=#{available},is_sys=#{is_sys} WHERE role_id=#{id}
     </insert>
 
-    <select id="getAllMachines" resultType="hash">
-        SELECT * FROM `machine`
+    <select id="getAllRoles" resultType="hash">
+        SELECT * FROM `sys_role`
         <if test="sidx!=null and sidx!=''">
             ORDER BY ${sidx} ${order}
         </if>

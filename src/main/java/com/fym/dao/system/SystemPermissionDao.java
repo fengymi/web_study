@@ -6,17 +6,12 @@ import com.fym.utils.data.HashPageData;
 
 import java.util.List;
 
-public interface MachineUserDao extends BaseOper {
+public interface SystemPermissionDao extends BaseOper {
 
+    List<HashPageData> getAllPermission(PageEntity page);
 
-    @Override
     int add(HashPageData data);
-
-    @Override
     void delete(HashPageData data);
-
-    @Override
     void update(HashPageData data);
 
-    List<HashPageData> getAllMachineUsers(PageEntity page);
 }
