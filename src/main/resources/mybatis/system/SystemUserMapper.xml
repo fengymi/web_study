@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fym.dao.system.SystemUserDao">
+    <resultMap id="userMap" type="com.fym.entity.User">
+        <id property="id" column="USER_ID"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="nickname" column="nickname"/>
+        <result property="locked" column="locked"/>
+        <!-- 进行 多表关联插叙，先关联user和role -->
+        <collection property="roleSet" column="role_id" ofType="com.fym.entity.Role">
+            <id property="id" column="ROLE_ID"/>
+            <result property="name" column="ROLE_NAME"/>
+            <result property="isSys" column="is_sys"/>
+            <result property="available" column="available"/>
+            <!-- 再在role中关联role和permission -->
+            <collection property="permissionSet" column="permission_id" ofType="com.fym.entity.Permission">
+                <id property="id" column="permission_id"/>
+                <result property="name" column="permission_name"/>
+            </collection>
+        </collection>
+    </resultMap>
 
     <insert id="add" parameterType="hash">
         INSERT INTO `sys_user`(nickname,username,password,locked) VALUES (#{nickname},#{username},#{password},#{locked})
     </insert>
-    <insert id="delete" parameterType="hash">
+    <delete id="delete" parameterType="hash">
         DELETE FROM `sys_user` WHERE user_id in (#{id})
-    </insert>
-    <insert id="update" parameterType="hash">
-        UPDATE `sys_user` SET nickname=#{nickname},password=#{password},locked=#{locked} WHERE user_id=#{id}
-    </insert>
+    </delete>
+    <update id="update" parameterType="hash">
+        UPDATE `sys_user` SET nickname=#{nickname},locked=#{locked} WHERE user_id=#{id}
+    </update>
 
     <select id="getAllUsers" resultType="hash">
         SELECT * FROM `sys_user`
@@ -20,17 +39,61 @@
     </select>
 
     <select id="getUsersByRole" resultType="hash">
-        SELECT r.*,u.* FROM
-          sys_role r,sys_user u,sys_user_role ru
-        WHERE
-          r.role_id = ru.role_id
+        <include refid="select-user_role"/>
+        <if test="extend.role_id!=null and extend.role_id!=''">
+            AND r.role_id in (#{extend.role_id})
+        </if>
         AND
-          ru.user_id = u.user_id
-        AND r.role_id=#{extend.role_id}
-        AND r.is_sys=1
-        and r.available=1
+        <if test="extend.is_sys!=1">
+            (r.is_sys=#{extend.is_sys} or (r.is_sys is null))
+        </if>
+        <if test="extend.is_sys==1">
+            r.is_sys=#{extend.is_sys}
+        </if>
+        and (r.available!=0 or (r.available IS NULL ))
+        GROUP BY u.user_id
         <if test="sidx!=null and sidx!=''">
             ORDER BY ${sidx} ${order}
         </if>
     </select>
+
+    <select id="getUserAndRole" resultMap="userMap">
+        <include refid="select-user_role"/>
+        and (r.available!=0 or (r.available IS NULL ))
+        AND u.user_id=#{0}
+    </select>
+
+
+    <sql id="select-user_role">
+        SELECT
+            u.*,r.*
+        FROM
+            sys_user as u
+        LEFT JOIN (
+            SELECT r.*,ru.user_id as u_id FROM
+                sys_role as r,
+                sys_user_role as ru
+            WHERE
+                r.ROLE_ID = ru.ROLE_ID
+        ) r
+        ON
+            u.user_id=r.u_id
+        WHERE 1=1
+    </sql>
+
+
+
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

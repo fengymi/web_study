@@ -134,15 +134,6 @@
                         }
                         return value;
                     }
-                },
-                {
-                    label:'操作',
-                    align: 'center',
-                    sortable: false,
-                    editable: false,
-                    formatter: function (cellvalue, options, rowObject) {
-                        return "操作";
-                    }
                 }
             ]
         }));

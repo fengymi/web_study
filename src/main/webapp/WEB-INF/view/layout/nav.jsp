@@ -50,15 +50,13 @@
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="fa fa-user-secret"></i> <span class="nav-label">系统用户 </span><span class="fa arrow"></span>
+                    <i class="fa fa-user-secret"></i> <span class="nav-label">用户管理 </span><span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li><a class="J_menuItem" href="system/user/list">系统用户</a>
-                    </li>
-                    <li><a class="J_menuItem" href="static/admin/mail_detail.html">角色管理</a>
-                    </li>
-                    <li><a class="J_menuItem" href="static/admin/mail_compose.html">权限管理</a>
-                    </li>
+                    <li><a class="J_menuItem" href="system/user/list">系统用户</a></li>
+                    <li><a class="J_menuItem" href="system/user/list_common">一般用户</a></li>
+                    <li><a class="J_menuItem" href="system/role/list">角色管理</a></li>
+                    <li><a class="J_menuItem" href="static/admin/mail_compose.html">权限管理</a></li>
                 </ul>
             </li>
             <li>

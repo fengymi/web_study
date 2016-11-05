@@ -5,12 +5,12 @@
     <insert id="add" parameterType="hash">
         INSERT INTO `proxy_server`(host,name,port) VALUES (#{host},#{name},#{port})
     </insert>
-    <insert id="delete" parameterType="hash">
+    <delete id="delete" parameterType="hash">
         DELETE FROM `proxy_server` WHERE server_id in (#{id})
-    </insert>
-    <insert id="update" parameterType="hash">
+    </delete>
+    <update id="update" parameterType="hash">
         UPDATE `proxy_server` SET host=#{host},name=#{name},port=#{port} WHERE server_id=#{id}
-    </insert>
+    </update>
 
     <select id="getAllServers" resultType="hash">
         SELECT * FROM `proxy_server`

@@ -7,9 +7,27 @@ public class User {
     private String id;
     private String username;
     private String password;
-    private Set<Role> roleSet = new HashSet<Role>();
+    private String nickname;
+    private String locked;
+    private Set<Role> roleSet = new HashSet<>();
 
     public User() {
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getLocked() {
+        return locked;
+    }
+
+    public void setLocked(String locked) {
+        this.locked = locked;
     }
 
     public String getId() {

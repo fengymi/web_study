@@ -119,7 +119,7 @@
         });
 
         initToast();
-        toastr["info"]("Hi, welcome to Inspinia. This is example of Toastr notification box.");
+        toastr["info"]("欢迎admin回来");
 
 
 

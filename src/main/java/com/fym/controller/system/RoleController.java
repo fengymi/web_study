@@ -23,7 +23,6 @@ public class RoleController extends BaseController{
     public ModelAndView list(){
         ModelAndView mv = new ModelAndView("system/sys_role");
         mv.addObject("title","系统角色管理");
-        mv.addObject("machine_id",getRequest().getParameter("machine_id"));
         return mv;
     }
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fym.dao.system.SystemUserRoleDao">
+
+    <insert id="addRoleForUser" parameterType="com.fym.entity.utils.UserManager">
+        INSERT INTO `sys_user_role`(user_id,role_id) VALUES
+        <foreach collection="addRoles" item="roleId" index="index" separator="," >
+            (#{userId},#{roleId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteUserRole" parameterType="com.fym.entity.utils.UserManager">
+        DELETE FROM sys_user_role WHERE user_id=#{userId} AND role_id in (#{delRolesStr})
+    </delete>
+
+</mapper>

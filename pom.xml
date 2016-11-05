@@ -9,51 +9,13 @@
     <url>http://maven.apache.org</url>
 
     <!-- 指定maven仓库 -->
-    <repositories><!-- 发现依赖和扩展的远程资源库 -->
-        <!-- maven自己官方仓库 -->
-        <!--&lt;!&ndash;<repository>&ndash;&gt;-->
-            <!--&lt;!&ndash;<id>maven</id>&ndash;&gt;-->
-            <!--&lt;!&ndash;<name>Maven Repository Switchboard</name>&ndash;&gt;-->
-            <!--&lt;!&ndash;<layout>default</layout>&ndash;&gt;-->
-            <!--&lt;!&ndash;<url>http://repo1.maven.org/maven2</url>&ndash;&gt;-->
-            <!--&lt;!&ndash;<snapshots>&ndash;&gt;-->
-                <!--&lt;!&ndash;<enabled>false</enabled>&ndash;&gt;-->
-            <!--&lt;!&ndash;</snapshots>&ndash;&gt;-->
-        <!--&lt;!&ndash;</repository>&ndash;&gt;-->
-        <!--&lt;!&ndash; 阿里巴巴发布版本仓库 &ndash;&gt;-->
-        <!--<repository>-->
-            <!--<id>alibaba-opensource</id>-->
-            <!--<name>alibaba-opensource</name>-->
-            <!--<url>http://code.alibabatech.com/mvn/releases/</url>-->
-            <!--<layout>default</layout>-->
-        <!--</repository>-->
-        <!--&lt;!&ndash; 阿里巴巴快照版本仓库 &ndash;&gt;-->
-        <!--<repository>-->
-            <!--<id>alibaba-opensource-snapshot</id>-->
-            <!--<name>alibaba-opensource-snapshot</name>-->
-            <!--<url>http://code.alibabatech.com/mvn/snapshots/</url>-->
-            <!--<layout>default</layout>-->
-        <!--</repository>-->
-        <!--<repository>-->
-            <!--<snapshots>-->
-                <!--<enabled>false</enabled>-->
-            <!--</snapshots>-->
-            <!--<id>central</id>-->
-            <!--<name>bintray</name>-->
-            <!--<url>http://jcenter.bintray.com</url>-->
-        <!--</repository>-->
-
-        <!--<repository>-->
-            <!--<id>mhj</id>-->
-            <!--<name>mhj</name>-->
-            <!--<url>http://192.168.5.12:8081/nexus/content/groups/public/</url>-->
-            <!--<releases>-->
-                <!--<enabled>true</enabled>-->
-            <!--</releases>-->
-            <!--<snapshots>-->
-                <!--<enabled>true</enabled>-->
-            <!--</snapshots>-->
-        <!--</repository>-->
+    <repositories>
+        <repository>
+            <id>alibaba-opensource</id>
+            <name>alibaba-opensource</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <layout>default</layout>
+        </repository>
     </repositories>
 
     <properties>
@@ -86,6 +48,11 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
         <!--spring config start-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -108,6 +75,18 @@
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
+        <!--aop-->
+        <!--<dependency>-->
+            <!--<groupId>org.aspectj</groupId>-->
+            <!--<artifactId>aspectjweaver</artifactId>-->
+            <!--<version>1.6.11</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>cglib</groupId>-->
+            <!--<artifactId>cglib</artifactId>-->
+            <!--<version>3.1</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.springframework</groupId>

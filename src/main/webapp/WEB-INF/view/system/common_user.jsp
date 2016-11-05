@@ -63,32 +63,48 @@
 
         // Configuration for jqGrid Example 2
         $("#table_data").jqGrid(getJqGirdInit({
-            url : '<%=basePath%>system/role/get_data',
-            editurl:"<%=basePath%>system/role/edit_data",
-            sortname:"role_id",
+            url : '<%=basePath%>system/user/get_data?is_sys=0&role_id=${role_id}',
+            editurl:"<%=basePath%>system/user/edit_data",
+            sortname:"user_id",
             colModel: [
                 {
-                    label:"角色id",
-                    name: 'role_id',
-                    index: 'role_id',
+                    label:"用户id",
+                    name: 'user_id',
+                    index: 'user_id',
                     editable: false,
                     align: 'center',
                     key:true
                 },
                 {
-                    label:'角色名称',
-                    name: 'role_name',
-                    index: 'role_name',
+                    label:'用户',
+                    name: 'nickname',
+                    index: 'nickname',
+                    align: 'center',
+                    editable: true
+                },
+                {
+                    label:'用户名',
+                    name: 'username',
+                    index: 'username',
                     align: 'center',
                     editable: true
                 },
                 {
                     label:'状态',
-                    name: 'available',
-                    index: 'available',
+                    name: 'locked',
+                    index: 'locked',
                     align: 'center',
+                    formatter: function (cellvalue, options, rowObject) {
+                        var label_class = "label-info";
+                        var label_text = "正常";
+                        if(rowObject.locked==1){
+                            label_class = "label-danger";
+                            label_text = "锁定";
+                        }
+                        return '<span class="label '+label_class+'">'+label_text+'</span>';
+                    },
                     edittype:'select',
-                    editoptions:{value:"1:可用;2:不可用"},
+                    editoptions:{value:"0:正常;1:锁定"},
                     editable: true
                 },
                 {
@@ -97,7 +113,11 @@
                     sortable: false,
                     editable: false,
                     formatter: function (cellvalue, options, rowObject) {
-                        return '<a class="J_menuItem" href="system/user/list?role_id='+rowObject.role_id+'">查看用户</a>';
+                        var id = rowObject.user_id;
+                        var con =   '<a class="J_menuItem" href="system/user/manager?user_id='+id+'">' +
+                                    '   用户管理'+
+                                    '</a>';
+                        return con;
                     }
                 }
             ]

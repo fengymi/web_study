@@ -6,6 +6,8 @@ import java.util.Set;
 public class Role {
     private Integer id;
     private String name;
+    private String available;
+    private String isSys;
     private Set<Permission> permissionSet = new HashSet<Permission>();
 
     @Override
@@ -31,6 +33,22 @@ public class Role {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    public String getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(String available) {
+        this.available = available;
+    }
+
+    public String getIsSys() {
+        return isSys;
+    }
+
+    public void setIsSys(String isSys) {
+        this.isSys = isSys;
     }
 
     public Integer getId() {

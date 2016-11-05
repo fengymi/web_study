@@ -5,12 +5,12 @@
     <insert id="add" parameterType="hash">
         INSERT INTO `machine`(host,name,port) VALUES (#{host},#{name},#{port})
     </insert>
-    <insert id="delete" parameterType="hash">
+    <delete id="delete" parameterType="hash">
         DELETE FROM `machine` WHERE machine_id in (#{id})
-    </insert>
-    <insert id="update" parameterType="hash">
+    </delete>
+    <update id="update" parameterType="hash">
         UPDATE `machine` SET host=#{host},name=#{name},port=#{port} WHERE machine_id=#{id}
-    </insert>
+    </update>
 
     <select id="getAllMachines" resultType="hash">
         SELECT * FROM `machine`

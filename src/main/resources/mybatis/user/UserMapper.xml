@@ -5,17 +5,18 @@
         <id property="id" column="USER_ID"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
+        <result property="nickname" column="nickname"/>
+        <result property="locked" column="locked"/>
         <!-- 进行 多表关联插叙，先关联user和role -->
         <collection property="roleSet" column="role_id" ofType="com.fym.entity.Role">
             <id property="id" column="ROLE_ID"/>
-            <result property="name" column="NAME"/>
+            <result property="name" column="ROLE_NAME"/>
             <!-- 再在role中关联role和permission -->
             <collection property="permissionSet" column="permission_id" ofType="com.fym.entity.Permission">
                 <id property="id" column="permission_id"/>
                 <result property="name" column="permission_name"/>
             </collection>
         </collection>
-
     </resultMap>
 
 

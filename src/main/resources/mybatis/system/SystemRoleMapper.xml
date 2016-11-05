@@ -5,12 +5,12 @@
     <insert id="add" parameterType="hash">
         INSERT INTO `sys_role`(role_name,available,is_sys) VALUES (#{role_name},#{available},#{is_sys},#{locked})
     </insert>
-    <insert id="delete" parameterType="hash">
+    <delete id="delete" parameterType="hash">
         DELETE FROM `sys_role` WHERE role_id in (#{id})
-    </insert>
-    <insert id="update" parameterType="hash">
+    </delete>
+    <update id="update" parameterType="hash">
         UPDATE `sys_role` SET role_name=#{role_name},available=#{available},is_sys=#{is_sys} WHERE role_id=#{id}
-    </insert>
+    </update>
 
     <select id="getAllRoles" resultType="hash">
         SELECT * FROM `sys_role`

@@ -63,7 +63,7 @@
 
         // Configuration for jqGrid Example 2
         $("#table_data").jqGrid(getJqGirdInit({
-            url : '<%=basePath%>system/user/get_data',
+            url : '<%=basePath%>system/user/get_data?role_id=${role_id}',
             editurl:"<%=basePath%>system/user/edit_data",
             sortname:"user_id",
             colModel: [
@@ -94,6 +94,15 @@
                     name: 'locked',
                     index: 'locked',
                     align: 'center',
+                    formatter: function (cellvalue, options, rowObject) {
+                        var label_class = "label-info";
+                        var label_text = "正常";
+                        if(rowObject.locked==1){
+                            label_class = "label-danger";
+                            label_text = "锁定";
+                        }
+                        return '<span class="label '+label_class+'">'+label_text+'</span>';
+                    },
                     edittype:'select',
                     editoptions:{value:"0:正常;1:锁定"},
                     editable: true
@@ -105,8 +114,8 @@
                     editable: false,
                     formatter: function (cellvalue, options, rowObject) {
                         var id = rowObject.user_id;
-                        var con =   '<a class="J_menuItem" href="system/user/manager">' +
-                                    '   <i class="fa fa-edit"></i>'+
+                        var con =   '<a class="J_menuItem" href="system/user/manager?user_id='+id+'">' +
+                                    '   用户管理'+
                                     '</a>';
                         return con;
                     }
