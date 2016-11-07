@@ -122,3 +122,51 @@ function initToast(data) {
         toastr.options[i] = data[i];
     }
 }
+/**
+ * 初始化多选下拉框
+ */
+function initSelector() {
+    var config = {
+        '.chosen-select-no-results': {no_results_text: '没有可用权限'}
+    };
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+}
+
+/**
+ * manager修改数据
+ * @param data {selectedIds:[],oldIds:[],addData:"input对象",delData:"input对象"}
+ */
+function setUpdateData(data) {
+    var selectedIds = data.selectedIds||[];
+    var oldIds = data.oldIds||[];
+    var addIds = [];
+    var delIds = [];
+    var selectedIdsStr = selectedIds.toString();
+    var oldIdsStr = oldIds.toString();
+    for(var i in oldIds){
+        if(selectedIdsStr.indexOf(oldIds[i])==-1){
+            delIds.push(oldIds[i]);
+        }
+    }
+    for(i in selectedIds){
+        if(oldIdsStr.indexOf(selectedIds[i])==-1){
+            addIds.push(selectedIds[i]);
+        }
+    }
+    $(data.addData).val(addIds.toString());
+    $(data.delData).val(delIds.toString());
+    $.ajax({
+        url:data.url,
+        data:$(data.form).serialize(),
+        type:"post",
+        success:function (result) {
+            toastr["info"](result);
+            data.success();
+        },
+        error:function () {
+            toastr["error"]("修改失败");
+        }
+    });
+}

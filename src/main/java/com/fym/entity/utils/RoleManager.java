@@ -5,6 +5,7 @@ public class RoleManager {
     private String role_name;
     private char isSys;
     private char available;
+    private String delPermissionsStr;
 
     private int[] delPermissions;
     private int[] addPermissions;
@@ -46,18 +47,21 @@ public class RoleManager {
     }
 
     public String getDelPermissionsStr() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < delPermissions.length; i++) {
-            stringBuilder.append(delPermissions[i]);
-            if(delPermissions.length<i-1){
-                stringBuilder.append(",");
-            }
-        }
-        return stringBuilder.toString();
+        return delPermissionsStr;
     }
 
     public void setDelPermissions(int[] delPermissions) {
         this.delPermissions = delPermissions;
+        if(this.delPermissions==null) return;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < delPermissions.length; i++) {
+            stringBuilder.append(delPermissions[i]);
+            if(i<delPermissions.length-1){
+                stringBuilder.append(",");
+            }
+        }
+        this.delPermissionsStr = stringBuilder.toString();
     }
 
     public int[] getAddPermissions() {

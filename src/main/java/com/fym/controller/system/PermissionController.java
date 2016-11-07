@@ -38,6 +38,8 @@ public class PermissionController extends BaseController{
     public ModelAndView manager(){
         ModelAndView mv = new ModelAndView("system/permission_manager");
         mv.addObject("title","权限管理");
+        Object permissionId = getRequest().getParameter("permission_id");
+
 
         return mv;
     }
@@ -45,7 +47,7 @@ public class PermissionController extends BaseController{
     @RequestMapping("/edit_data")
     @ResponseBody
     public Object edit(){
-        systemPermissionService.edit(getOper(), OperObject.OPER_SYSTEM_USER);
+        systemPermissionService.edit(getOper(), OperObject.OPER_SYSTEM_PERMISSION);
         return true;
     }
 }

@@ -87,20 +87,20 @@
                 },
                 {
                     label:'状态',
-                    name: 'available',
-                    index: 'available',
+                    name: 'p_available',
+                    index: 'p_available',
                     align: 'center',
                     formatter: function (cellvalue, options, rowObject) {
                         var label_class = "label-info";
                         var label_text = "正常";
-                        if(rowObject.locked==1){
+                        if(rowObject.p_available==0){
                             label_class = "label-danger";
                             label_text = "禁用";
                         }
                         return '<span class="label '+label_class+'">'+label_text+'</span>';
                     },
                     edittype:'select',
-                    editoptions:{value:"0:正常;1:禁用"},
+                    editoptions:{value:"1:正常;0:禁用"},
                     editable: true
                 },
                 {
@@ -110,7 +110,7 @@
                     editable: false,
                     formatter: function (cellvalue, options, rowObject) {
                         var id = rowObject.permission_id;
-                        var con ='  <a class="J_menuItem" href="system/permission/manager?user_id='+id+'">' +
+                        var con ='  <a title="分配角色" class="J_menuItem" href="system/permission/manager?permission_id='+id+'">' +
                                 '       <i class="fa fa-user-secret"></i>'+
                                 '   </a>';
                         return con;

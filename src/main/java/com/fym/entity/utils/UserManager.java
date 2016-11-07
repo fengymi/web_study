@@ -4,6 +4,7 @@ public class UserManager {
     private int userId;
     private String nickname;
     private String locked;
+    private String delRolesStr;
 
     private int[] delRoles;
     private int[] addRoles;
@@ -36,18 +37,20 @@ public class UserManager {
         return delRoles;
     }
     public String getDelRolesStr() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < delRoles.length; i++) {
-            stringBuilder.append(delRoles[i]);
-            if(delRoles.length<=i){
-                stringBuilder.append(",");
-            }
-        }
-        return stringBuilder.toString();
+        return delRolesStr;
     }
 
     public void setDelRoles(int[] delRoles) {
         this.delRoles = delRoles;
+        if(this.delRoles==null) return;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < delRoles.length; i++) {
+            stringBuilder.append(delRoles[i]);
+            if(i<delRoles.length-1){
+                stringBuilder.append(",");
+            }
+        }
+        this.delRolesStr = stringBuilder.toString();
     }
 
     public int[] getAddRoles() {

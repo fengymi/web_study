@@ -25,24 +25,21 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>${title}</h5>
-                    <div class="ibox-tools">
-                        <button type="button" class="btn btn-w-m btn-success">修改密码</button>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     <form id="updateUser" class="form-horizontal m-t" onsubmit="return updateUser(this)">
-                        <input type="hidden" name="userId" value="${user.id}" />
+                        <input type="hidden" name="permissionId" value="${user.permissionId}" />
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">昵称：</label>
+                            <label class="col-sm-3 control-label">名称：</label>
                             <div class="col-sm-8">
-                                <input name="nickname" value="${user.nickname}" type="text" class="form-control" required=""
+                                <input name="permissionName" value="${user.permissionName}" type="text" class="form-control" required=""
                                        aria-required="true">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">账号：</label>
+                            <label class="col-sm-3 control-label">url：</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${user.username}" disabled />
+                                <input name="url" type="text" class="form-control" value="${user.url}" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -51,10 +48,10 @@
 
                                 <div class="radio">
                                     <label>
-                                        <input value="0" <c:if test="${user.locked==0}" >checked</c:if> name="locked" type="radio">正常
+                                        <input value="0" <c:if test="${user.pAvailable==1}" >checked</c:if> name="pAvailable" type="radio">正常
                                     </label>
                                     <label>
-                                        <input value="1" <c:if test="${user.locked==1}" >checked</c:if> name="locked" type="radio">锁定
+                                        <input value="1" <c:if test="${user.pAvailable==0}" >checked</c:if> name="pAvailable" type="radio">禁用
                                     </label>
                                 </div>
 

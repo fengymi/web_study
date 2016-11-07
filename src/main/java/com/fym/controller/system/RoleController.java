@@ -41,7 +41,9 @@ public class RoleController extends BaseController{
         mv.addObject("title","角色管理");
         Object roleId = getRequest().getParameter("role_id");
         Role role = systemRoleService.getRole(roleId);
-        List<HashPageData> permissions = systemPermissionService.getSystemPermission(new PageEntity().setExtend("roleId",roleId).setExtend("available",1).setNotPage(true));
+        if(role == null) return mv;
+
+        List<HashPageData> permissions = systemPermissionService.getSystemPermission(new PageEntity().setExtend("roleId",roleId).setExtend("p_available",1).setNotPage(true));
         String oldPermissions = "";
         Iterator<Permission> userPermission = null;
         for (HashPageData permission : permissions) {
@@ -73,6 +75,7 @@ public class RoleController extends BaseController{
     @ResponseBody
     public Object update(RoleManager roleManager){
         System.out.println(JSON.toJSONString(roleManager));
+        System.out.println(roleManager.getDelPermissionsStr());
         systemRoleService.update(roleManager);
         return "修改成功";
     }

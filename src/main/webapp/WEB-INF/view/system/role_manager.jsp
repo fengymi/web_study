@@ -27,8 +27,10 @@
                     <h5>${title}</h5>
                 </div>
                 <div class="ibox-content">
-                    <form id="updatePermission" class="form-horizontal m-t" onsubmit="return updateUser(this)">
+                    <form id="updatePermission" class="form-horizontal m-t" onsubmit="return updateManager(this)">
                         <input type="hidden" name="roleId" value="${role.id}" />
+                        <input id="addIds" name="addPermissions" type="hidden" />
+                        <input id="delIds" name="delPermissions" type="hidden" />
                         <div class="form-group">
                             <label class="col-sm-3 control-label">名称：</label>
                             <div class="col-sm-8">
@@ -91,44 +93,19 @@
 <script src="static/js/design/design.js" type="text/javascript"></script>
     <script type="text/javascript">
         initToast();
-        var oldPermissions = [${oldPermissions}];
-        var config = {
-            '.chosen-select-no-results': {no_results_text: '没有可用权限'}
-        };
-        for (var selector in config) {
-            $(selector).chosen(config[selector]);
-        }
+        initSelector();
+        var oldIds = [${oldPermissions}]||"";
 
-        function updateUser(form) {
-            var permission_ids = $("#permission_id").val();
-            var addPermissions = [];
-            var delPermissions = [];
-            var role_ids_str = permission_ids?permission_ids.toString():"";
-            var oldRoles_str = oldPermissions?oldPermissions.toString():"";
-            for(var i in oldPermissions){
-                if(role_ids_str.indexOf(oldPermissions[i])==-1){
-                    delPermissions.push(oldPermissions[i]);
-                }
-            }
-            for(i in permission_ids){
-                if(oldRoles_str.indexOf(permission_ids[i])==-1){
-                    addPermissions.push(permission_ids[i]);
-                }
-            }
-            if($(form).find("input[name='delPermissions']").length==0){
-                $(form).append("<input type='hidden' name='delPermissions' value='"+delPermissions+"' />");
-                $(form).append("<input type='hidden' name='addPermissions' value='"+addPermissions+"' />");
-            }
-            $.ajax({
+        function updateManager(form) {
+            setUpdateData({
+                selectedIds:$("#permission_id").val(),
+                oldIds:oldIds,
+                addData:$("#addIds"),
+                delData:$("#delIds"),
                 url:"<%=basePath%>system/role/update",
-                data:$(form).serialize(),
-                type:"post",
-                success:function (result) {
-                    toastr["info"](result);
-                    oldPermissions = permission_ids;
-                },
-                error:function () {
-                    toastr["error"]("修改失败");
+                form:$(form),
+                success:function () {
+                    oldIds = $("#permission_id").val();
                 }
             });
             return false;

@@ -3,13 +3,13 @@
 <mapper namespace="com.fym.dao.system.SystemPermissionDao">
 
     <insert id="add" parameterType="hash">
-        INSERT INTO `sys_permission`(permission_name,p_available,url) VALUES (#{permission_name},#{available},#{url})
+        INSERT INTO `sys_permission`(permission_name,p_available,url) VALUES (#{permission_name},#{p_available},#{url})
     </insert>
     <delete id="delete" parameterType="hash">
         DELETE FROM `sys_permission` WHERE permission_id in (#{id})
     </delete>
     <update id="update" parameterType="hash">
-        UPDATE `sys_permission` SET permission_name=#{permission_name},p_available=#{available},url=#{url} WHERE permission_id=#{id}
+        UPDATE `sys_permission` SET permission_name=#{permission_name},p_available=#{p_available},url=#{url} WHERE permission_id=#{id}
     </update>
 
     <select id="getAllPermissions" resultType="hash">
@@ -21,8 +21,8 @@
         <if test="extend.role_id!=null and extend.role_id>0">
             AND rp.role_id=#{extend.role_id}
         </if>
-        <if test="extend.available!=null and extend.available!=''">
-            AND p.p_available=#{extend.available}
+        <if test="extend.p_available!=null and extend.p_available!=''">
+            AND p.p_available=#{extend.p_available}
         </if>
         GROUP BY p.permission_id
         <if test="sidx!=null and sidx!=''">

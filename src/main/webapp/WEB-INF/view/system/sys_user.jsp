@@ -110,8 +110,8 @@
                     editable: false,
                     formatter: function (cellvalue, options, rowObject) {
                         var id = rowObject.user_id;
-                        var con =   '<a class="J_menuItem" href="system/user/manager?user_id='+id+'">' +
-                                '   用户管理'+
+                        var con =   '<a title="分配角色" class="J_menuItem" href="system/user/manager?user_id='+id+'">' +
+                                '   <i class="fa fa-users"></i>'+
                                 '</a>';
                         return con;
                     }

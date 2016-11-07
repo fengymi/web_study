@@ -32,6 +32,8 @@
                 <div class="ibox-content">
                     <form id="updateUser" class="form-horizontal m-t" onsubmit="return updateUser(this)">
                         <input type="hidden" name="userId" value="${user.id}" />
+                        <input id="addIds" name="addRoles" type="hidden" />
+                        <input id="delIds" name="delRoles" type="hidden" />
                         <div class="form-group">
                             <label class="col-sm-3 control-label">昵称：</label>
                             <div class="col-sm-8">
@@ -94,44 +96,20 @@
 <script src="static/js/design/design.js" type="text/javascript"></script>
     <script type="text/javascript">
         initToast();
-        var oldRoles = [${oldRolesId}];
-        var config = {
-            '.chosen-select-no-results': {no_results_text: '没有可用角色'}
-        };
-        for (var selector in config) {
-            $(selector).chosen(config[selector]);
-        }
+        initSelector();
+        var oldIds = [${oldRolesId}];
 
         function updateUser(form) {
-            var role_ids = $("#role_id").val();
-            var addRoles = [];
-            var delRoles = [];
-            var role_ids_str = role_ids?role_ids.toString():"";
-            var oldRoles_str = oldRoles?oldRoles.toString():"";
-            for(var i in oldRoles){
-                if(role_ids_str.indexOf(oldRoles[i])==-1){
-                    delRoles.push(oldRoles[i]);
-                }
-            }
-            for(i in role_ids){
-                if(oldRoles_str.indexOf(role_ids[i])==-1){
-                    addRoles.push(role_ids[i]);
-                }
-            }
-            if($(form).find("input[name='delRoles']").length==0){
-                $(form).append("<input type='hidden' name='delRoles' value='"+delRoles+"' />");
-                $(form).append("<input type='hidden' name='addRoles' value='"+addRoles+"' />");
-            }
-            $.ajax({
+            var selectedIds = $("#role_id").val();
+            setUpdateData({
+                selectedIds:selectedIds,
+                oldIds:oldIds,
+                addData:$("#addIds"),
+                delData:$("#delIds"),
                 url:"<%=basePath%>system/user/update_user",
-                data:$(form).serialize(),
-                type:"post",
-                success:function (result) {
-                    toastr["info"](result);
-                    oldRoles = role_ids;
-                },
-                error:function () {
-                    toastr["error"]("修改失败");
+                form:$(form),
+                success:function () {
+                    oldIds = selectedIds;
                 }
             });
             return false;
