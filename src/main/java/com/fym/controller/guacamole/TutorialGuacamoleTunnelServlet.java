@@ -9,10 +9,11 @@ import org.glyptodon.guacamole.protocol.ConfiguredGuacamoleSocket;
 import org.glyptodon.guacamole.protocol.GuacamoleConfiguration;
 import org.glyptodon.guacamole.servlet.GuacamoleHTTPTunnelServlet;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Component
+@Controller
 public class TutorialGuacamoleTunnelServlet
         extends GuacamoleHTTPTunnelServlet {
 

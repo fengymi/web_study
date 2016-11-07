@@ -106,8 +106,8 @@
             var role_ids = $("#role_id").val();
             var addRoles = [];
             var delRoles = [];
-            var role_ids_str = role_ids?role_ids.toString():"";
-            var oldRoles_str = oldRoles?oldRoles.toString():"";
+            var role_ids_str = role_ids.toString();
+            var oldRoles_str = oldRoles.toString();
             for(var i in oldRoles){
                 if(role_ids_str.indexOf(oldRoles[i])==-1){
                     delRoles.push(oldRoles[i]);

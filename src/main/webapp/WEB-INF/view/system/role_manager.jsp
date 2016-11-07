@@ -25,24 +25,29 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>${title}</h5>
-                    <div class="ibox-tools">
-                        <button type="button" class="btn btn-w-m btn-success">修改密码</button>
-                    </div>
                 </div>
                 <div class="ibox-content">
-                    <form id="updateUser" class="form-horizontal m-t" onsubmit="return updateUser(this)">
-                        <input type="hidden" name="userId" value="${user.id}" />
+                    <form id="updatePermission" class="form-horizontal m-t" onsubmit="return updateUser(this)">
+                        <input type="hidden" name="roleId" value="${role.id}" />
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">昵称：</label>
+                            <label class="col-sm-3 control-label">名称：</label>
                             <div class="col-sm-8">
-                                <input name="nickname" value="${user.nickname}" type="text" class="form-control" required=""
+                                <input name="role_name" value="${role.name}" type="text" class="form-control" required=""
                                        aria-required="true">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">账号：</label>
+                            <label class="col-sm-3 control-label">类型：</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="${user.username}" disabled />
+
+                                <div class="radio">
+                                    <label>
+                                        <input value="0" <c:if test="${role.isSys==0}" >checked</c:if> name="isSys" type="radio">普通用户
+                                    </label>
+                                    <label>
+                                        <input value="1" <c:if test="${role.isSys==1}" >checked</c:if> name="isSys" type="radio">系统用户
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -51,30 +56,22 @@
 
                                 <div class="radio">
                                     <label>
-                                        <input value="0" <c:if test="${user.locked==0}" >checked</c:if> name="locked" type="radio">正常
+                                        <input value="0" <c:if test="${role.available==0}" >checked</c:if> name="available" type="radio">禁用
                                     </label>
                                     <label>
-                                        <input value="1" <c:if test="${user.locked==1}" >checked</c:if> name="locked" type="radio">锁定
+                                        <input value="1" <c:if test="${role.available==1}" >checked</c:if> name="available" type="radio">正常
                                     </label>
                                 </div>
-
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">角色：</label>
+                            <label class="col-sm-3 control-label">权限：</label>
                             <div class="col-sm-8">
-                                <select data-placeholder="为用户添加角色" id="role_id" style="width:100%;" multiple class="chosen-select-no-results" tabindex="11">
+                                <select data-placeholder="为角色添加权限" id="permission_id" style="width:100%;" multiple class="chosen-select-no-results" tabindex="11">
                                     <option value=""></option>
-                                    <optgroup label="系统角色">
-                                        <c:forEach var="role" items="${sysRoles}">
-                                            <option value="${role.role_id}" <c:if test="${role.isIn==true}">selected</c:if> >${role.role_name}</option>
-                                        </c:forEach>
-                                    </optgroup>
-                                    <optgroup label="普通角色">
-                                        <c:forEach var="role" items="${oRoles}">
-                                            <option value="${role.role_id}" <c:if test="${role.isIn==true}">selected</c:if> >${role.role_name}</option>
-                                        </c:forEach>
-                                    </optgroup>
+                                    <c:forEach var="permission" items="${permissions}">
+                                        <option value="${permission.permission_id}" <c:if test="${permission.isIn==true}">selected</c:if> >${permission.permission_name}:${permission.url}</option>
+                                    </c:forEach>
                                 </select>
                             </div>
                         </div>
@@ -94,41 +91,41 @@
 <script src="static/js/design/design.js" type="text/javascript"></script>
     <script type="text/javascript">
         initToast();
-        var oldRoles = [${oldRolesId}];
+        var oldPermissions = [${oldPermissions}];
         var config = {
-            '.chosen-select-no-results': {no_results_text: '没有可用角色'}
+            '.chosen-select-no-results': {no_results_text: '没有可用权限'}
         };
         for (var selector in config) {
             $(selector).chosen(config[selector]);
         }
 
         function updateUser(form) {
-            var role_ids = $("#role_id").val();
-            var addRoles = [];
-            var delRoles = [];
-            var role_ids_str = role_ids?role_ids.toString():"";
-            var oldRoles_str = oldRoles?oldRoles.toString():"";
-            for(var i in oldRoles){
-                if(role_ids_str.indexOf(oldRoles[i])==-1){
-                    delRoles.push(oldRoles[i]);
+            var permission_ids = $("#permission_id").val();
+            var addPermissions = [];
+            var delPermissions = [];
+            var role_ids_str = permission_ids?permission_ids.toString():"";
+            var oldRoles_str = oldPermissions?oldPermissions.toString():"";
+            for(var i in oldPermissions){
+                if(role_ids_str.indexOf(oldPermissions[i])==-1){
+                    delPermissions.push(oldPermissions[i]);
                 }
             }
-            for(i in role_ids){
-                if(oldRoles_str.indexOf(role_ids[i])==-1){
-                    addRoles.push(role_ids[i]);
+            for(i in permission_ids){
+                if(oldRoles_str.indexOf(permission_ids[i])==-1){
+                    addPermissions.push(permission_ids[i]);
                 }
             }
-            if($(form).find("input[name='delRoles']").length==0){
-                $(form).append("<input type='hidden' name='delRoles' value='"+delRoles+"' />");
-                $(form).append("<input type='hidden' name='addRoles' value='"+addRoles+"' />");
+            if($(form).find("input[name='delPermissions']").length==0){
+                $(form).append("<input type='hidden' name='delPermissions' value='"+delPermissions+"' />");
+                $(form).append("<input type='hidden' name='addPermissions' value='"+addPermissions+"' />");
             }
             $.ajax({
-                url:"<%=basePath%>system/user/update_user",
+                url:"<%=basePath%>system/role/update",
                 data:$(form).serialize(),
                 type:"post",
                 success:function (result) {
                     toastr["info"](result);
-                    oldRoles = role_ids;
+                    oldPermissions = permission_ids;
                 },
                 error:function () {
                     toastr["error"]("修改失败");

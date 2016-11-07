@@ -2,11 +2,10 @@ package com.fym.entity;
 
 public class Permission {
     private Integer id;
-    private String name;
-
-    public Permission() {
-        super();
-    }
+    private String permissionName;
+    private String type;
+    private String url;
+    private char available;
 
     @Override
     public int hashCode() {
@@ -41,11 +40,35 @@ public class Permission {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getPermissionName() {
+        return permissionName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPermissionName(String permissionName) {
+        this.permissionName = permissionName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public char getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(char available) {
+        this.available = available;
     }
 }

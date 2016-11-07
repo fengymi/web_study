@@ -83,12 +83,40 @@
                     editable: true
                 },
                 {
+                    label:'角色类型',
+                    name: 'is_sys',
+                    index: 'is_sys',
+                    align: 'center',
+                    editrules:{required:true,number:true},
+                    formatter: function (cellvalue, options, rowObject) {
+                        var label_class = "label-info";
+                        var label_text = "普通角色";
+                        if(rowObject.is_sys==1){
+                            label_class = "label-danger";
+                            label_text = "系统角色";
+                        }
+                        return '<span class="label '+label_class+'">'+label_text+'</span>';
+                    },
+                    edittype:'select',
+                    editoptions:{value:"1:系统角色;0:普通角色"},
+                    editable: true
+                },
+                {
                     label:'状态',
                     name: 'available',
                     index: 'available',
                     align: 'center',
+                    formatter: function (cellvalue, options, rowObject) {
+                        var label_class = "label-info";
+                        var label_text = "正常";
+                        if(rowObject.available==0){
+                            label_class = "label-danger";
+                            label_text = "禁用";
+                        }
+                        return '<span class="label '+label_class+'">'+label_text+'</span>';
+                    },
                     edittype:'select',
-                    editoptions:{value:"1:可用;2:不可用"},
+                    editoptions:{value:"1:正常;0:禁用"},
                     editable: true
                 },
                 {
@@ -97,7 +125,10 @@
                     sortable: false,
                     editable: false,
                     formatter: function (cellvalue, options, rowObject) {
-                        return '<a class="J_menuItem" href="system/user/list?role_id='+rowObject.role_id+'">查看用户</a>';
+                        var oper = '<a title="查看用户" class="J_menuItem" href="system/user/list?is_sys='+rowObject.is_sys+'&role_id='+rowObject.role_id+'"><i class="fa fa-users"></i></a>&nbsp;&nbsp;';
+                        oper += '<a title="分配权限" class="J_menuItem" href="system/role/manager?role_id='+rowObject.role_id+'"><i class="fa fa-key"></i></a>';
+
+                        return oper;
                     }
                 }
             ]

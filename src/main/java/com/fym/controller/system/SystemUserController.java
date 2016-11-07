@@ -6,12 +6,12 @@ import com.fym.entity.Role;
 import com.fym.entity.User;
 import com.fym.entity.utils.PageEntity;
 import com.fym.entity.utils.UserManager;
+import com.fym.service.system.SystemRoleService;
 import com.fym.service.system.SystemUserService;
+import com.fym.utils.component.OperObject;
 import com.fym.utils.data.HashPageData;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,12 +28,15 @@ public class SystemUserController extends BaseController{
 
     @Resource
     private SystemUserService systemUserService;
+    @Resource
+    private SystemRoleService systemRoleService;
 
     @RequestMapping("/list")
     public ModelAndView list(){
         ModelAndView mv = new ModelAndView("system/sys_user");
         mv.addObject("title","系统用户管理");
         mv.addObject("role_id",getRequest().getParameter("role_id"));
+        mv.addObject("is_sys","0".equals(getRequest().getParameter("is_sys"))?0:1);
         return mv;
     }
     @RequestMapping("/list_common")
@@ -55,7 +58,7 @@ public class SystemUserController extends BaseController{
         String oldRolesId = "";//记录原来有的角色id
         Iterator<Role> userRole = null;
 
-        List<HashPageData> roles = systemUserService.getSystemRole(null);
+        List<HashPageData> roles = systemRoleService.getSystemRole(new PageEntity().setExtend("available",1).setNotPage(true));
         Set<HashPageData> sysRoles = new HashSet<>();
         Set<HashPageData> oRoles = new HashSet<>();
         for (HashPageData role : roles) {//区分系统角色和普通角色
@@ -90,7 +93,6 @@ public class SystemUserController extends BaseController{
     @RequestMapping(value = "/update_user",produces="application/text;charset=UTF-8")
     @ResponseBody
     public Object updateUser(UserManager userManager){
-        System.out.println(JSON.toJSONString(userManager));
         systemUserService.updateUser(userManager);
         return "修改成功";
     }
@@ -109,7 +111,7 @@ public class SystemUserController extends BaseController{
     @RequestMapping("/edit_data")
     @ResponseBody
     public Object edit(){
-        //serverService.editServers(getOper(), Constant.OPER_MACHINE_USER);
+        systemUserService.editUsers(getOper(), OperObject.OPER_SYSTEM_USER);
         return true;
     }
 

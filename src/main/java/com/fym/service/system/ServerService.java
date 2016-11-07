@@ -6,7 +6,7 @@ import com.fym.dao.system.MachineUserDao;
 import com.fym.dao.system.ServerDao;
 import com.fym.entity.utils.OperEntity;
 import com.fym.entity.utils.PageEntity;
-import com.fym.utils.config.Constant;
+import com.fym.utils.component.OperObject;
 import com.fym.utils.data.HashPageData;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -26,6 +26,8 @@ public class ServerService {
     private MachineDao machineDao;
     @Resource
     private ServerDao serverDao;
+    @Resource
+    private OperObject operObject;
 
 
     public PageInfo getMachineUsers(PageEntity page){
@@ -80,31 +82,6 @@ public class ServerService {
      * @param operType 操作类型
      */
     public void editServers(OperEntity oper,int operType){
-        BaseOper operDao;
-        switch (operType){
-            case Constant.OPER_SERVER:
-                operDao = serverDao;
-                break;
-            case Constant.OPER_MACHINE:
-                operDao = machineDao;
-                break;
-            case Constant.OPER_MACHINE_USER:
-                operDao = machineUserDao;
-                break;
-            default:
-                operDao = serverDao;
-                break;
-        }
-        switch (oper.getOper()){
-            case "del":
-                operDao.delete(oper.getData());
-                break;
-            case "edit":
-                operDao.update(oper.getData());
-                break;
-            case "add":
-                operDao.add(oper.getData());
-                break;
-        }
+        operObject.editObject(oper,operType);
     }
 }

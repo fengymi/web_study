@@ -13,6 +13,14 @@
     <mvc:annotation-driven/>
     <mvc:resources location="/static/" mapping="/static/**/**"/>
 
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.fym.interceptor.GlobalInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <!--允许返回json-->
     <bean id="mappingJacksonHttpMessageConverter"
           class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">

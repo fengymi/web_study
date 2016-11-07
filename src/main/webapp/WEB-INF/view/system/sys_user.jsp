@@ -58,12 +58,8 @@
 
 <script>
     $(document).ready(function () {
-
-        $.jgrid.defaults.styleUI = 'Bootstrap';
-
-        // Configuration for jqGrid Example 2
-        $("#table_data").jqGrid(getJqGirdInit({
-            url : '<%=basePath%>system/user/get_data?role_id=${role_id}',
+        initGrid({
+            url : '<%=basePath%>system/user/get_data?is_sys=${is_sys}&role_id=${role_id}',
             editurl:"<%=basePath%>system/user/edit_data",
             sortname:"user_id",
             colModel: [
@@ -115,24 +111,12 @@
                     formatter: function (cellvalue, options, rowObject) {
                         var id = rowObject.user_id;
                         var con =   '<a class="J_menuItem" href="system/user/manager?user_id='+id+'">' +
-                                    '   用户管理'+
-                                    '</a>';
+                                '   用户管理'+
+                                '</a>';
                         return con;
                     }
                 }
             ]
-        }));
-
-        $("#table_data").jqGrid('navGrid', '#pager_list', {
-            edit: true,
-            add: true,
-            del: true
-        }, {
-            reloadAfterSubmit: true
-        });
-        $(window).bind('resize', function () {
-            var width = $('.jqGrid_wrapper').width();
-            $('#table_data').setGridWidth(width);
         });
     });
 </script>

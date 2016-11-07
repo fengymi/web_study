@@ -40,7 +40,7 @@ public class UserRealm extends AuthorizingRealm {
         while(it.hasNext()){
             roles.add(it.next().getName());
             for(Permission per:it.next().getPermissionSet()){
-                permissions.add(per.getName());
+                permissions.add(per.getPermissionName());
             }
         }
 

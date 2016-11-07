@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SystemPermissionDao extends BaseOper {
 
-    List<HashPageData> getAllPermission(PageEntity page);
+    List<HashPageData> getAllPermissions(PageEntity page);
 
     int add(HashPageData data);
     void delete(HashPageData data);

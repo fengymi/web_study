@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fym.dao.system.SystemPermissionDao">
+
+    <insert id="add" parameterType="hash">
+        INSERT INTO `sys_permission`(permission_name,p_available,url) VALUES (#{permission_name},#{available},#{url})
+    </insert>
+    <delete id="delete" parameterType="hash">
+        DELETE FROM `sys_permission` WHERE permission_id in (#{id})
+    </delete>
+    <update id="update" parameterType="hash">
+        UPDATE `sys_permission` SET permission_name=#{permission_name},p_available=#{available},url=#{url} WHERE permission_id=#{id}
+    </update>
+
+    <select id="getAllPermissions" resultType="hash">
+        SELECT p.* FROM `sys_permission` p
+        LEFT JOIN `sys_role_permission` rp
+        ON
+        p.permission_id=rp.permission_id
+        WHERE 1=1
+        <if test="extend.role_id!=null and extend.role_id>0">
+            AND rp.role_id=#{extend.role_id}
+        </if>
+        <if test="extend.available!=null and extend.available!=''">
+            AND p.p_available=#{extend.available}
+        </if>
+        GROUP BY p.permission_id
+        <if test="sidx!=null and sidx!=''">
+            ORDER BY p.${sidx} ${order}
+        </if>
+    </select>
+</mapper>

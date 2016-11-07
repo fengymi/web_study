@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fym.dao.system.SystemRolePermissionDao">
+
+    <insert id="addPermissions" parameterType="com.fym.entity.utils.RoleManager">
+        INSERT INTO `sys_role_permission`(permission_id,role_id) VALUES
+        <foreach collection="addPermissions" item="permissionId" index="index" separator="," >
+            (#{permissionId},#{roleId})
+        </foreach>
+    </insert>
+
+    <delete id="delPermissions" parameterType="com.fym.entity.utils.RoleManager">
+        DELETE FROM sys_role_permission WHERE role_id=#{roleId} AND permission_id in (#{delPermissionsStr})
+    </delete>
+
+</mapper>

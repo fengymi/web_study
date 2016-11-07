@@ -1,8 +1,25 @@
 /**
  * jqGrid 初始化
- * @param data
+ * @param girdData
+ * @param colModel
  * @returns {{jsonReader: {root: string, page: string, total: string, records: string}, prmNames: {rows: string, page: string, order: string, sort: string, _search: null, nd: null}, height: string, emptyrecords: string, add: boolean, edit: boolean, viewrecords: boolean, addtext: string, edittext: string, pager: string, datatype: string, autowidth: boolean, shrinkToFit: boolean, rowNum: number, rowList: number[], hidegrid: boolean}}
  */
+function initGrid(girdData,colModel) {
+    var table_data = $("#table_data");
+    $.jgrid.defaults.styleUI = 'Bootstrap';
+    table_data.jqGrid(getJqGirdInit(girdData));
+    var defaultCol = getJqGirdColModel(colModel);
+    table_data.jqGrid('navGrid', '#pager_list', {
+        edit: true,
+        add: true,
+        del: true
+    }, defaultCol[0],defaultCol[1]);
+
+    $(window).bind('resize', function () {
+        var width = $('.jqGrid_wrapper').width();
+        $('#table_data').setGridWidth(width);
+    });
+}
 function getJqGirdInit(data) {
     var girdData = {
         jsonReader : {              //后台返回数据格式
@@ -39,6 +56,27 @@ function getJqGirdInit(data) {
     }
     return girdData;
 }
+function getJqGirdColModel(colModel) {
+    var defaultEdit = {
+        reloadAfterSubmit: true,
+        closeAfterEdit: true,
+        closeOnEscape: true,
+        modal:true
+    };
+    var defaultAdd = {
+        reloadAfterSubmit: true,
+        closeAfterEdit: true,
+        closeOnEscape: true,
+        modal:true
+    };
+    if(colModel){
+        for(var i in colModel){
+            defaultEdit[i] = colModel[i];
+            defaultAdd[i] = colModel[i];
+        }
+    }
+    return [defaultEdit,defaultAdd];
+}
 
 /**
  * 下拉框格式化
@@ -68,12 +106,12 @@ function initToast(data) {
     toastr.options = {
         "closeButton": true,
         "debug": true,
-        "progressBar": true,
+        "progressBar": false,//进度条
         "positionClass": "toast-top-center",
         "onclick": null,
         "showDuration": "400",
         "hideDuration": "1000",
-        "timeOut": "3000",
+        "timeOut": "1000",
         "extendedTimeOut": "1000",
         "showEasing": "swing",
         "hideEasing": "linear",

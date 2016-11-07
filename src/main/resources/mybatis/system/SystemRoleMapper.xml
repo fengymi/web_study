@@ -3,7 +3,7 @@
 <mapper namespace="com.fym.dao.system.SystemRoleDao">
 
     <insert id="add" parameterType="hash">
-        INSERT INTO `sys_role`(role_name,available,is_sys) VALUES (#{role_name},#{available},#{is_sys},#{locked})
+        INSERT INTO `sys_role`(role_name,available,is_sys) VALUES (#{role_name},#{available},#{is_sys})
     </insert>
     <delete id="delete" parameterType="hash">
         DELETE FROM `sys_role` WHERE role_id in (#{id})
@@ -12,10 +12,42 @@
         UPDATE `sys_role` SET role_name=#{role_name},available=#{available},is_sys=#{is_sys} WHERE role_id=#{id}
     </update>
 
+    <select id="getRole" resultMap="roleMap">
+        SELECT r.*,p.* FROM `sys_role` r
+        LEFT JOIN
+          (
+            SELECT p.*,rp.role_id r_id FROM `sys_permission` p,`sys_role_permission` rp
+            WHERE p.permission_id=rp.permission_id
+          ) p
+        ON
+          r.role_id=p.r_id
+        WHERE r.role_id = #{0}
+
+    </select>
+
     <select id="getAllRoles" resultType="hash">
         SELECT * FROM `sys_role`
+        <if test="extend.available!=null and extend.available!=''">
+            WHERE available=#{extend.available}
+        </if>
         <if test="sidx!=null and sidx!=''">
             ORDER BY ${sidx} ${order}
         </if>
     </select>
+
+    <resultMap id="roleMap" type="com.fym.entity.Role">
+        <id property="id" column="ROLE_ID"/>
+        <result property="name" column="ROLE_NAME"/>
+        <result property="isSys" column="is_sys"/>
+        <result property="available" column="available"/>
+        <!-- 再在role中关联role和permission -->
+        <collection property="permissionSet" column="permission_id" ofType="com.fym.entity.Permission">
+            <id property="id" column="permission_id"/>
+            <result property="permissionName" column="permission_name"/>
+            <result property="type" column="type"/>
+            <result property="url" column="url"/>
+            <result property="available" column="p_available"/>
+        </collection>
+    </resultMap>
+
 </mapper>

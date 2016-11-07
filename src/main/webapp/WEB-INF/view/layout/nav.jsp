@@ -56,7 +56,7 @@
                     <li><a class="J_menuItem" href="system/user/list">系统用户</a></li>
                     <li><a class="J_menuItem" href="system/user/list_common">一般用户</a></li>
                     <li><a class="J_menuItem" href="system/role/list">角色管理</a></li>
-                    <li><a class="J_menuItem" href="static/admin/mail_compose.html">权限管理</a></li>
+                    <li><a class="J_menuItem" href="system/permission/list">权限管理</a></li>
                 </ul>
             </li>
             <li>

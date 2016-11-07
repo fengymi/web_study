@@ -12,8 +12,19 @@ public class PageEntity {
     private String sidx;
     //排序方式
     private String order;
+    //不分页
+    private boolean notPage;
 
     private HashPageData extend = new HashPageData();
+
+    public boolean isNotPage() {
+        return notPage;
+    }
+
+    public PageEntity setNotPage(boolean notPage) {
+        this.notPage = notPage;
+        return this;
+    }
 
     public int getPageNum() {
         return pageNum;

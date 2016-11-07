@@ -16,13 +16,16 @@
             <!-- 再在role中关联role和permission -->
             <collection property="permissionSet" column="permission_id" ofType="com.fym.entity.Permission">
                 <id property="id" column="permission_id"/>
-                <result property="name" column="permission_name"/>
+                <result property="permissionName" column="permission_name"/>
+                <result property="type" column="type"/>
+                <result property="url" column="url"/>
+                <result property="available" column="p_available"/>
             </collection>
         </collection>
     </resultMap>
 
     <insert id="add" parameterType="hash">
-        INSERT INTO `sys_user`(nickname,username,password,locked) VALUES (#{nickname},#{username},#{password},#{locked})
+        INSERT INTO `sys_user`(nickname,username,locked) VALUES (#{nickname},#{username},#{locked})
     </insert>
     <delete id="delete" parameterType="hash">
         DELETE FROM `sys_user` WHERE user_id in (#{id})

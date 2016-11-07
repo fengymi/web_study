@@ -58,16 +58,11 @@
 
 <script>
     $(document).ready(function () {
-
-        $.jgrid.defaults.styleUI = 'Bootstrap';
-
-        // Configuration for jqGrid Example 2
-        $("#table_data").jqGrid(getJqGirdInit({
+        initGrid({
             url : '<%=basePath%>system/machine_user/get_data?machine_id=${machine_id}',
             editurl:"<%=basePath%>system/machine_user/edit_data",
             sortname:"mu_id",
             caption: "${title}",
-//            colNames: ['虚拟机id','主机', '名称', '端口'],
             colModel: [
                 {
                     label:"账号id",
@@ -118,39 +113,28 @@
                     editrules:{required:true},
                     editable: true,
                     edittype:'select',
-                    editoptions:{value:"1:可用;-1:禁用"},
+                    editoptions:{value:"1:可用;2:禁用"},
                     formatter: function (cellvalue, options, rowObject) {
-                        var value;
+                        var label_class;
+                        var label_text;
                         switch (cellvalue){
                             case "1":
-                                value = "可用";
+                                label_class = "label-info";
+                                label_text = "可用";
                                 break;
                             case "0":
-                                value = "使用中";
+                                label_class = "label-warning";
+                                label_text = "使用中";
                                 break;
                             default :
-                                value = "异常";
+                                label_class = "label-danger";
+                                label_text = "异常";
                                 break;
                         }
-                        return value;
+                        return '<span class="label '+label_class+'">'+label_text+'</span>';;
                     }
                 }
             ]
-        }));
-
-        $("#table_data").jqGrid('navGrid', '#pager_list', {
-            edit: true,
-            add: true,
-            del: true,
-            search: true
-        }, {
-            boolean:true,
-            closeAfterEdit:true,
-            reloadAfterSubmit: true
-        });
-        $(window).bind('resize', function () {
-            var width = $('.jqGrid_wrapper').width();
-            $('#table_data').setGridWidth(width);
         });
     });
 </script>

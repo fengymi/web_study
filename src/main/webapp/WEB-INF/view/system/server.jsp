@@ -58,16 +58,11 @@
 
 <script>
     $(document).ready(function () {
-
-        $.jgrid.defaults.styleUI = 'Bootstrap';
-
-        // Configuration for jqGrid Example 2
-        $("#table_data").jqGrid(getJqGirdInit({
+        initGrid({
             url : '<%=basePath%>system/server/get_data',
             editurl:"<%=basePath%>system/server/edit_data",
             sortname:"server_id",
             caption: "${title}",
-//            colNames: ['服务器id','主机', '名称', '端口','操作'],
             colModel: [
                 {
                     label:"服务器id",
@@ -109,18 +104,6 @@
                     }
                 }
             ]
-        }));
-
-        $("#table_data").jqGrid('navGrid', '#pager_list', {
-            edit: true,
-            add: true,
-            del: true
-        }, {
-            reloadAfterSubmit: true
-        });
-        $(window).bind('resize', function () {
-            var width = $('.jqGrid_wrapper').width();
-            $('#table_data').setGridWidth(width);
         });
     });
 </script>

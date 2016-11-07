@@ -59,48 +59,48 @@
 <script>
     $(document).ready(function () {
         initGrid({
-            url : '<%=basePath%>system/user/get_data?is_sys=0&role_id=${role_id}',
-            editurl:"<%=basePath%>system/user/edit_data",
-            sortname:"user_id",
+            url : '<%=basePath%>system/permission/get_data?available=${available}&role_id=${role_id}',
+            editurl:"<%=basePath%>system/permission/edit_data",
+            sortname:"permission_id",
             colModel: [
                 {
-                    label:"用户id",
-                    name: 'user_id',
-                    index: 'user_id',
+                    label:"权限id",
+                    name: 'permission_id',
+                    index: 'permission_id',
                     editable: false,
                     align: 'center',
                     key:true
                 },
                 {
-                    label:'用户',
-                    name: 'nickname',
-                    index: 'nickname',
+                    label:'权限名称',
+                    name: 'permission_name',
+                    index: 'permission_name',
                     align: 'center',
                     editable: true
                 },
                 {
-                    label:'用户名',
-                    name: 'username',
-                    index: 'username',
+                    label:'地址',
+                    name: 'url',
+                    index: 'url',
                     align: 'center',
                     editable: true
                 },
                 {
                     label:'状态',
-                    name: 'locked',
-                    index: 'locked',
+                    name: 'available',
+                    index: 'available',
                     align: 'center',
                     formatter: function (cellvalue, options, rowObject) {
                         var label_class = "label-info";
                         var label_text = "正常";
                         if(rowObject.locked==1){
                             label_class = "label-danger";
-                            label_text = "锁定";
+                            label_text = "禁用";
                         }
                         return '<span class="label '+label_class+'">'+label_text+'</span>';
                     },
                     edittype:'select',
-                    editoptions:{value:"0:正常;1:锁定"},
+                    editoptions:{value:"0:正常;1:禁用"},
                     editable: true
                 },
                 {
@@ -109,16 +109,15 @@
                     sortable: false,
                     editable: false,
                     formatter: function (cellvalue, options, rowObject) {
-                        var id = rowObject.user_id;
-                        var con =   '<a class="J_menuItem" href="system/user/manager?user_id='+id+'">' +
-                                '   用户管理'+
-                                '</a>';
+                        var id = rowObject.permission_id;
+                        var con ='  <a class="J_menuItem" href="system/permission/manager?user_id='+id+'">' +
+                                '       <i class="fa fa-user-secret"></i>'+
+                                '   </a>';
                         return con;
                     }
                 }
             ]
         });
-
     });
 </script>
 
