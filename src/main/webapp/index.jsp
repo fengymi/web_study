@@ -32,10 +32,16 @@ display.appendChild(guac.getDisplay().getElement());
 guac.onerror = function (error) {
     alert(error);
 };
+var data = {
+    "11":"aa",
+    "22":"bb",
+    "33":"cc"
+};
+
 try{
 
 // Connect
-guac.connect();
+guac.connect("11=22&bb=11");
 }catch (error){
     console.log("11:connection error");
     console.log("12:"+error);

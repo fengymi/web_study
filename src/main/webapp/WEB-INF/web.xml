@@ -79,8 +79,11 @@
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
     <!--spring监听器-->
+    <!--<listener>-->
+        <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+    <!--</listener>-->
     <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+        <listener-class>com.fym.context.DesignContextLoaderListener</listener-class>
     </listener>
 
     <session-config>

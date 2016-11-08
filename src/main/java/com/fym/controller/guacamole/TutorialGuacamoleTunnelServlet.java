@@ -27,9 +27,12 @@ public class TutorialGuacamoleTunnelServlet
         System.out.println("start");
         // Create our configuration
         GuacamoleConfiguration config = new GuacamoleConfiguration();
-        //tencent
         System.out.println(JSON.toJSONString(new HashPageData(request)));
 
+        System.out.println(request.getParameter("data"));
+        System.out.println(request.getParameter("aa"));
+        System.out.println(request.getQueryString());
+        //tencent
         config.setProtocol("ssh");
         config.setParameter("hostname", "115.159.55.209");
         config.setParameter("port", "22");
