@@ -3,13 +3,13 @@
 <mapper namespace="com.fym.dao.system.MachineDao">
 
     <insert id="add" parameterType="hash">
-        INSERT INTO `machine`(host,name,port) VALUES (#{host},#{name},#{port})
+        INSERT INTO `machine`(host,name,port,protocol,system) VALUES (#{host},#{name},#{port},#{protocol},#{system})
     </insert>
     <delete id="delete" parameterType="hash">
         DELETE FROM `machine` WHERE machine_id in (#{id})
     </delete>
     <update id="update" parameterType="hash">
-        UPDATE `machine` SET host=#{host},name=#{name},port=#{port} WHERE machine_id=#{id}
+        UPDATE `machine` SET host=#{host},name=#{name},port=#{port},protocol=#{protocol},system=#{system} WHERE machine_id=#{id}
     </update>
 
     <select id="getAllMachines" resultType="hash">

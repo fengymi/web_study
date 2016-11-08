@@ -1,5 +1,7 @@
 package com.fym.entity.utils;
 
+import com.fym.utils.component.CalcTools;
+
 public class UserManager {
     private int userId;
     private String nickname;
@@ -42,15 +44,7 @@ public class UserManager {
 
     public void setDelRoles(int[] delRoles) {
         this.delRoles = delRoles;
-        if(this.delRoles==null) return;
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < delRoles.length; i++) {
-            stringBuilder.append(delRoles[i]);
-            if(i<delRoles.length-1){
-                stringBuilder.append(",");
-            }
-        }
-        this.delRolesStr = stringBuilder.toString();
+        this.delRolesStr = CalcTools.arrayToString(delRoles,",");
     }
 
     public int[] getAddRoles() {

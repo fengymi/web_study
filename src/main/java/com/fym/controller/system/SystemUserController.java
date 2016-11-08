@@ -8,6 +8,7 @@ import com.fym.entity.utils.PageEntity;
 import com.fym.entity.utils.UserManager;
 import com.fym.service.system.SystemRoleService;
 import com.fym.service.system.SystemUserService;
+import com.fym.utils.component.CalcTools;
 import com.fym.utils.component.OperObject;
 import com.fym.utils.data.HashPageData;
 import com.github.pagehelper.PageInfo;
@@ -66,15 +67,7 @@ public class SystemUserController extends BaseController{
             if (user.getRoleSet()!=null&&user.getRoleSet().size()>0){
                 userRole = user.getRoleSet().iterator();
             }
-            while (userRole!=null&&userRole.hasNext()){
-                Role uRole = userRole.next();
-                if(uRole.getId().equals(Integer.parseInt(role.get("role_id").toString()))){
-                    role.put("isIn",true);
-                    oldRolesId += uRole.getId()+",";
-                    userRole.remove();
-                    break;
-                }
-            }
+            oldRolesId += CalcTools.getSelectedIds(userRole,role);
             if("1".equals(role.get("is_sys"))){
                 sysRoles.add(role);
             }else {

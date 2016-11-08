@@ -8,9 +8,18 @@
             (#{permissionId},#{roleId})
         </foreach>
     </insert>
+    <insert id="addRoles" parameterType="com.fym.entity.utils.PermissionManager">
+        INSERT INTO `sys_role_permission`(permission_id,role_id) VALUES
+        <foreach collection="addRoles" item="roleId" index="index" separator="," >
+            (#{permissionId},#{roleId})
+        </foreach>
+    </insert>
 
     <delete id="delPermissions" parameterType="com.fym.entity.utils.RoleManager">
         DELETE FROM sys_role_permission WHERE role_id=#{roleId} AND permission_id in (#{delPermissionsStr})
+    </delete>
+    <delete id="delRoles" parameterType="com.fym.entity.utils.PermissionManager">
+        DELETE FROM sys_role_permission WHERE permission_id=#{permissionId} AND role_id in (#{delRolesStr})
     </delete>
 
 </mapper>

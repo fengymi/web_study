@@ -88,10 +88,47 @@
                     editable: true
                 },
                 {
+                    label:'连接协议',
+                    name: 'protocol',
+                    index: 'protocol',
+                    align: 'center',
+                    edittype:'select',
+                    editoptions:{value:"SSH:SSH;VNC:VNC;RDP:RDP;TELNET:TELNET"},
+                    editable: true
+                },
+                {
                     label:'端口',
                     name: 'port',
                     index: 'port',
                     align: 'center',
+                    editable: true
+                },
+                {
+                    label:'操作系统',
+                    name: 'system',
+                    index: 'system',
+                    align: 'center',
+                    edittype:'select',
+                    editoptions:{value:"1:linux;2:windows;3:mac"},
+                    formatter: function (cellvalue, options, rowObject) {
+                        var label_class;
+                        var label_text;
+                        switch (cellvalue){
+                            case "3":
+                                label_class = "label-success";
+                                label_text = "mac";
+                                break;
+                            case "2":
+                                label_class = "label-primary";
+                                label_text = "windows";
+                                break;
+                            default :
+                                label_class = "label-info";
+                                label_text = "linux";
+                                break;
+                        }
+                        return '<span class="label '+label_class+'">'+label_text+'</span>';;
+                    },
                     editable: true
                 },
                 {

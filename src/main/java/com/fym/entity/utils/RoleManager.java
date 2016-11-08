@@ -1,5 +1,7 @@
 package com.fym.entity.utils;
 
+import com.fym.utils.component.CalcTools;
+
 public class RoleManager {
     private int roleId;
     private String role_name;
@@ -52,16 +54,7 @@ public class RoleManager {
 
     public void setDelPermissions(int[] delPermissions) {
         this.delPermissions = delPermissions;
-        if(this.delPermissions==null) return;
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < delPermissions.length; i++) {
-            stringBuilder.append(delPermissions[i]);
-            if(i<delPermissions.length-1){
-                stringBuilder.append(",");
-            }
-        }
-        this.delPermissionsStr = stringBuilder.toString();
+        this.delPermissionsStr = CalcTools.arrayToString(delPermissions,",");
     }
 
     public int[] getAddPermissions() {

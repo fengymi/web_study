@@ -55,8 +55,8 @@ public class RoleController extends BaseController{
                 Permission p = userPermission.next();
                 if(p.getId().equals(Integer.parseInt(permission.get("permission_id").toString()))){
                     permission.put("isIn",true);
-                    userPermission.remove();
                     oldPermissions += p.getId()+",";
+                    userPermission.remove();
                     break;
                 }
             }
@@ -74,8 +74,6 @@ public class RoleController extends BaseController{
     @RequestMapping(value = "/update",produces="application/text;charset=UTF-8")
     @ResponseBody
     public Object update(RoleManager roleManager){
-        System.out.println(JSON.toJSONString(roleManager));
-        System.out.println(roleManager.getDelPermissionsStr());
         systemRoleService.update(roleManager);
         return "修改成功";
     }

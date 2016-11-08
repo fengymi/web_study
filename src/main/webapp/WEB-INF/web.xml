@@ -19,18 +19,18 @@
         <param-value>classpath:config/log4j.properties</param-value>
     </context-param>
 
-    <servlet>
-        <description>Tunnel servlet.</description>
-        <servlet-name>tunnel</servlet-name>
-        <servlet-class>
-            com.fym.controller.guacamole.TutorialGuacamoleTunnelServlet
-        </servlet-class>
-    </servlet>
+    <!--<servlet>-->
+        <!--<description>Tunnel servlet.</description>-->
+        <!--<servlet-name>tunnel</servlet-name>-->
+        <!--<servlet-class>-->
+            <!--com.fym.controller.guacamole.TutorialGuacamoleTunnelServlet-->
+        <!--</servlet-class>-->
+    <!--</servlet>-->
 
-    <servlet-mapping>
-        <servlet-name>tunnel</servlet-name>
-        <url-pattern>/tunnel</url-pattern>
-    </servlet-mapping>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>tunnel</servlet-name>-->
+        <!--<url-pattern>/tunnel</url-pattern>-->
+    <!--</servlet-mapping>-->
 
     <!--&lt;!&ndash;shiro配置&ndash;&gt;-->
     <!--<filter>-->

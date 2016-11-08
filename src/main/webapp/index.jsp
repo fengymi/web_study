@@ -1,11 +1,19 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
+<head>
+    <meta charset="utf-8">
+</head>
 <body>
+
 
 <!-- Guacamole -->
 <script type="text/javascript"
-        src="static/js/all.min.js"></script>
+        src="static/js/guacamole/guacamole_all.js"></script>
+<script type="text/javascript"
+        src="static/js/guacamole/guacamole_manager.js"></script>
 
-hello
+<button onclick="disConnection()">断开连接</button>
 <!-- Display -->
 <div id="display"></div>
 
@@ -17,25 +25,29 @@ hello
 var display = document.getElementById("display");
 
 // Instantiate client, using an HTTP tunnel for communications.
-var guac = new Guacamole.Client(
-        new Guacamole.HTTPTunnel("tunnel")
-);
+var guac = GuacamoleManager.init("tunnel");
 
-// Add client to display div
 display.appendChild(guac.getDisplay().getElement());
 
-// Error handler
 guac.onerror = function (error) {
     alert(error);
 };
+try{
 
 // Connect
 guac.connect();
+}catch (error){
+    console.log("11:connection error");
+    console.log("12:"+error);
+}
+function disConnection() {
+    guac.disconnect();
+}
 
 // Disconnect on close
 window.onunload = function () {
-    guac.disconnect();
-}
+    disConnection();
+};
 
 /* ]]> */ </script>
 

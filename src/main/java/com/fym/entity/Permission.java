@@ -5,7 +5,7 @@ public class Permission {
     private String permissionName;
     private String type;
     private String url;
-    private char available;
+    private String available;
 
     @Override
     public int hashCode() {
@@ -64,11 +64,11 @@ public class Permission {
         this.url = url;
     }
 
-    public char getAvailable() {
+    public String  getAvailable() {
         return available;
     }
 
-    public void setAvailable(char available) {
+    public void setAvailable(String available) {
         this.available = available;
     }
 }
