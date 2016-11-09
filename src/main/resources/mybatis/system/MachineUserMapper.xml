@@ -12,6 +12,10 @@
         UPDATE `machine_user` SET machine_id=#{machine_id},username=#{username},password=#{password},status=#{status} WHERE mu_id=#{id}
     </update>
 
+    <update id="updateUse">
+        UPDATE `machine_user` SET status=#{1} WHERE mu_id=#{0}
+    </update>
+
     <select id="getAllMachineUsers" resultType="hash">
         SELECT * FROM `machine_user`
         <if test="extend.machine_id!=null and extend.machine_id>0">
@@ -20,5 +24,20 @@
         <if test="sidx!=null and sidx!=''">
             ORDER BY ${sidx} ${order}
         </if>
+    </select>
+
+    <select id="getOneUser" resultType="hash">
+        SELECT mu.*,m.host,m.protocol,m.port,m.name FROM `machine_user` mu,`machine` m
+        WHERE
+        mu.machine_id=m.machine_id
+        and mu.status=1
+        <if test="machine_id!=null and machine_id!=''">
+            AND mu.machine_id=#{machine_id}
+        </if>
+        <if test="username!=null and username!=''">
+            AND mu.username=#{username}
+        </if>
+        limit 1
+
     </select>
 </mapper>

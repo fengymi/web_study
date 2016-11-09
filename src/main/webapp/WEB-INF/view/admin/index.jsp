@@ -31,7 +31,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title" style="border-bottom:none;background:#fff;">
-                    <h5>服务器状态</h5>
+                    <h5>服务器状态&nbsp;<span id="num"></span></h5>
                 </div>
                 <div class="ibox-content" style="border-top:none;">
                     <div id="flot-line-chart-moving" style="height:217px;">
@@ -48,6 +48,13 @@
 <!--flotdemo-->
 <script type="text/javascript">
     $(function() {
+        $.ajax({
+            url:"<%=basePath%>index/get_user_num",
+            success:function (data) {
+                var con = "在线浏览人数:"+data.visitorNum+";在线用户:"+data.userNum+";连接数:"+data.connectionNum;
+                $("#num").text(con);
+            }
+        });
         var container = $("#flot-line-chart-moving");
         var maximum = container.outerWidth() / 2 || 300;
         var data = [];

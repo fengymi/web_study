@@ -18,5 +18,15 @@ public interface MachineUserDao extends BaseOper {
     @Override
     void update(HashPageData data);
 
+    /**
+     * 修改某个用户使用状态
+     * @param muId 虚拟机用户id
+     * @param status 状态
+     */
+    void updateUse(Object muId,int status);
+
     List<HashPageData> getAllMachineUsers(PageEntity page);
+
+    HashPageData getOneUser(HashPageData data);
+
 }

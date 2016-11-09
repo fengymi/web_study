@@ -6,6 +6,7 @@ import com.fym.dao.system.MachineUserDao;
 import com.fym.dao.system.ServerDao;
 import com.fym.entity.utils.OperEntity;
 import com.fym.entity.utils.PageEntity;
+import com.fym.utils.component.Constant;
 import com.fym.utils.component.OperObject;
 import com.fym.utils.data.HashPageData;
 import com.github.pagehelper.PageHelper;
@@ -28,7 +29,6 @@ public class ServerService {
     private ServerDao serverDao;
     @Resource
     private OperObject operObject;
-
 
     public PageInfo getMachineUsers(PageEntity page){
         List<HashPageData> machines = null;
@@ -83,5 +83,24 @@ public class ServerService {
      */
     public void editServers(OperEntity oper,int operType){
         operObject.editObject(oper,operType);
+    }
+
+    /**
+     * 修改虚拟机账号使用状态
+     */
+    public void changeUsed(Object muId,int status){
+        machineUserDao.updateUse(muId,status);
+    }
+
+    /**
+     * 获取可以连接的用户
+     * @return 虚拟机用户
+     */
+    public synchronized HashPageData getLoginInfo(HashPageData hashPageData){
+        HashPageData machineUser = machineUserDao.getOneUser(hashPageData);
+        if(machineUser!=null){
+            changeUsed(machineUser.get("mu_id"), Constant.MACHINE_USER_USED);
+        }
+        return machineUser;
     }
 }
