@@ -20,28 +20,28 @@ public class TutorialGuacamoleTunnelServlet
             throws GuacamoleException {
         TunnelRequestService service = SpringBeanGetter.getBean(TunnelRequestService.class);
         return service.createTunnel(new HashPageData(request));
-////        System.out.println("start");
-////        // Create our configuration
+//        System.out.println("start");
+//        // Create our configuration
 //        GuacamoleConfiguration config = new GuacamoleConfiguration();
-////        //tencent
+//        //tencent
 //        config.setProtocol("ssh");
 //        config.setParameter("hostname", "115.159.55.209");
 //        config.setParameter("port", "22");
 //        config.setParameter("username", "root");
 //        config.setParameter("password", "feng1234");
-////        //window7
-////        config.setParameter("hostname", "192.168.182.130");
-////        config.setProtocol("rdp");
-////        config.setParameter("port", "3389");
-////        config.setParameter("username", "fengymi");
-////        config.setParameter("password", "feng1234");
-////
-//////        config.setProtocol("vnc");
-//////        config.setParameter("port", "5900");
-//////        config.setParameter("username", "root");
-//////        config.setParameter("password", "feng1234");
-////
-////        // Connect to guacd - everything is hard-coded here.
+//        //window7
+//        config.setParameter("hostname", "192.168.182.130");
+//        config.setProtocol("rdp");
+//        config.setParameter("port", "3389");
+//        config.setParameter("username", "fengymi");
+//        config.setParameter("password", "feng1234");
+//
+//        config.setProtocol("vnc");
+//        config.setParameter("port", "5900");
+//        config.setParameter("username", "root");
+//        config.setParameter("password", "feng1234");
+//
+//        // Connect to guacd - everything is hard-coded here.
 //        GuacamoleSocket socket = null;
 //        socket = new ConfiguredGuacamoleSocket(
 //                new InetGuacamoleSocket("192.168.182.137", 4822),

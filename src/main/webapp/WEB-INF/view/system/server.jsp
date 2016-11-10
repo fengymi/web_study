@@ -32,6 +32,9 @@
             <div class="ibox ">
                 <div class="ibox-title">
                     <h5>${title}</h5>
+                    <div class="ibox-tools">
+                        <button onclick="proxyReset()" title="修改后需要重置才能生效,不会影响已连接用户" type="button" class="btn btn-w-m btn-success">重置服务器</button>
+                    </div>
                 </div>
                 <div class="ibox-content">
                     <div class="jqGrid_wrapper">
@@ -58,6 +61,7 @@
 
 <script>
     $(document).ready(function () {
+        initToast();
         initGrid({
             url : '<%=basePath%>system/server/get_data',
             editurl:"<%=basePath%>system/server/edit_data",
@@ -95,6 +99,30 @@
                     editable: true
                 },
                 {
+                    label:'状态',
+                    name: 's_status',
+                    index: 's_status',
+                    align: 'center',
+                    edittype:'select',
+                    editoptions:{value:"1:可用;0:禁用"},
+                    formatter: function (cellvalue, options, rowObject) {
+                        var label_class;
+                        var label_text;
+                        switch (cellvalue){
+                            case "0":
+                                label_class = "label-danger";
+                                label_text = "禁用";
+                                break;
+                            default :
+                                label_class = "label-info";
+                                label_text = "可用";
+                                break;
+                        }
+                        return '<span class="label '+label_class+'">'+label_text+'</span>';
+                    },
+                    editable: true
+                },
+                {
                     label:'操作',
                     align: 'center',
                     sortable: false,
@@ -106,6 +134,14 @@
             ]
         });
     });
+    function proxyReset() {
+        $.ajax({
+            url:"<%=basePath%>system/server/reset",
+            success:function () {
+                toastr["info"]("重置完成");
+            }
+        });
+    }
 </script>
 
 

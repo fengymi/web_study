@@ -127,7 +127,31 @@
                                 label_text = "linux";
                                 break;
                         }
-                        return '<span class="label '+label_class+'">'+label_text+'</span>';;
+                        return '<span class="label '+label_class+'">'+label_text+'</span>';
+                    },
+                    editable: true
+                },
+                {
+                    label:'状态',
+                    name: 'm_status',
+                    index: 'm_status',
+                    align: 'center',
+                    edittype:'select',
+                    editoptions:{value:"1:可用;0:禁用"},
+                    formatter: function (cellvalue, options, rowObject) {
+                        var label_class;
+                        var label_text;
+                        switch (cellvalue){
+                            case "0":
+                                label_class = "label-danger";
+                                label_text = "禁用";
+                                break;
+                            default :
+                                label_class = "label-info";
+                                label_text = "可用";
+                                break;
+                        }
+                        return '<span class="label '+label_class+'">'+label_text+'</span>';
                     },
                     editable: true
                 },

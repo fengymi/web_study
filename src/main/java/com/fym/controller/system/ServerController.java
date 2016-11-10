@@ -1,6 +1,7 @@
 package com.fym.controller.system;
 
 import com.alibaba.fastjson.JSON;
+import com.fym.context.ProxyServer;
 import com.fym.controller.BaseController;
 import com.fym.service.system.ServerService;
 import com.fym.utils.component.OperObject;
@@ -35,6 +36,17 @@ public class ServerController extends BaseController{
     @ResponseBody
     public Object edit(){
         serverService.editServers(getOper(), OperObject.OPER_SERVER);
+        return true;
+    }
+
+    /**
+     * 重置代理服务器
+     * @return 重置
+     */
+    @RequestMapping("/reset")
+    @ResponseBody
+    public Object reset(){
+        ProxyServer.getProxy().reset();
         return true;
     }
 

@@ -30,7 +30,7 @@
         SELECT mu.*,m.host,m.protocol,m.port,m.name FROM `machine_user` mu,`machine` m
         WHERE
         mu.machine_id=m.machine_id
-        and mu.status=1
+        and mu.status=1 AND m.m_status=1
         <if test="machine_id!=null and machine_id!=''">
             AND mu.machine_id=#{machine_id}
         </if>

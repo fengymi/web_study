@@ -1,12 +1,13 @@
 package com.fym.service.guacamole;
 
+import com.fym.context.ProxyServer;
 import com.fym.controller.guacamole.DesignGuacamoleHTTPTunnel;
+import com.fym.entity.ProxyServerEntity;
 import com.fym.service.system.ServerService;
 import com.fym.utils.component.Constant;
 import com.fym.utils.data.HashPageData;
 import com.fym.utils.data.PageDataUtils;
 import com.fym.utils.guacamole.request.TunnelRequest;
-import org.glyptodon.guacamole.GuacamoleException;
 import org.glyptodon.guacamole.net.GuacamoleSocket;
 import org.glyptodon.guacamole.net.GuacamoleTunnel;
 import org.glyptodon.guacamole.net.InetGuacamoleSocket;
@@ -34,10 +35,15 @@ public class TunnelRequestService {
         GuacamoleClientInformation clientInfo = getClientInformation(request);
         //配置连接信息
         GuacamoleConfiguration config = getConfig(machineUser);
+        //获取代理服务器信息
+        ProxyServerEntity proxyServer = ProxyServer.getProxy().getProxyServer();
+
         GuacamoleSocket socket = null;
         try {
-            InetGuacamoleSocket inetGuacamoleSocket = new InetGuacamoleSocket("192.168.182.137", 4822);
+            InetGuacamoleSocket inetGuacamoleSocket = new InetGuacamoleSocket(proxyServer.getHost(), proxyServer.getPort());
             socket = new ConfiguredGuacamoleSocket(inetGuacamoleSocket,config,clientInfo);
+            System.out.println(socket);
+            System.out.println(socket);
         }catch (Exception g){
             serverService.changeUsed(machineUser.get("mu_id"), Constant.MACHINE_USER_USE);
             logger.error(g.getMessage());

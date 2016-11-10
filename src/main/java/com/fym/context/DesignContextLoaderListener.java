@@ -29,7 +29,10 @@ public class DesignContextLoaderListener extends ContextLoaderListener implement
         super.contextInitialized(event);
         ApplicationContext applicationContext = (ApplicationContext) event.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
         sessionManager = applicationContext.getBean(SessionManager.class);
+        //初始化springBean获取器
         SpringBeanGetter.setContext(applicationContext);
+        //初始化代理服务器
+        ProxyServer.getProxy().init();
     }
 
     @Override

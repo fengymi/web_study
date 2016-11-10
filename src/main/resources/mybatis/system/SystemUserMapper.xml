@@ -40,6 +40,9 @@
             ORDER BY ${sidx} ${order}
         </if>
     </select>
+    <select id="getByUsername" resultMap="userMap">
+        SELECT * FROM `sys_user` WHERE username=#{0}
+    </select>
 
     <select id="getUsersByRole" resultType="hash">
         <include refid="select-user_role"/>

@@ -1,5 +1,6 @@
-package com.fym.utils.shiro;
+package com.fym.interceptor;
 
+import com.alibaba.fastjson.JSON;
 import com.fym.entity.Permission;
 import com.fym.entity.Role;
 import com.fym.entity.User;
@@ -9,8 +10,8 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -21,14 +22,16 @@ import java.util.Set;
 
 public class UserRealm extends AuthorizingRealm {
 
-    @Autowired
+    @Resource
     private UserService userService;
     /**
      * 授权操作
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        System.out.println("doGetAuthorizationInfo:start");
         String username = (String) principals.getPrimaryPrincipal();
+        System.out.println(username);
 
         Set<Role> roleSet =  userService.findUserByUsername(username).getRoleSet();
         //角色名的集合
@@ -40,7 +43,7 @@ public class UserRealm extends AuthorizingRealm {
         while(it.hasNext()){
             roles.add(it.next().getName());
             for(Permission per:it.next().getPermissionSet()){
-                permissions.add(per.getPermissionName());
+                permissions.add(per.getPermissionName()+":*");
             }
         }
 
@@ -49,6 +52,7 @@ public class UserRealm extends AuthorizingRealm {
         authorizationInfo.addRoles(roles);
         authorizationInfo.addStringPermissions(permissions);
 
+        System.out.println(JSON.toJSONString(authorizationInfo));
 
         return authorizationInfo;
     }
@@ -59,17 +63,19 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(
             AuthenticationToken token) throws AuthenticationException {
+        System.out.println("doGetAuthenticationInfo:start");
 
         String username = (String) token.getPrincipal();
+        System.out.println(username);
         User user = userService.findUserByUsername(username);
 
         if(user==null){
             //木有找到用户
             throw new UnknownAccountException("没有找到该账号");
         }
-		/* if(Boolean.TRUE.equals(user.getLocked())) {
-	            throw new LockedAccountException(); //帐号锁定
-	        } */
+        if(Boolean.TRUE.equals(user.getLocked())) {
+            throw new LockedAccountException(); //帐号锁定
+        }
 
         /**
          * 交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以在此判断或自定义实现

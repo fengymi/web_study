@@ -32,7 +32,7 @@
         <!--<url-pattern>/tunnel</url-pattern>-->
     <!--</servlet-mapping>-->
 
-    <!--&lt;!&ndash;shiro配置&ndash;&gt;-->
+    <!--shiro配置-->
     <!--<filter>-->
         <!--<filter-name>shiroFilter</filter-name>-->
         <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->

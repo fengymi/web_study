@@ -39,8 +39,8 @@
                 <form method="post" action="index/admin_auth">
                     <h4 class="no-margins">登录：</h4>
                     <p class="m-t-md">登录到学习系统后台</p>
-                    <input type="text" class="form-control uname" placeholder="用户名"/>
-                    <input type="password" class="form-control pword m-b" placeholder="密码"/>
+                    <input name="username" type="text" class="form-control uname" placeholder="用户名"/>
+                    <input name="password" type="password" class="form-control pword m-b" placeholder="密码"/>
                     <a href="">忘记密码了？</a>
                     <button class="btn btn-success btn-block">登录</button>
                 </form>

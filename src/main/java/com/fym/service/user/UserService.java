@@ -1,17 +1,23 @@
 package com.fym.service.user;
 
 
+import com.fym.dao.system.SystemUserDao;
 import com.fym.entity.User;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 @Service
 public class UserService {
+
+    @Resource
+    private SystemUserDao systemUserDao;
 
     public User getUser(){
         return null;
     }
 
     public User findUserByUsername(String username){
-        return null;
+        return systemUserDao.getByUsername(username);
     }
 }

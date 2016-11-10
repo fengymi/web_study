@@ -3,13 +3,13 @@
 <mapper namespace="com.fym.dao.system.ServerDao">
 
     <insert id="add" parameterType="hash">
-        INSERT INTO `proxy_server`(host,name,port) VALUES (#{host},#{name},#{port})
+        INSERT INTO `proxy_server`(host,name,port,s_status) VALUES (#{host},#{name},#{port},#{s_status})
     </insert>
     <delete id="delete" parameterType="hash">
         DELETE FROM `proxy_server` WHERE server_id in (#{id})
     </delete>
     <update id="update" parameterType="hash">
-        UPDATE `proxy_server` SET host=#{host},name=#{name},port=#{port} WHERE server_id=#{id}
+        UPDATE `proxy_server` SET host=#{host},name=#{name},port=#{port},s_status=#{s_status} WHERE server_id=#{id}
     </update>
 
     <select id="getAllServers" resultType="hash">
@@ -18,4 +18,11 @@
             ORDER BY ${sidx} ${order}
         </if>
     </select>
+
+    <select id="getCanUseServers" resultMap="proxyServer">
+        SELECT * FROM `proxy_server` WHERE s_status=1
+    </select>
+
+    <resultMap id="proxyServer" type="com.fym.entity.ProxyServerEntity" autoMapping="true">
+    </resultMap>
 </mapper>

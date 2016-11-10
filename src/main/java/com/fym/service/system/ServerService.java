@@ -4,6 +4,7 @@ import com.fym.dao.base.BaseOper;
 import com.fym.dao.system.MachineDao;
 import com.fym.dao.system.MachineUserDao;
 import com.fym.dao.system.ServerDao;
+import com.fym.entity.ProxyServerEntity;
 import com.fym.entity.utils.OperEntity;
 import com.fym.entity.utils.PageEntity;
 import com.fym.utils.component.Constant;
@@ -65,16 +66,26 @@ public class ServerService {
      * @param page 分页信息
      * @return 该页数据
      */
-    public PageInfo getServers(PageEntity page){
+    public PageInfo<HashPageData> getServers(PageEntity page){
         List<HashPageData> servers = null;
-        PageHelper.startPage(page.getPageNum(), page.getPageSize());
-
+        if(page!=null)
+            PageHelper.startPage(page.getPageNum(), page.getPageSize());
         try {
             servers = serverDao.getAllServers(page);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
         return new PageInfo<>(servers);
+    }
+
+    /**
+     * 获取可用服务器列表
+     * @return 可用服务器
+     */
+    public List<ProxyServerEntity> getCanUseServers(){
+        List<ProxyServerEntity> servers = null;
+        servers = serverDao.getCanUseServers();
+        return servers;
     }
     /**
      * 变更服务器

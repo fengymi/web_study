@@ -15,6 +15,8 @@ public interface SystemUserDao extends BaseOper {
 
     List<HashPageData> getUsersByRole(PageEntity page);
 
+    User getByUsername(String username);
+
     int add(HashPageData data);
     void delete(HashPageData data);
     void update(HashPageData data);
