@@ -49,6 +49,15 @@ public class SystemUserService {
     public User getSystemUser(Object userId){
         return (userId==null)?null:systemUserDao.getUserAndRole(userId);
     }
+
+    /**
+     * 获取用户的权限
+     * @param username 用户名
+     * @return 用户和权限信息
+     */
+    public User getUserPermission(String username){
+        return systemUserDao.findPermission(username);
+    }
     /**
      * 修改用户信息
      * @param manager 用户信息

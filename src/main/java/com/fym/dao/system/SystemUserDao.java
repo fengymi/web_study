@@ -17,6 +17,8 @@ public interface SystemUserDao extends BaseOper {
 
     User getByUsername(String username);
 
+    User findPermission(String username);
+
     int add(HashPageData data);
     void delete(HashPageData data);
     void update(HashPageData data);

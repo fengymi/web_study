@@ -1,7 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!--${sessionScope.user}-->
 <!-- 全局js -->
 <%@include file="main_js.jsp"%>
+<script src="static/js/design/design.js"></script>
+<script>
+    initToast();
+    toastr["info"]("欢迎admin回来");
+</script>
 
 <script src="static/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="static/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>

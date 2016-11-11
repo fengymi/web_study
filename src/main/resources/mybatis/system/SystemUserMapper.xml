@@ -87,7 +87,36 @@
         WHERE 1=1
     </sql>
 
+    <select id="findPermission" parameterType="string" resultMap="userMap">
+        <include refid="select-permission"/>
+        AND
+        u.USERNAME = #{username}
+    </select>
 
+    <sql id="select-permission">
+        SELECT
+        u.USER_ID,
+        u.USERNAME,
+        u.PASSWORD,
+        r.ROLE_ID,
+        r.ROLE_NAME,
+        p.PERMISSION_ID,
+        p.PERMISSION_NAME
+        FROM
+        sys_user as u,
+        sys_role as r,
+        sys_permission as p,
+        sys_role_permission as pr,
+        sys_user_role as ru
+        WHERE
+        u.USER_ID = ru.USER_ID
+        AND
+        r.ROLE_ID = ru.ROLE_ID
+        AND
+        p.PERMISSION_ID = pr.PERMISSION_ID
+        AND
+        r.ROLE_ID = pr.ROLE_ID
+    </sql>
 
 </mapper>
 

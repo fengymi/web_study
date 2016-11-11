@@ -21,6 +21,7 @@
     <link href="static/admin/css/animate.css" rel="stylesheet">
     <link href="static/admin/css/style.css" rel="stylesheet">
     <link href="static/admin/css/login.css" rel="stylesheet">
+    <link href="static/css/plugin/toastr.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html"/>
     <![endif]-->
@@ -36,7 +37,7 @@
     <div class="signinpanel">
         <div class="row">
             <div class="col-sm-12">
-                <form method="post" action="index/admin_auth">
+                <form method="post" action="index/admin">
                     <h4 class="no-margins">登录：</h4>
                     <p class="m-t-md">登录到学习系统后台</p>
                     <input name="username" type="text" class="form-control uname" placeholder="用户名"/>
@@ -53,5 +54,12 @@
         </div>
     </div>
 </body>
-
+<%@include file="../layout/main_js.jsp"%>
+<script src="static/js/design/design.js"></script>
+<script>
+    initToast();
+    if(""!="${message}"){
+        toastr["error"]("${message}");
+    }
+</script>
 </html>

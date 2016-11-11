@@ -125,10 +125,6 @@
             }
         });
 
-        initToast();
-        toastr["info"]("欢迎admin回来");
-
-
 
         setInterval(function updateRandom() {
             series[0].data = getRandomData();

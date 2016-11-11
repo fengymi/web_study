@@ -4,21 +4,21 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--添加自己的过滤规则-->
-    <bean id="myRealm" class="com.fym.interceptor.UserRealm"/>
+    <bean id="myRealm" class="com.fym.interceptor.shiro.UserRealm"/>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="myRealm"/>
     </bean>
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="loginUrl" value="/index/login"/>
-        <!--<property name="successUrl" value="/index/admin/home"/>-->
+        <property name="loginUrl" value="/index/admin"/>
         <property name="unauthorizedUrl" value="/index"/>
         <property name="filterChainDefinitions">
             <value>
                 /index=anon
                 /index/** = anon
                 /static/** = anon
+                /system/server/list = perms[代理服务器:*]
                 <!--/role/edit/* = perms[role:edit]-->
                 <!--/role/save = perms [role:edit]-->
                 <!--/role/list = perms [role:view]-->

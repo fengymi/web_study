@@ -85,6 +85,9 @@
                     </li>
                 </ul>
             </li>
+            <li class="dropdown">
+                <a href="index/logout">退出登录</a>
+            </li>
         </ul>
     </nav>
 </div>
