@@ -9,6 +9,7 @@ import com.fym.service.system.SystemUserService;
 import com.fym.service.user.UserService;
 import com.fym.utils.component.Constant;
 import com.fym.utils.component.MD5Util;
+import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -29,6 +30,7 @@ import java.util.Set;
  */
 
 public class UserRealm extends AuthorizingRealm {
+    private Logger logger = Logger.getLogger(UserRealm.class);
 
     @Resource
     private UserService userService;
@@ -49,7 +51,6 @@ public class UserRealm extends AuthorizingRealm {
         if(permissions!=null && permissions.size()>0){
             authorizationInfo.addStringPermissions(permissions);
         }
-        System.out.println(JSON.toJSONString(authorizationInfo));
 
         return authorizationInfo;
     }
@@ -80,7 +81,7 @@ public class UserRealm extends AuthorizingRealm {
                 Set<Permission> permissions = role.getPermissionSet();
                 for (Permission permission : permissions) {
                     ids.add(permission.getId());
-                    permissionStr.add(permission.getUrl());
+                    permissionStr.add(permission.getPermissionName());
                 }
             }
             if(ids.size()>=1){
@@ -88,6 +89,8 @@ public class UserRealm extends AuthorizingRealm {
             }
             getSession().setAttribute(Constant.SESSION_USER,user);
             getSession().setAttribute(Constant.SESSION_USER_PERMISSION,permissionStr);
+            logger.debug(username+"的权限\r\n"+JSON.toJSONString(permissionStr));
+
         }
 
         return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(),getName());

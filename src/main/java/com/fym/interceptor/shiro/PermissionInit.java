@@ -1,9 +1,12 @@
 package com.fym.interceptor.shiro;
 
-import com.fym.service.system.SystemPermissionService;
+import com.alibaba.fastjson.JSON;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.util.CollectionUtils;
+import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
+import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
+import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,11 +15,9 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 public abstract class PermissionInit{
-    private final static Logger log = LoggerFactory.getLogger(PermissionInit.class);
+    private final Logger logger = LoggerFactory.getLogger(PermissionInit.class);
 
     private String definitions = "";
-    @Resource
-    private SystemPermissionService systemPermissionService;
 
     @Resource
     private ShiroFilterFactoryBean shiroFilterFactoryBean;
@@ -24,7 +25,38 @@ public abstract class PermissionInit{
     @PostConstruct
     public void intiPermission() {
         shiroFilterFactoryBean.setFilterChainDefinitionMap(obtainPermission());
-        log.debug("initialize shiro permission success...");
+        logger.debug("initialize shiro permission success...");
+    }
+
+    public void updatePermission(Map<String,String> map) {
+        synchronized (PermissionInit.class) {
+            AbstractShiroFilter shiroFilter = null;
+            try {
+                shiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean.getObject();
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+            }
+
+            // 获取过滤管理器
+            PathMatchingFilterChainResolver filterChainResolver = (PathMatchingFilterChainResolver) shiroFilter
+                    .getFilterChainResolver();
+            DefaultFilterChainManager manager = (DefaultFilterChainManager) filterChainResolver.getFilterChainManager();
+
+            // 清空初始权限配置
+            manager.getFilterChains().clear();
+            shiroFilterFactoryBean.getFilterChainDefinitionMap().clear();
+
+            // 重新构建生成
+            shiroFilterFactoryBean.setFilterChainDefinitions(definitions);
+            Map<String, String> chains = shiroFilterFactoryBean.getFilterChainDefinitionMap();
+            chains.putAll(map);
+            for (Map.Entry<String, String> entry : chains.entrySet()) {
+                String url = entry.getKey();
+                String chainDefinition = entry.getValue().trim().replace(" ", "");
+                manager.createChain(url, chainDefinition);
+            }
+            logger.debug("update shiro permission success...");
+        }
     }
 
     /** 读取配置资源 */
@@ -41,6 +73,7 @@ public abstract class PermissionInit{
         if (permissionMap != null && !permissionMap.isEmpty()) {
             section.putAll(permissionMap);
         }
+        logger.debug("全部权限\r\n"+ JSON.toJSONString(section));
         return section;
     }
 

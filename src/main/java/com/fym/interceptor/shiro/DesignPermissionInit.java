@@ -1,8 +1,7 @@
 package com.fym.interceptor.shiro;
 
-import com.fym.dao.system.SystemPermissionDao;
+import com.fym.entity.utils.PageEntity;
 import com.fym.service.system.SystemPermissionService;
-import com.fym.utils.component.SpringBeanGetter;
 import com.fym.utils.data.HashPageData;
 
 import javax.annotation.Resource;
@@ -17,15 +16,16 @@ public class DesignPermissionInit extends PermissionInit {
 
     @Override
     public Map<String, String> initOtherPermission() {
-        List<HashPageData> permissions = systemPermissionService.getSystemPermission(null);
+        List<HashPageData> permissions = systemPermissionService.getSystemPermission(new PageEntity().setNotPage(true));
         Map<String,String> permissionMap = new HashMap<>();
         if (permissions!=null){
             for (HashPageData permission : permissions) {
                 permissionMap.put(
                         "/"+(permission.getString("url").replaceAll("[^/]*$","*")),
-                        permission.getString("permission_name")+":[*]");
+                        "perms["+permission.getString("permission_name")+":*]");
             }
         }
+        permissionMap.put("/**","authc");
         return permissionMap;
     }
 }

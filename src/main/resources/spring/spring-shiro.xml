@@ -20,7 +20,6 @@
                 /index=anon
                 /index/** = anon
                 /static/** = anon
-                /** = authc
             </value>
         </property>
     </bean>

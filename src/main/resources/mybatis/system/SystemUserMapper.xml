@@ -17,7 +17,6 @@
             <collection property="permissionSet" column="permission_id" ofType="com.fym.entity.Permission">
                 <id property="id" column="permission_id"/>
                 <result property="permissionName" column="permission_name"/>
-                <result property="type" column="type"/>
                 <result property="url" column="url"/>
                 <result property="available" column="p_available"/>
             </collection>
@@ -91,6 +90,8 @@
         <include refid="select-permission"/>
         AND
         u.USERNAME = #{username}
+        and
+        p.P_AVAILABLE=1
     </select>
 
     <sql id="select-permission">
@@ -101,6 +102,7 @@
         r.ROLE_ID,
         r.ROLE_NAME,
         p.PERMISSION_ID,
+        p.P_AVAILABLE,
         p.PERMISSION_NAME
         FROM
         sys_user as u,

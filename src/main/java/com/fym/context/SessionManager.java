@@ -38,12 +38,12 @@ public class SessionManager {
     public synchronized void delNum(int type) {
         switch (type){
             case VISITOR:
-                if(this.visitorNum>1){
+                if(this.visitorNum>=1){
                     this.visitorNum --;
                 }
                 break;
             case USER :
-                if(this.userNum>1){
+                if(this.userNum>=1){
                     this.userNum --;
                 }
                 break;
