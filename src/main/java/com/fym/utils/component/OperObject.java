@@ -25,6 +25,8 @@ public class OperObject {
     private SystemRoleDao systemRoleDao;
     @Resource
     private SystemPermissionDao systemPermissionDao;
+    @Resource
+    private MenuDao menuDao;
 
     //操作对象类型
     public static final int OPER_SERVER = 100; //代理服务器
@@ -33,6 +35,7 @@ public class OperObject {
     public static final int OPER_SYSTEM_USER = 103; //系统用户
     public static final int OPER_SYSTEM_ROLE = 104; //系统角色
     public static final int OPER_SYSTEM_PERMISSION = 105; //系统权限
+    public static final int OPER_MENU = 106; //系统菜单
 
     private static final Map<Integer,BaseOper> operDaos = new HashMap<>();
 
@@ -44,6 +47,7 @@ public class OperObject {
         operDaos.put(OPER_SYSTEM_USER,systemUserDao);
         operDaos.put(OPER_SYSTEM_ROLE,systemRoleDao);
         operDaos.put(OPER_SYSTEM_PERMISSION,systemPermissionDao);
+        operDaos.put(OPER_MENU,menuDao);
     }
 
     private BaseOper getOperDao(int oper){

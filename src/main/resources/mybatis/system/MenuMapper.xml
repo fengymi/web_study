@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fym.dao.system.MenuDao">
+    <select id="getAllMenu" resultType="hash">
+        SELECT * FROM sys_menu
+        <if test="sidx!=null and sidx!=''">
+            ORDER BY ${sidx} ${order}
+        </if>
+    </select>
+
+    <select id="getMenus" resultMap="menu_url">
+        SELECT m.*,
+            p.url,p.permission_name,p.icon,p.permission_id
+          FROM
+            sys_menu m,sys_permission p
+        where m.menu_id=p.menu_id AND p.p_available=1 AND p.permission_id in
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ORDER BY m.type asc,m.menu_id asc
+    </select>
+
+    <resultMap id="menu_url" type="com.fym.entity.Menu" autoMapping="true">
+        <id property="menu_id" column="menu_id"/>
+        <collection property="urls" javaType="ArrayList" column="permission_id" ofType="hash" autoMapping="true"/>
+    </resultMap>
+</mapper>

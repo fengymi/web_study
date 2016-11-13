@@ -1,5 +1,6 @@
 package com.fym.context;
 
+import com.fym.utils.component.Constant;
 import com.fym.utils.component.SpringBeanGetter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
@@ -47,12 +48,16 @@ public class DesignContextLoaderListener extends ContextLoaderListener implement
 
     @Override
     public void attributeAdded(HttpSessionBindingEvent httpSessionBindingEvent) {
-        sessionManager.addNum(SessionManager.USER);
+        if(Constant.SESSION_USER.equals(httpSessionBindingEvent.getName())) {
+            sessionManager.addNum(SessionManager.USER);
+        }
     }
 
     @Override
     public void attributeRemoved(HttpSessionBindingEvent httpSessionBindingEvent) {
-        sessionManager.delNum(SessionManager.USER);
+        if(Constant.SESSION_USER.equals(httpSessionBindingEvent.getName())) {
+            sessionManager.delNum(SessionManager.USER);
+        }
     }
 
     @Override

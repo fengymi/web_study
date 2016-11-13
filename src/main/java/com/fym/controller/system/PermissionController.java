@@ -6,6 +6,7 @@ import com.fym.entity.PermissionRole;
 import com.fym.entity.Role;
 import com.fym.entity.utils.PageEntity;
 import com.fym.entity.utils.PermissionManager;
+import com.fym.service.system.SystemMenuService;
 import com.fym.service.system.SystemPermissionService;
 import com.fym.service.system.SystemRoleService;
 import com.fym.utils.component.CalcTools;
@@ -30,11 +31,22 @@ public class PermissionController extends BaseController{
     private SystemPermissionService systemPermissionService;
     @Resource
     private SystemRoleService systemRoleService;
+    @Resource
+    private SystemMenuService systemMenuService;
 
     @RequestMapping("/list")
     public ModelAndView list(){
         ModelAndView mv = new ModelAndView("system/sys_permission");
         mv.addObject("title","权限管理");
+
+        List<HashPageData> menus = systemMenuService.getMenus(null);
+        HashPageData menuStr = new HashPageData();
+        for (HashPageData menu : menus) {
+            menuStr.put(menu.getString("menu_id"),menu.getString("name"));
+        }
+        menuStr.put("undefined","其它");
+        mv.addObject("menus",JSON.toJSONString(menuStr));
+
         mv.addObject("role_id",getRequest().getParameter("role_id"));
         mv.addObject("available",getRequest().getParameter("available"));
         return mv;

@@ -4,6 +4,7 @@ import com.fym.utils.component.CalcTools;
 
 public class PermissionManager {
     private int permissionId;
+    private int menuId;
     private String permissionName;
     private String url;
     private String available;
@@ -50,6 +51,14 @@ public class PermissionManager {
 
     public int[] getDelRoles() {
         return delRoles;
+    }
+
+    public int getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(int menuId) {
+        this.menuId = menuId;
     }
 
     public void setDelRoles(int[] delRoles) {

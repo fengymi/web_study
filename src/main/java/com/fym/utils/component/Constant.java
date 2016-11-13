@@ -8,4 +8,7 @@ public interface Constant {
 
     int MACHINE_USER_USED = 0; //使用中
     int MACHINE_USER_USE = 1; //可以使用
+
+    String SESSION_USER = "sessionUser";
+    String SESSION_USER_PERMISSION = "permission";
 }

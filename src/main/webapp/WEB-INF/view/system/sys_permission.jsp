@@ -57,11 +57,19 @@
 <script src="static/js/design/design.js"></script>
 
 <script>
+    var menu = ${menus};
     $(document).ready(function () {
         initGrid({
             url : '<%=basePath%>system/permission/get_data?available=${available}&role_id=${role_id}',
             editurl:"<%=basePath%>system/permission/edit_data",
             sortname:"permission_id",
+            grouping:true,
+            groupingView: {
+                groupField: ['menu_id'],
+                groupColumnShow: [false],
+                groupText: ['<b>{0}</b>'],
+                groupCollapse: true
+            },
             colModel: [
                 {
                     label:"权限id",
@@ -84,6 +92,30 @@
                     index: 'url',
                     align: 'center',
                     editable: true
+                },{
+                    label:'菜单',
+                    name: 'menu_id',
+                    index: 'menu_id',
+                    hidden:true,
+                    formatter: function (cellvalue, options, rowObject) {
+                        var result = menu[cellvalue];
+                        if(!result){
+                            result = "其它"
+                        }
+                        return result;
+                    },
+                    editrules:{edithidden:true,required:true,number:true},
+                    editable: true,
+                    edittype:'select',
+                    editoptions:{
+                        dataUrl:'<%=basePath%>system/menu/get_select',
+                        buildSelect: function (response) {
+                            var data = eval(response);
+                            return selectFormat(data,"menu_id","name","暂无可用菜单");
+                        }
+                    },
+                    sorttype: "int",
+                    align: 'center'
                 },
                 {
                     label:'状态',

@@ -54,6 +54,7 @@ public class SystemPermissionService {
         hash.put("p_available",manager.getAvailable());
         hash.put("url",manager.getUrl());
         hash.put("id",manager.getPermissionId());
+        hash.put("menu_id",manager.getMenuId());
 
         systemPermissionDao.update(hash);
         if(manager.getDelRoles().length>0)

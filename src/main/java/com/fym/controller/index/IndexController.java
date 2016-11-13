@@ -3,6 +3,8 @@ package com.fym.controller.index;
 import com.alibaba.fastjson.JSON;
 import com.fym.context.SessionManager;
 import com.fym.controller.BaseController;
+import com.fym.utils.component.Constant;
+import com.fym.utils.component.MD5Util;
 import com.fym.utils.data.HashPageData;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -42,10 +44,11 @@ public class IndexController extends BaseController{
     @RequestMapping(value = "/admin",method = RequestMethod.POST)
     public ModelAndView adminAuth(){
         String username = getRequest().getParameter("username");
-        String password = getRequest().getParameter("password");
+        String password = MD5Util.MD5(getRequest().getParameter("password"));
         ModelAndView mv = new ModelAndView("redirect:/admin/home");
         String msg = loginVerify(username,password);
         if(msg==null){
+//            getSession().setAttribute();
             return mv;
         }
         mv.addObject("message",msg);
@@ -100,6 +103,7 @@ public class IndexController extends BaseController{
     public String logout(RedirectAttributes redirectAttributes ){
         //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         SecurityUtils.getSubject().logout();
+        getSession().removeAttribute(Constant.SESSION_USER);
         redirectAttributes.addFlashAttribute("message", "您已安全退出");
         return "redirect:/index/admin";
     }
@@ -119,6 +123,7 @@ public class IndexController extends BaseController{
             subject.isAuthenticated();
         } catch (IncorrectCredentialsException e) {
             msg = "登录密码错误";
+            getSession().removeAttribute(Constant.SESSION_USER);
         } catch (UnknownAccountException e) {
             msg = "帐号不存在";
         } catch (LockedAccountException e) {

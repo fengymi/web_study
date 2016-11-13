@@ -1,6 +1,7 @@
 package com.fym.entity;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class User {
@@ -9,9 +10,18 @@ public class User {
     private String password;
     private String nickname;
     private String locked;
+    private List<Menu> menus;
     private Set<Role> roleSet = new HashSet<>();
 
     public User() {
+    }
+
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
     }
 
     public String getNickname() {

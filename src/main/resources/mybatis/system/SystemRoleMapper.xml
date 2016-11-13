@@ -30,8 +30,9 @@
         <if test="extend.available!=null and extend.available!=''">
             WHERE available=#{extend.available}
         </if>
+        ORDER BY is_sys desc
         <if test="sidx!=null and sidx!=''">
-            ORDER BY ${sidx} ${order}
+            ,${sidx} ${order}
         </if>
     </select>
 

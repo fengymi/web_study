@@ -3,7 +3,7 @@ package com.fym.entity;
 public class Permission {
     private Integer id;
     private String permissionName;
-    private String type;
+    private String icon;
     private String url;
     private String available;
 
@@ -48,12 +48,12 @@ public class Permission {
         this.permissionName = permissionName;
     }
 
-    public String getType() {
-        return type;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getUrl() {

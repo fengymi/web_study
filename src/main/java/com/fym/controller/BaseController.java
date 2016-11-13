@@ -3,11 +3,12 @@ package com.fym.controller;
 import com.fym.entity.utils.OperEntity;
 import com.fym.entity.utils.PageEntity;
 import com.fym.utils.data.HashPageData;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * 基本的controller，所有的controller应该从该类继承
@@ -54,11 +55,11 @@ public class BaseController {
     }
 
     /**
-     * 获取session
+     * 获取shiro的session
      * @return session
      */
-    protected HttpSession getSession(){
-        return getRequest().getSession();
+    protected Session getSession(){
+        return SecurityUtils.getSubject().getSession();
     }
 
     /**
