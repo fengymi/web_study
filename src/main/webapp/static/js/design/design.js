@@ -170,3 +170,28 @@ function setUpdateData(data) {
         }
     });
 }
+
+
+function showNavBar(data) {
+    var timeObj;
+    $(data.trigger).mouseenter(function(){
+        console.log("document:"+window.outerHeight);
+        console.log("window:"+screen.availHeight);
+        if(window.outerHeight==screen.availHeight){
+            show.find("a").eq(1).css("display","none");
+            show.find("a").eq(0).css("display","inline");
+        }else{
+            show.find("a").eq(0).css("display","none");
+            show.find("a").eq(1).css("display","inline");
+        }
+        $(data.show).fadeIn(200);
+    });
+    $(data.show).mouseleave(function () {//对应mouseout会多次触发
+        timeObj = setTimeout(function () {
+            $(data.show).fadeOut(300);
+        }, 1000);
+    });
+    $(data.show).mouseenter(function () { //对应mouseover会多次触发
+        clearTimeout(timeObj);
+    });
+}

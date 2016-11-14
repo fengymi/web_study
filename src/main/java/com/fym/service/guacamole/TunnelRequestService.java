@@ -29,6 +29,7 @@ public class TunnelRequestService {
     private ServerService serverService;
 
     public GuacamoleTunnel createTunnel(HashPageData request){
+        System.out.println(request);
         HashPageData machineUser = serverService.getLoginInfo(request);
         if(machineUser==null) return null;
         //客户端信息(宽,高等信息)

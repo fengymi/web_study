@@ -121,15 +121,6 @@
                         return '<span class="label '+label_class+'">'+label_text+'</span>';
                     },
                     editable: true
-                },
-                {
-                    label:'操作',
-                    align: 'center',
-                    sortable: false,
-                    editable: false,
-                    formatter: function (cellvalue, options, rowObject) {
-                        return "操作";
-                    }
                 }
             ]
         });

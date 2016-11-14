@@ -6,6 +6,15 @@ public class Permission {
     private String icon;
     private String url;
     private String available;
+    private String menu_id;
+
+    public String getMenu_id() {
+        return menu_id;
+    }
+
+    public void setMenu_id(String menu_id) {
+        this.menu_id = menu_id;
+    }
 
     @Override
     public int hashCode() {

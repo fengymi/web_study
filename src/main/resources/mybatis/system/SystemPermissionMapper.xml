@@ -6,6 +6,7 @@
             <id property="id" column="permission_id"/>
             <result property="permissionName" column="permission_name"/>
             <result property="available" column="p_available"/>
+            <result property="menu_id" column="menu_id"/>
         </association>
         <collection property="roles" column="role_id" ofType="com.fym.entity.Role">
             <id property="id" column="ROLE_ID"/>

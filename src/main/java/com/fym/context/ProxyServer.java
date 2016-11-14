@@ -14,6 +14,7 @@ import java.util.List;
 public class ProxyServer {
     private final Logger logger = LoggerFactory.getLogger(ProxyServer.class);
 
+    private static final boolean needResetUser = true; //系统重启时,是否需要重置已经连接的用户
     private static ProxyServer proxyServer;
     private ServerService serverService;
     private List<ProxyServerEntity> servers;
@@ -37,6 +38,11 @@ public class ProxyServer {
      */
     protected void init(){
         serverService = SpringBeanGetter.getBean(ServerService.class);
+        if(needResetUser){
+            logger.debug("重置已连接用户情况");
+            serverService.initUse();
+            logger.debug("用户重置完成");
+        }
         initProxy();
     }
 

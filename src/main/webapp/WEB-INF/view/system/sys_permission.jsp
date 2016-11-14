@@ -32,6 +32,9 @@
             <div class="ibox ">
                 <div class="ibox-title">
                     <h5>${title}</h5>
+                    <div class="ibox-tools">
+                        <button onclick="permissionReset()" title="修改后需要重置才能生效" type="button" class="btn btn-w-m btn-success">重置权限</button>
+                    </div>
                 </div>
                 <div class="ibox-content">
                     <div class="jqGrid_wrapper">
@@ -59,6 +62,7 @@
 <script>
     var menu = ${menus};
     $(document).ready(function () {
+        initToast();
         initGrid({
             url : '<%=basePath%>system/permission/get_data?available=${available}&role_id=${role_id}',
             editurl:"<%=basePath%>system/permission/edit_data",
@@ -151,6 +155,14 @@
             ]
         });
     });
+    function permissionReset() {
+        $.ajax({
+            url:"<%=basePath%>system/permission/reset",
+            success:function () {
+                toastr["info"]("重置完成");
+            }
+        });
+    }
 </script>
 
 

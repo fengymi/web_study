@@ -28,34 +28,35 @@ public abstract class PermissionInit{
         logger.debug("initialize shiro permission success...");
     }
 
-    public void updatePermission(Map<String,String> map) {
+    public void updatePermission() {
         synchronized (PermissionInit.class) {
-            AbstractShiroFilter shiroFilter = null;
-            try {
-                shiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean.getObject();
-            } catch (Exception e) {
-                logger.error(e.getMessage());
-            }
-
-            // 获取过滤管理器
-            PathMatchingFilterChainResolver filterChainResolver = (PathMatchingFilterChainResolver) shiroFilter
-                    .getFilterChainResolver();
-            DefaultFilterChainManager manager = (DefaultFilterChainManager) filterChainResolver.getFilterChainManager();
-
-            // 清空初始权限配置
-            manager.getFilterChains().clear();
-            shiroFilterFactoryBean.getFilterChainDefinitionMap().clear();
-
-            // 重新构建生成
-            shiroFilterFactoryBean.setFilterChainDefinitions(definitions);
-            Map<String, String> chains = shiroFilterFactoryBean.getFilterChainDefinitionMap();
-            chains.putAll(map);
-            for (Map.Entry<String, String> entry : chains.entrySet()) {
-                String url = entry.getKey();
-                String chainDefinition = entry.getValue().trim().replace(" ", "");
-                manager.createChain(url, chainDefinition);
-            }
-            logger.debug("update shiro permission success...");
+            intiPermission();
+//            AbstractShiroFilter shiroFilter = null;
+//            try {
+//                shiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean.getObject();
+//            } catch (Exception e) {
+//                logger.error(e.getMessage());
+//            }
+//
+//            // 获取过滤管理器
+//            PathMatchingFilterChainResolver filterChainResolver = (PathMatchingFilterChainResolver) shiroFilter
+//                    .getFilterChainResolver();
+//            DefaultFilterChainManager manager = (DefaultFilterChainManager) filterChainResolver.getFilterChainManager();
+//
+//            // 清空初始权限配置
+//            manager.getFilterChains().clear();
+//            shiroFilterFactoryBean.getFilterChainDefinitionMap().clear();
+//
+//            // 重新构建生成
+//            shiroFilterFactoryBean.setFilterChainDefinitions(definitions);
+//            Map<String, String> chains = shiroFilterFactoryBean.getFilterChainDefinitionMap();
+//            chains.putAll(map);
+//            for (Map.Entry<String, String> entry : chains.entrySet()) {
+//                String url = entry.getKey();
+//                String chainDefinition = entry.getValue().trim().replace(" ", "");
+//                manager.createChain(url, chainDefinition);
+//            }
+//            logger.debug("update shiro permission success...");
         }
     }
 

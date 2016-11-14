@@ -6,6 +6,7 @@ import com.fym.entity.PermissionRole;
 import com.fym.entity.Role;
 import com.fym.entity.utils.PageEntity;
 import com.fym.entity.utils.PermissionManager;
+import com.fym.interceptor.shiro.DesignPermissionInit;
 import com.fym.service.system.SystemMenuService;
 import com.fym.service.system.SystemPermissionService;
 import com.fym.service.system.SystemRoleService;
@@ -33,6 +34,8 @@ public class PermissionController extends BaseController{
     private SystemRoleService systemRoleService;
     @Resource
     private SystemMenuService systemMenuService;
+    @Resource(name="designShiro")
+    private DesignPermissionInit designShiro;
 
     @RequestMapping("/list")
     public ModelAndView list(){
@@ -90,13 +93,18 @@ public class PermissionController extends BaseController{
         mv.addObject("oldRolesId",oldRolesId);
         mv.addObject("sysRoles",sysRoles);
         mv.addObject("oRoles",oRoles);
-//        mv.addObject("roles",roles);
         return mv;
     }
     @RequestMapping(value = "/update",produces="application/text;charset=UTF-8")
     @ResponseBody
     public Object update(PermissionManager manager){
         systemPermissionService.update(manager);
+        return "修改成功";
+    }
+    @RequestMapping(value = "/reset",produces="application/text;charset=UTF-8")
+    @ResponseBody
+    public Object reset(){
+        designShiro.updatePermission();
         return "修改成功";
     }
 

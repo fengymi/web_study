@@ -25,6 +25,11 @@ public interface MachineUserDao extends BaseOper {
      */
     void updateUse(Object muId,int status);
 
+    /**
+     * 初始化时重置账号使用状态
+     */
+    void initUse();
+
     List<HashPageData> getAllMachineUsers(PageEntity page);
 
     HashPageData getOneUser(HashPageData data);

@@ -112,22 +112,22 @@
                     editoptions:{value:"1:linux;2:windows;3:mac"},
                     formatter: function (cellvalue, options, rowObject) {
                         var label_class;
-                        var label_text;
+                        var title_text;
                         switch (cellvalue){
                             case "3":
-                                label_class = "label-success";
-                                label_text = "mac";
+                                label_class = "fa-apple";
+                                title_text = "苹果系统";
                                 break;
                             case "2":
-                                label_class = "label-primary";
-                                label_text = "windows";
+                                label_class = "fa-windows";
+                                title_text = "windows";
                                 break;
                             default :
-                                label_class = "label-info";
-                                label_text = "linux";
+                                label_class = "fa-linux";
+                                title_text = "linux";
                                 break;
                         }
-                        return '<span class="label '+label_class+'">'+label_text+'</span>';
+                        return '<i title="'+title_text+'" class="fa '+label_class+'"></i>';
                     },
                     editable: true
                 },
@@ -161,7 +161,7 @@
                     sortable: false,
                     editable: false,
                     formatter: function (cellvalue, options, rowObject) {
-                        var value = '<a class="J_menuItem" href="system/machine_user/list?machine_id='+rowObject.machine_id+'">查看</a>';
+                        var value = '<a title="查看账号" class="J_menuItem" href="system/machine_user/list?machine_id='+rowObject.machine_id+'">查看</a>';
                         return value;
                     }
                 }

@@ -1,6 +1,5 @@
 package com.fym.service.system;
 
-import com.fym.dao.base.BaseOper;
 import com.fym.dao.system.MachineDao;
 import com.fym.dao.system.MachineUserDao;
 import com.fym.dao.system.ServerDao;
@@ -61,6 +60,14 @@ public class ServerService {
     public List<HashPageData> getMachines(){
         return machineDao.getAllMachines(null);
     }
+
+    /**
+     * 得到可用虚拟机
+     * @return 可用虚拟机列表
+     */
+    public List<HashPageData> getCanUseMachines(){
+        return machineDao.getCanUseMachines();
+    }
     /**
      * 获取服务器列表
      * @param page 分页信息
@@ -101,6 +108,12 @@ public class ServerService {
      */
     public void changeUsed(Object muId,int status){
         machineUserDao.updateUse(muId,status);
+    }
+    /**
+     * 修改虚拟机账号使用状态
+     */
+    public void initUse(){
+        machineUserDao.initUse();
     }
 
     /**

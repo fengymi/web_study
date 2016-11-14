@@ -18,4 +18,11 @@
             ORDER BY ${sidx} ${order}
         </if>
     </select>
+
+    <select id="getCanUseMachines" resultType="hash">
+        SELECT m.*,SUM(mu.`status`!=1) as free_num ,COUNT(mu.mu_id) as count_num
+        FROM `machine` m,machine_user mu
+        WHERE m.machine_id=mu.machine_id and m.m_status=1
+        GROUP BY m.machine_id
+    </select>
 </mapper>

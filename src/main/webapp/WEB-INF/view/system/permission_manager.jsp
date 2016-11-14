@@ -29,6 +29,7 @@
                 <div class="ibox-content">
                     <form id="updateUser" class="form-horizontal m-t" onsubmit="return updateManager(this)">
                         <input type="hidden" name="permissionId" value="${permission.id}" />
+                        <input type="hidden" name="menuId" value="${permission.menu_id}" />
                         <input id="addIds" name="addRoles" type="hidden" />
                         <input id="delIds" name="delRoles" type="hidden" />
                         <div class="form-group">

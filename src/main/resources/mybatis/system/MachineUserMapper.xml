@@ -15,6 +15,9 @@
     <update id="updateUse">
         UPDATE `machine_user` SET status=#{1} WHERE mu_id=#{0}
     </update>
+    <update id="initUse">
+        UPDATE `machine_user` SET status=1 WHERE status=0
+    </update>
 
     <select id="getAllMachineUsers" resultType="hash">
         SELECT * FROM `machine_user`
