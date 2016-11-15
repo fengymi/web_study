@@ -19,19 +19,6 @@
         <param-value>classpath:config/log4j.properties</param-value>
     </context-param>
 
-    <!--<servlet>-->
-        <!--<description>Tunnel servlet.</description>-->
-        <!--<servlet-name>tunnel</servlet-name>-->
-        <!--<servlet-class>-->
-            <!--com.fym.controller.guacamole.TutorialGuacamoleTunnelServlet-->
-        <!--</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>tunnel</servlet-name>-->
-        <!--<url-pattern>/tunnel</url-pattern>-->
-    <!--</servlet-mapping>-->
-
     <!--shiro配置-->
     <filter>
         <filter-name>shiroFilter</filter-name>
@@ -78,10 +65,7 @@
     <listener>
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
-    <!--spring监听器-->
-    <!--<listener>-->
-        <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
-    <!--</listener>-->
+    <!--重写spring监听器-->
     <listener>
         <listener-class>com.fym.context.DesignContextLoaderListener</listener-class>
     </listener>

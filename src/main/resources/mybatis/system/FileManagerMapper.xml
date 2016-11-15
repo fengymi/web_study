@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fym.dao.system.FileManagerDao">
+
+    <insert id="addFile" parameterType="com.fym.entity.utils.FastDFSFile">
+        INSERT INTO file(`name`,`group`,remote_name,ext,`length`,author_id)
+          VALUES (#{name},#{group},#{remote_name},#{ext},#{length},#{author})
+    </insert>
+
+    <delete id="deleteFile">
+        DELETE FROM file WHERE file_id=#{0}
+    </delete>
+
+    <select id="getFile" resultType="com.fym.entity.utils.FastDFSFile">
+        SELECT f.*
+        FROM file f
+        WHERE f.file_id=#{0}
+    </select>
+
+    <select id="getFile2" resultMap="file">
+        SELECT f.*,
+          u1.user_id a_user_id,u1.username a_username,u1.nickname a_nickname,
+          u2.user_id v_user_id,u2.username v_username,u2.nickname v_nickname
+        FROM sys_user u1,file f
+        left JOIN
+          sys_user u2
+        ON f.verity_id=u2.user_id
+        WHERE f.file_id=#{0}
+        AND f.author_id=u1.user_id
+    </select>
+
+    <resultMap id="file" type="com.fym.entity.FastDFSEntity" autoMapping="true">
+        <id property="file_id" column="file_id"/>
+        <association property="author" javaType="com.fym.entity.User">
+            <id property="id" column="a_USER_ID"/>
+            <result property="username" column="a_username"/>
+            <result property="nickname" column="a_nickname"/>
+        </association>
+        <association property="verity" javaType="com.fym.entity.User">
+            <id property="id" column="v_USER_ID"/>
+            <result property="username" column="v_username"/>
+            <result property="nickname" column="v_nickname"/>
+        </association>
+    </resultMap>
+</mapper>
