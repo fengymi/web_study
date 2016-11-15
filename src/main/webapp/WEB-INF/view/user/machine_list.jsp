@@ -119,6 +119,7 @@
 </body>
 <%@include file="../layout/main_js.jsp" %>
 <script src="static/admin/js/content.js"></script>
+<script src="static/js/design/design.js"></script>
 
 <script>
     $(document).ready(function () {
