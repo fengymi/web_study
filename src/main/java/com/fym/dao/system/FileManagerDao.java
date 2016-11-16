@@ -12,5 +12,5 @@ public interface FileManagerDao {
     void deleteFile(Object fileId);
 
     FastDFSFile getFile(Object fileId);
-    List<FastDFSEntity> getAllFile();
+    List<FastDFSEntity> getAllFiles();
 }

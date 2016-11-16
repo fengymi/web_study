@@ -7,11 +7,9 @@ import com.fym.service.system.FileManagerService;
 import com.fym.utils.component.Constant;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -22,9 +20,16 @@ public class FileController extends BaseController {
     @Resource
     private FileManagerService fileManagerService;
 
-    @RequestMapping(value = "/upload",produces = "application/text;charset=UTF-8")
+    @RequestMapping(value = "/upload",method = RequestMethod.GET)
+    public ModelAndView toUpload(){
+        ModelAndView mv = new ModelAndView("user/file_upload");
+        mv.addObject("title","文件上传");
+        return mv;
+    }
+
+    @RequestMapping(value = "/upload",produces = "application/json;charset=UTF-8",method = RequestMethod.POST)
     @ResponseBody
-    public boolean uploadFile(@RequestParam(value="file") MultipartFile attach)throws IOException {
+    public String uploadFile(@RequestParam(value="file") MultipartFile attach)throws IOException {
         FastDFSFile file = new FastDFSFile();
         String [] fileInfo = getFileNameAndExt(attach.getOriginalFilename());
         file.setName(fileInfo[0]);
@@ -32,7 +37,8 @@ public class FileController extends BaseController {
         file.setContent(attach.getBytes());
         file.setLength(attach.getSize());
         file.setAuthor(((User)getSession().getAttribute(Constant.SESSION_USER)).getId());
-        return fileManagerService.uploadFile(file);
+        fileManagerService.uploadFile(file);
+        return "{\"aa\":\"bb\"}";
     }
 
     /**

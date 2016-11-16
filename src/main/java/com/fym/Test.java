@@ -23,7 +23,7 @@ public class Test {
         // 6、获得StorageClient对象。
         StorageClient storageClient = new StorageClient(trackerServer,  storageServer);
         String groupName = "group1";
-        String remoteFileName = "M00/00/00/cxxD0Vgq1vuAfnTwAABkQO1bdCE891.png";
+        String remoteFileName = "M00/00/00/cxxD0Vgr0EqAeGRqAAAD9pONqKM379.png";
         System.out.println(storageClient.delete_file(groupName, remoteFileName));
         // 7、直接调用StorageClient对象方法上传文件即可。
 //        NameValuePair[] metaList = new NameValuePair[3];

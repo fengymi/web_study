@@ -33,7 +33,7 @@
                 <div class="ibox-title">
                     <h5>${title}</h5>
                     <div class="ibox-tools">
-                        <button onclick="permissionReset()" title="修改后需要重置才能生效" type="button" class="btn btn-w-m btn-success">重置权限</button>
+                        <button onclick="permissionReset()" title="修改后需要重置才能生效" type="button" class="btn btn-success btn-xs">重置权限</button>
                     </div>
                 </div>
                 <div class="ibox-content">

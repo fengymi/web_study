@@ -2,11 +2,12 @@ package com.fym.service.system;
 
 import com.fym.dao.system.FileManagerDao;
 import com.fym.entity.utils.FastDFSFile;
-import com.fym.utils.component.FileManager;
+import com.fym.utils.fastdfs.FileManager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class FileManagerService {
@@ -29,6 +30,14 @@ public class FileManagerService {
         }
         fileManagerDao.deleteFile(fileId);
         return result;
+    }
+
+    /**
+     * 得到所有的文件
+     * @return 所有文件
+     */
+    public List getAllFiles(){
+        return fileManagerDao.getAllFiles();
     }
 
     public boolean uploadFile(FastDFSFile file) {

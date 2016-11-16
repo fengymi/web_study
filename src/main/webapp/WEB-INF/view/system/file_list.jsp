@@ -21,7 +21,6 @@
 
     <%@include file="../layout/style.jsp" %>
 
-
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content">
@@ -64,7 +63,24 @@
         <div class="col-sm-9 animated fadeInRight">
             <div class="row">
                 <div class="col-sm-12">
+                    <c:forEach var="file" items="${files}">
+                        <div class="file-box">
+                            <a href="file/download/${file.file_id}">
+                                <div class="file">
+                                    <span class="corner"></span>
 
+                                    <div class="icon">
+                                        <i class="fa fa-bar-chart-o"></i>
+                                    </div>
+                                    <div class="file-name">
+                                        ${file.name}.${file.ext}
+                                        <br/>
+                                        <small>上传时间：${file.upload_time}</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -75,8 +91,9 @@
 <script src="static/admin/js/content.js"></script>
 
 <script>
+
     $(document).ready(function () {
-        initToast();
+//        initToast();
         $('.file-box').each(function () {
             animationHover(this, 'pulse');
         });

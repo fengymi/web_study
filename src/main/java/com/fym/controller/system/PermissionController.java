@@ -13,6 +13,8 @@ import com.fym.service.system.SystemRoleService;
 import com.fym.utils.component.CalcTools;
 import com.fym.utils.component.OperObject;
 import com.fym.utils.data.HashPageData;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -59,7 +61,7 @@ public class PermissionController extends BaseController{
     @ResponseBody
     public Object getList(){
         String role_id = getRequest().getParameter("role_id");
-        return JSON.toJSON(systemPermissionService.getSystemPermission(getPage().setExtend("role_id",role_id)));
+        return JSON.toJSON(new PageInfo<>(systemPermissionService.getSystemPermission(getPage().setExtend("role_id",role_id))));
     }
 
     @RequestMapping("/manager")

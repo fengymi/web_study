@@ -33,7 +33,7 @@
                 <div class="ibox-title">
                     <h5>${title}</h5>
                     <div class="ibox-tools">
-                        <button onclick="proxyReset()" title="修改后需要重置才能生效,不会影响已连接用户" type="button" class="btn btn-w-m btn-success">重置服务器</button>
+                        <button onclick="proxyReset()" title="修改后需要重置才能生效,不会影响已连接用户" type="button" class="btn btn-success btn-xs">重置服务器</button>
                     </div>
                 </div>
                 <div class="ibox-content">

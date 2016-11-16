@@ -1,5 +1,7 @@
 package com.fym.entity;
 
+import java.sql.Timestamp;
+
 public class FastDFSEntity {
     private String file_id; //文件id
     private String group;   //远程组名
@@ -9,6 +11,7 @@ public class FastDFSEntity {
     private String name;    //文件名称
     private String ext;     //扩展名
     private long length;    //文件大小
+    private Timestamp upload_time;    //上传时间
     private User author;    //上传者
     private User verity;   //审核者
 
@@ -82,5 +85,13 @@ public class FastDFSEntity {
 
     public void setVerity(User verity) {
         this.verity = verity;
+    }
+
+    public Timestamp getUpload_time() {
+        return upload_time;
+    }
+
+    public void setUpload_time(Timestamp upload_time) {
+        this.upload_time = upload_time;
     }
 }

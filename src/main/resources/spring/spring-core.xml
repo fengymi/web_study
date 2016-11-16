@@ -16,6 +16,7 @@
             <list>
                 <!--数据库配置信息-->
                 <value>classpath:config/jdbc.properties</value>
+                <value>classpath:config/fastdfs.properties</value>
             </list>
         </property>
     </bean>

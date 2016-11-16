@@ -3,8 +3,10 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-
-    <bean id="fileManager" class="com.fym.utils.component.FileManager" >
-        <constructor-arg value="config/fastdfs-client.conf"/>
+    <bean id="fileManager" class="com.fym.utils.fastdfs.FileManager" init-method="init">
+        <property name="minPoolSize" value="${dfs_minPoolSize}"/>
+        <property name="maxPoolSize" value="${dfs_maxPoolSize}"/>
+        <property name="clientFile" value="${dfs_clientFile}"/>
+        <property name="waitTimes" value="${dfs_waitTimes}"/>
     </bean>
 </beans>

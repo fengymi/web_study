@@ -26,7 +26,7 @@
                 <div class="ibox-title">
                     <h5>${title}</h5>
                     <div class="ibox-tools">
-                        <button type="button" class="btn btn-w-m btn-success">修改密码</button>
+                        <button type="button" class="btn btn-success btn-xs">修改密码</button>
                     </div>
                 </div>
                 <div class="ibox-content">
