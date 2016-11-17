@@ -238,7 +238,6 @@
             <artifactId>fastdfs-client-java</artifactId>
             <version>1.25</version>
         </dependency>
-
     </dependencies>
 
 

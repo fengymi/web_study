@@ -43,8 +43,6 @@ public class TunnelRequestService {
         try {
             InetGuacamoleSocket inetGuacamoleSocket = new InetGuacamoleSocket(proxyServer.getHost(), proxyServer.getPort());
             socket = new ConfiguredGuacamoleSocket(inetGuacamoleSocket,config,clientInfo);
-            System.out.println(socket);
-            System.out.println(socket);
         }catch (Exception g){
             serverService.changeUsed(machineUser.get("mu_id"), Constant.MACHINE_USER_USE);
             logger.error(g.getMessage());
