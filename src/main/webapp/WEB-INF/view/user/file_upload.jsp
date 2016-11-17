@@ -235,6 +235,7 @@
      */
     function removeFile(file) {
         uploader.removeFile(file,true);//从队列删除
+        uploader.cancelFile(file);
         var fileView;
         if(file.id){
             fileView = $("#"+file.id);
