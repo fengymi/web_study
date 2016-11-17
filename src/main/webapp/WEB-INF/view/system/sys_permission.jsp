@@ -115,7 +115,7 @@
                         dataUrl:'<%=basePath%>system/menu/get_select',
                         buildSelect: function (response) {
                             var data = eval(response);
-                            return selectFormat(data,"menu_id","name","暂无可用菜单");
+                            return selectFormat(data,"menu_id","name","暂无可用菜单","${role_id}");
                         }
                     },
                     sorttype: "int",

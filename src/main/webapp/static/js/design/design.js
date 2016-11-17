@@ -85,13 +85,18 @@ function getJqGirdColModel(colModel) {
  * @param text text取值
  * @param defaultValue 没有时
  */
-function selectFormat(data,value,text,defaultValue) {
+function selectFormat(data,value,text,defaultValue,selected) {
     var con = ' <select>';
     if(data.length==0){
         con +='<option value="">'+defaultValue+'</option>';
     }else {
+
         $.each(data, function () {
-            con += '    <option value="'+this[value]+'"> '+this[text]+'</option>';
+            var select = "";
+            if(this[value]==selected){
+                select = "selected";
+            }
+            con += '    <option value="'+this[value]+'" '+select+'> '+this[text]+'</option>';
         });
     }
     con += '    </select>';

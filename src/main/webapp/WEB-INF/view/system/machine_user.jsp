@@ -83,7 +83,7 @@
                         dataUrl:'<%=basePath%>system/machine/get_select',
                         buildSelect: function (response) {
                             var data = eval(response);
-                            return selectFormat(data,"machine_id","name","暂无可用虚拟机");
+                            return selectFormat(data,"machine_id","name","暂无可用虚拟机","${machine_id}");
                         }
                     },
                     sorttype: "int",
