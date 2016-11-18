@@ -146,7 +146,7 @@
                     editable: false,
                     formatter: function (cellvalue, options, rowObject) {
                         var id = rowObject.permission_id;
-                        var con ='  <a title="分配角色" class="J_menuItem" href="system/permission/manager?permission_id='+id+'">' +
+                        var con ='  <a title="分配角色" class="J_menuItem btn btn-white btn-bitbucket" href="system/permission/manager?permission_id='+id+'">' +
                                 '       <i class="fa fa-user-secret"></i>'+
                                 '   </a>';
                         return con;

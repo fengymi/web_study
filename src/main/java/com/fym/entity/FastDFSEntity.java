@@ -11,6 +11,7 @@ public class FastDFSEntity {
     private String name;    //文件名称
     private String ext;     //扩展名
     private long length;    //文件大小
+    private String status;  //状态
     private Timestamp upload_time;    //上传时间
     private User author;    //上传者
     private User verity;   //审核者
@@ -21,6 +22,14 @@ public class FastDFSEntity {
 
     public void setFile_id(String file_id) {
         this.file_id = file_id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getGroup() {

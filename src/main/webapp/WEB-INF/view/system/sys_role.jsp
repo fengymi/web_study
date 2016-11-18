@@ -125,8 +125,8 @@
                     sortable: false,
                     editable: false,
                     formatter: function (cellvalue, options, rowObject) {
-                        var oper = '<a title="查看用户" class="J_menuItem" href="system/user/list?is_sys='+rowObject.is_sys+'&role_id='+rowObject.role_id+'"><i class="fa fa-users"></i></a>&nbsp;&nbsp;';
-                        oper += '<a title="分配权限" class="J_menuItem" href="system/role/manager?role_id='+rowObject.role_id+'"><i class="fa fa-key"></i></a>';
+                        var oper = '<a title="查看用户" class="J_menuItem btn btn-white btn-bitbucket" href="system/user/list?is_sys='+rowObject.is_sys+'&role_id='+rowObject.role_id+'"><i class="fa fa-users"></i></a>&nbsp;&nbsp;';
+                        oper += '<a title="分配权限" class="J_menuItem btn btn-white btn-bitbucket" href="system/role/manager?role_id='+rowObject.role_id+'"><i class="fa fa-key"></i></a>';
 
                         return oper;
                     }

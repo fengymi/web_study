@@ -12,7 +12,8 @@ function initGrid(girdData,colModel) {
     table_data.jqGrid('navGrid', '#pager_list', {
         edit: true,
         add: true,
-        del: true
+        del: true,
+        search: false
     }, defaultCol[0],defaultCol[1]);
 
     $(window).bind('resize', function () {
@@ -199,4 +200,25 @@ function showNavBar(data) {
     $(data.show).mouseenter(function () { //对应mouseover会多次触发
         clearTimeout(timeObj);
     });
+}
+/**
+ * 时间格式化
+ * @param date 时间
+ * @param showSecond 是否显示秒
+ * @returns timeStr 返回格式化的时间
+ */
+function getDate(date,showSecond) {
+    showSecond = showSecond || false;
+    var dateTime = date?new Date(date):new Date();
+    var year = dateTime.getYear() + 1900;
+    var month = dateTime.getMonth()+1;
+    var day = dateTime.getDate();
+    var timeStr = year+"-"+(month<10?("0"+month):month)+"-"+(day<10?("0"+day):day);
+    if(showSecond){
+        var hours = dateTime.getHours();
+        var minutes = dateTime.getMinutes();
+        var seconds = dateTime.getSeconds();
+        timeStr += " "+(hours<10?"0"+hours:hours)+":"+(minutes<10?"0"+minutes:minutes)+":"+(seconds<10?"0"+seconds:seconds);
+    }
+    return timeStr;
 }

@@ -161,7 +161,7 @@
                     sortable: false,
                     editable: false,
                     formatter: function (cellvalue, options, rowObject) {
-                        var value = '<a title="查看账号" class="J_menuItem" href="system/machine_user/list?machine_id='+rowObject.machine_id+'">查看</a>';
+                        var value = '<a title="查看账号" class="J_menuItem btn btn-white btn-bitbucket" href="system/machine_user/list?machine_id='+rowObject.machine_id+'"><i class="fa fa-search"></i></a>';
                         return value;
                     }
                 }

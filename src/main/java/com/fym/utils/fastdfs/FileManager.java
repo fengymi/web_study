@@ -64,7 +64,7 @@ public class FileManager {
      * 删除服务器上的文件
      * @param groupName 文件组名
      * @param remoteFileName 服务器上文件名
-     * @return 0为成功,其它均为失败
+     * @return 0为成功,2为文件不存在,其它均为失败
      */
     public int deleteFile(String groupName,String remoteFileName){
         int result = 0;

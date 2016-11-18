@@ -27,6 +27,9 @@
         ON f.verity_id=u2.user_id
         WHERE
             f.author_id=u1.user_id
+        <if test="sidx!=null and sidx!=''">
+            ORDER BY ${sidx} ${order}
+        </if>
     </select>
 
     <resultMap id="file" type="com.fym.entity.FastDFSEntity" autoMapping="true">

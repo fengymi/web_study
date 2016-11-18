@@ -18,7 +18,7 @@
     <!--360浏览器优先以webkit内核解析-->
 
 
-    <title> - 主页示例</title>
+    <title>主页</title>
 
     <%@include file="../layout/style.jsp"%>
 

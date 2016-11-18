@@ -25,19 +25,24 @@
     <style type="text/css">
         /*文件拖动*/
         #dnd_file{
-            height: 300px;
+            min-height: 500px;
             border: dashed 3px #c0c0c0;
-            border-radius: 5px;
-            font-size: 20px;
-            line-height: 300px;
-            text-align: center;
-            color: #cccccc;
-            font-weight: 700;
-            cursor:crosshair;
+            border-radius: 4px;
+            /*font-size: 20px;*/
+            /*line-height: 300px;*/
+            /*text-align: center;*/
+            /*color: #cccccc;*/
+            /*font-weight: 700;*/
+            /*cursor:crosshair;*/
         }
         #dnd_file span{cursor:pointer;}
         /*待上传文件列表*/
+        #file_list{
+            min-height: 500px;
+            padding: 5px;
+        }
         #file_list:after{content: " ";display: block;clear: both;}
+        #files_status{text-align: center;}
         #files_status:after{content: " ";display: block;clear: both;}
 
         .tools-bar{}
@@ -62,34 +67,20 @@
         .upload-title .warning{
             color: #ee3939;
         }
+        .file-box{height: 180px;}
     </style>
 
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content">
     <div class="row">
-        <div class="col-sm-3">
-            <div class="ibox float-e-margins">
-                <div id="files_status">
-                    <div class="col-sm-3">
-                        成功:<span>0</span>
-                    </div>
-                    <div class="col-sm-3">
-                        失败:<span>0</span>
-                    </div>
-                    <div class="col-sm-3">
-                        取消:<span>0</span>
-                    </div>
-                    <div class="col-sm-3">
-                        等待:<span>0</span>
-                    </div>
-                </div>
-            </div>
-            <div class="ibox float-e-margins">
-                <div id="dnd_file">
-                    <span title="点击上传" onclick="$('input[name=\'file\']').click()">将需要上传的文件拖至此处</span>
-                </div>
-            </div>
+        <div class="col-md-3">
+
+            <%--<div class="ibox float-e-margins">--%>
+                <%--<div id="dnd_file">--%>
+                    <%--<span title="点击上传" onclick="$('input[name=\'file\']').click()">将需要上传的文件拖至此处</span>--%>
+                <%--</div>--%>
+            <%--</div>--%>
             <div class="ibox float-e-margins">
                 <div id="picker" >选择文件</div>
                 <button id="ctlBtn" class="btn btn-primary btn-block">上传文件</button>
@@ -97,29 +88,31 @@
         </div>
         <div class="col-sm-9 animated fadeInRight">
             <div class="row">
-                <div class="col-sm-12">
-                    <div id="file_list">
-                        <%--<div id="WU_FILE_0" class="file-box">--%>
-                            <%--<div class="file">--%>
-                                <%--<div class="tools-bar">--%>
-                                    <%--<div class="file-tools">--%>
-                                        <%--<i title="开始上传" class="fa fa-check"></i>--%>
-                                        <%--<i title="删除文件" class="fa fa-times"></i>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                                <%--<div class="icon" style="padding: 0;height: 80px;"><i class="img-responsive fa fa-film"></i></div>--%>
-                                <%--<div class="file-name"><span>文件名: iconfont.html</span><br>--%>
-                                    <%--<small>大小: 5.96KB</small>--%>
-                                <%--</div>--%>
-                                <%--<div class="progress progress-striped active" style="margin-bottom: 2px;border: dotted 1px #c0c0c0">--%>
-                                    <%--<div class="upload-title">--%>
-                                        <%--<span class="success">等待上传</span>--%>
-                                    <%--</div>--%>
-                                    <%--<div class="progress-bar" role="progressbar"></div>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
+                <div class="ibox col-sm-12">
+                    <div id="files_status">
+                        <div class="col-sm-3">
+                            成功:<span>0</span>
+                        </div>
+                        <div class="col-sm-3">
+                            失败:<span>0</span>
+                        </div>
+                        <div class="col-sm-3">
+                            取消:<span>0</span>
+                        </div>
+                        <div class="col-sm-3">
+                            等待:<span>0</span>
+                        </div>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="ibox col-sm-12">
+                    <div id="file_list">
+
+                    </div>
+                    <%--<div id="dnd_file">--%>
+                        <%--&lt;%&ndash;<span title="点击上传" onclick="$('input[name=\'file\']').click()">将需要上传的文件拖至此处</span>&ndash;%&gt;--%>
+                    <%--</div>--%>
                 </div>
             </div>
         </div>
@@ -166,7 +159,7 @@
             innerHTML: "请选择上传文件",
             multiple:true
         },
-        dnd: "#dnd_file", //开启拖拽
+        dnd: "#file_list", //开启拖拽
         disableGlobalDnd:true, //禁止浏览器打开文件
 //        auto: true,
 
@@ -186,7 +179,6 @@
     });
     // 文件上传过程中创建进度条实时显示。
     uploader.on( 'uploadProgress', function( file, percentage ) {
-        console.log(percentage);
         var $li = $( '#'+file.id ), $percent = $li.find('.progress .progress-bar');
         if(!$percent.length){
             var con ='      <div class="progress progress-striped active" style="margin-bottom: 2px;">'+
@@ -194,11 +186,6 @@
                     '       </div>';
             $li.find(".file").append(con);
         }
-        /*else{
-            if($li.find(".progress").css("display")=="none"){
-                $li.find(".progress").fadeIn();
-            }
-        }*/
         $li.find('.upload-title span').text('上传中..'+percentage+"%");
         $percent.css( 'width', percentage * 100 + '%' );
     });
@@ -216,8 +203,6 @@
         updateFilesStatus();
     });
 
-
-
     /**
      * 更新上传文件数量显示
      */
@@ -232,10 +217,12 @@
     /**
      * 删除列表中的文件
      * @param file 文件或者文件id
+     * @param removeFile 去队列删除
      */
-    function removeFile(file) {
-        uploader.removeFile(file,true);//从队列删除
-        uploader.cancelFile(file);
+    function removeFile(file,removeFile) {
+        if(removeFile){
+            uploader.removeFile(file,true);//从队列删除
+        }
         var fileView;
         if(file.id){
             fileView = $("#"+file.id);
@@ -252,28 +239,22 @@
      */
     function appendFileItem(file) {
         var item =  '<div id="'+file.id+'" class="file-box">'+
-                    '   <div class="file">' +
-                    '      <div class="tools-bar">'+
-                    '           <div class="file-tools">'+
-                    '               <i title="上传" onclick="uploader.upload(\''+file.id+'\')" class="fa fa-check"></i>'+
-                    '               <i title="删除" onclick="removeFile(\''+file.id+'\')" class="fa fa-times"></i>'+
-                    '           </div>'+
-                    '       </div>'+
-                    '       <div class="icon" style="padding: 0;height: 80px;">'+
-                                getFileIcon(file.name)+
-                    '       </div>'+
-                    '       <div class="file-name">'+
-                    '           <span>文件名: '+file.name+'</span><br/>'+
-                    '           <small>大小: '+getFileSize(file.size)+'</small>'+
-                    '       </div>'+
-//                    '       <div class="progress progress-striped active" style="margin-bottom: 2px;border: dotted 1px #c0c0c0">'+
-//                    '           <div class="upload-title">'+
-//                    '               <span class="success">等待上传</span>'+
-//                    '           </div>'+
-//                    '           <div class="progress-bar" role="progressbar"></div>'+
-//                    '       </div>'+
-                    '   </div>';
-            item += '</div>';
+                '   <div class="file">' +
+                '      <div class="tools-bar">'+
+                '           <div class="file-tools">'+
+                '               <i title="上传" onclick="uploader.upload(\''+file.id+'\')" class="fa fa-check"></i>'+
+                '               <i title="删除" onclick="removeFile(\''+file.id+'\',true)" class="fa fa-times"></i>'+
+                '           </div>'+
+                '       </div>'+
+                '       <div class="icon" style="padding: 0;height: 80px;">'+
+                            getFileIcon(file.name)+
+                '       </div>'+
+                '       <div class="file-name">'+
+                '           <span>'+file.name+'</span><br/>'+
+                '           <small>'+getFileSize(file.size)+'</small>'+
+                '       </div>'+
+                '   </div>';
+        item += '</div>';
         return item;
     }
 
@@ -298,5 +279,6 @@
         }
         return fileSize+sizeUnit[index<sizeUnit.length?index:sizeUnit.length];
     }
+
 </script>
 </html>

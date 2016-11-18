@@ -1,8 +1,14 @@
 package com.fym.service.system;
 
 import com.fym.dao.system.FileManagerDao;
+import com.fym.entity.FastDFSEntity;
 import com.fym.entity.utils.FastDFSFile;
+import com.fym.entity.utils.PageEntity;
+import com.fym.utils.data.HashPageData;
 import com.fym.utils.fastdfs.FileManager;
+import com.github.pagehelper.PageHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +17,7 @@ import java.util.List;
 
 @Service
 public class FileManagerService {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private FileManager fileManager;
     @Resource
@@ -25,19 +32,35 @@ public class FileManagerService {
         FastDFSFile file = fileManagerDao.getFile(fileId);
         if(file==null) return -1; //找不到该文件
         int result = fileManager.deleteFile(file.getGroup(),file.getRemote_name());
-        if(result != 0){
+        if(result!=0&&result!=2){
             return result;
         }
         fileManagerDao.deleteFile(fileId);
         return result;
+    }
+    public int deleteFiles(String[] ids){
+        for (String id : ids) {
+            int result = deleteFile(id);
+            if(result!=0&&result!=2){
+                return -1;
+            }
+        }
+        return 0;
     }
 
     /**
      * 得到所有的文件
      * @return 所有文件
      */
-    public List getAllFiles(){
-        return fileManagerDao.getAllFiles();
+    public List<FastDFSEntity> getAllFiles(PageEntity page){
+        List<FastDFSEntity> files = null;
+        PageHelper.startPage(page.getPageNum(), page.getPageSize());
+        try {
+            files = fileManagerDao.getAllFiles(page);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return files;
     }
 
     public boolean uploadFile(FastDFSFile file) {
