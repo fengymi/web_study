@@ -11,7 +11,7 @@
     </bean>
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="loginUrl" value="/index/admin"/>
+        <property name="loginUrl" value="/index/login"/>
         <property name="unauthorizedUrl" value="/index"/>
     </bean>
     <bean id="designShiro" class="com.fym.interceptor.shiro.DesignPermissionInit">

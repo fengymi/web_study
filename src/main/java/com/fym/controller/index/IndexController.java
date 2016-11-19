@@ -1,8 +1,11 @@
 package com.fym.controller.index;
 
-import com.alibaba.fastjson.JSON;
 import com.fym.context.SessionManager;
 import com.fym.controller.BaseController;
+import com.fym.dao.system.SystemUserRoleDao;
+import com.fym.entity.User;
+import com.fym.entity.utils.UserManager;
+import com.fym.service.user.UserService;
 import com.fym.utils.component.Constant;
 import com.fym.utils.component.MD5Util;
 import com.fym.utils.data.HashPageData;
@@ -11,7 +14,6 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,12 +29,15 @@ import javax.annotation.Resource;
 public class IndexController extends BaseController{
     @Resource
     private SessionManager sessionManager;
+    @Resource
+    private UserService userService;
+    @Resource
+    private SystemUserRoleDao systemUserRoleDao;
 
     @RequestMapping("")
     public ModelAndView index(){
         ModelAndView mv = new ModelAndView("index");
-        mv.addObject("user","admin");
-        getSession().setAttribute("user","admin");
+        mv.addObject("title","在线学习");
         return mv;
     }
 
@@ -69,35 +74,55 @@ public class IndexController extends BaseController{
         return pageData;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    @RequestMapping("/login")
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(){
         return "user/login";
     }
-
-    @RequestMapping("/auth")
-    public ModelAndView loginAuth(){
-        ModelAndView mv = new ModelAndView("user/home");
-        boolean success = true;
-
-        if(success){ //登录成功
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public ModelAndView loginAuth(String username,String password){
+        ModelAndView mv = new ModelAndView("redirect:/index");
+        String msg = loginVerify(username,MD5Util.MD5(password));
+        if(msg==null){
             return mv;
         }
-
+        mv.addObject("message",msg);
         mv.setViewName("user/login");
         return mv;
     }
+    @RequestMapping(value = "/register",method = RequestMethod.GET)
+    public ModelAndView register(){
+        ModelAndView mv = new ModelAndView("user/login");
+        mv.addObject("register","1");
+        return mv;
+    }
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    public ModelAndView registerUser(String username,String password){
+        ModelAndView mv = new ModelAndView("user/login");
+        if(username==null||password==null){
+            mv.addObject("register","1");
+            mv.addObject("message","信息不能为空");
+            return mv;
+        }
+        if(userService.findUserByUsername(username)!=null){
+            mv.addObject("register","1");
+            mv.addObject("message","用户已存在");
+            return mv;
+        }
+        HashPageData userInfo = new HashPageData();
+        userInfo.put("username",username);
+        userInfo.put("nickname",username);
+        userInfo.put("password",MD5Util.MD5(password));
+        userInfo.put("locked",0);
+        userService.registerUser(userInfo);
+        UserManager userManager = new UserManager();
+        userManager.setUserId(Integer.parseInt(userInfo.getString("userId")));
+        userManager.setAddRoles(new int[]{3});
+        systemUserRoleDao.addRoleForUser(userManager);
+        SecurityUtils.getSubject().getSession().setAttribute(Constant.SESSION_USER,userService.findUserByUsername(username));
+        mv.setViewName("redirect:/index");
+        return mv;
+    }
+
 
     @RequestMapping(value="/logout",method=RequestMethod.GET)
     public String logout(RedirectAttributes redirectAttributes ){
@@ -105,7 +130,7 @@ public class IndexController extends BaseController{
         SecurityUtils.getSubject().logout();
         getSession().removeAttribute(Constant.SESSION_USER);
         redirectAttributes.addFlashAttribute("message", "您已安全退出");
-        return "redirect:/index/admin";
+        return "redirect:/index";
     }
 
     /**

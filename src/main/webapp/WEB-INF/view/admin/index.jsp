@@ -34,8 +34,7 @@
                     <h5>服务器状态&nbsp;<span id="num"></span></h5>
                 </div>
                 <div class="ibox-content" style="border-top:none;">
-                    <div id="flot-line-chart-moving" style="height:217px;">
-                    </div>
+                    <div id="main" style="height:400px;"></div>
                 </div>
             </div>
         </div>
@@ -43,96 +42,85 @@
 </div>
 <!-- 全局js -->
 <%@include file="../layout/main_js.jsp"%>
-<script src="static/admin/js/plugins/flot/jquery.flot.js"></script>
+<script src="static/js/plugin/echarts.js"></script>
 <script src="static/js/design/design.js"></script>
 <!--flotdemo-->
 <script type="text/javascript">
     $(function() {
         $.ajax({
-            url:"<%=basePath%>index/get_user_num",
-            success:function (data) {
-                var con = "在线浏览人数:"+data.visitorNum+";在线用户:"+data.userNum+";连接数:"+data.connectionNum;
+            url: "<%=basePath%>index/get_user_num",
+            success: function (data) {
+                var con = "在线浏览人数:" + data.visitorNum + ";在线用户:" + data.userNum + ";连接数:" + data.connectionNum;
                 $("#num").text(con);
             }
         });
-        var container = $("#flot-line-chart-moving");
-        var maximum = container.outerWidth() / 2 || 300;
-        var data = [];
 
-        function getRandomData() {
-            if (data.length) {
-                data = data.slice(1);
-            }
-            while (data.length < maximum) {
-                var previous = data.length ? data[data.length - 1] : 50;
-                var y = previous + Math.random() * 10 - 5;
-                data.push(y < 0 ? 0 : y > 100 ? 100 : y);
-            }
-            var res = [];
-            for (var i = 0; i < data.length; ++i) {
-                res.push([i, data[i]])
-            }
-            return res;
+
+        var myChart = echarts.init(document.getElementById('main'));
+
+        var xAxis = [];
+        for(var i=0;i<60;i++){
+            xAxis[i] = i+1;
         }
-        series = [{
-            data: getRandomData(),
-            lines: {
-                fill: true
-            }
-        }];
-        var plot = $.plot(container, series, {
-            grid: {
-                color: "#999999",
-                tickColor: "#f7f9fb",
-                borderWidth:0,
-                minBorderMargin: 20,
-                labelMargin: 10,
-                backgroundColor: {
-                    colors: ["#ffffff", "#ffffff"]
-                },
-                margin: {
-                    top: 8,
-                    bottom: 20,
-                    left: 20
-                },
-                markings: function(axes) {
-                    var markings = [];
-                    var xaxis = axes.xaxis;
-                    for (var x = Math.floor(xaxis.min); x < xaxis.max; x += xaxis.tickSize * 2) {
-                        markings.push({
-                            xaxis: {
-                                from: x,
-                                to: x + xaxis.tickSize
-                            },
-                            color: "#fff"
-                        });
-                    }
-                    return markings;
-                }
+        var yAxis = [];
+        myChart.setOption({
+            grid:{
+                containLabel:true
             },
-            colors: ["#4fc5ea"],
-            xaxis: {
-                tickFormatter: function() {
-                    return "";
-                }
+            title: {
+                text: '服务器监控'
             },
-            yaxis: {
-                min: 0,
-                max: 110
+            tooltip: {
+                trigger:"axis",
+                formatter:"时间:{b0}<br/>{a0}:{c0}%"
             },
             legend: {
-                show: true
-            }
+                data:['CPU使用率']
+            },
+            xAxis: {
+                data: xAxis
+            },
+            yAxis: {
+                name:"CPU使用率%",
+                data:[1,2,3,4,5,6,7,8],
+                nameGap:15,
+                interval:5,
+                boundaryGap:[0,0]
+            },
+            series:[{
+                name:'CPU使用率',
+                type:'line',
+                areaStyle: {
+                    normal: {}
+                }
+            }],
+            color:["#98F5FF"]
         });
 
+        function updateData() {
+            console.log("开始执行");
+            $.ajax({
+                url:'<%=basePath%>admin/get_info',
+                async:false,
+                success:function (data) {
+                    myChart.setOption({
+                        series: [{
+                            data: data
+                        }]
+                    });
 
-        setInterval(function updateRandom() {
-            series[0].data = getRandomData();
-            plot.setData(series);
-            plot.draw();
-        }, 40);
+                }
+            });
+
+        }
+        updateData();
+
+//        setInterval(function () {
+//            updateData();
+//        },10000);
+
+
     });
-
 
 </script>
 </body>

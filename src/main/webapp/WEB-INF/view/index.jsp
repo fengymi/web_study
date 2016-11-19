@@ -1,6 +1,8 @@
+
 <%-- User: fengymi--%>
 <%-- Date: 16-11-2--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
@@ -14,23 +16,12 @@
     <meta charset="utf-8">
     <base href="<%=basePath%>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ＺＴ云 - 网站首页</title>
+    <title>${title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="ＺＴ云流量" />
-
-    <!-- Facebook and Twitter integration -->
-    <meta property="og:title" content=""/>
-    <meta property="og:image" content=""/>
-    <meta property="og:url" content=""/>
-    <meta property="og:site_name" content=""/>
-    <meta property="og:description" content=""/>
-    <meta name="twitter:title" content="" />
-    <meta name="twitter:image" content="" />
-    <meta name="twitter:url" content="" />
-    <meta name="twitter:card" content="" />
+    <meta name="keywords" content="在线学习" />
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="shortcut icon" href="static/home/favicon.ico">
+    <link rel="shortcut icon" href="static/img/favicon.ico">
 
     <!-- Animate.css -->
     <link rel="stylesheet" href="static/home/css/animate.css">
@@ -50,6 +41,10 @@
     <link rel="stylesheet" id="theme-switch" href="static/home/css/style_1_1.css">
     <!-- End demo purposes only -->
 
+    <style type="text/css">
+        #go_top{cursor:pointer;}
+    </style>
+
     <!-- Modernizr JS -->
     <script src="static/home/js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
@@ -67,17 +62,22 @@
             <div class="navbar-header">
                 <!-- Mobile Toggle Menu Button -->
                 <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
-                <a class="navbar-brand" href="index"><img src="static/home/picture/zesql4.png" />ＺＴ云流量</a>
+                <a class="navbar-brand" href="index"><img src="static/img/logo.png" />${title}</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="#" data-nav-section="home"><span>网站首页</span></a></li>
-                    <li><a href="#" data-nav-section="services"><span>产品介绍</span></a></li>
-                    <li><a href="#" data-nav-section="press"><span>软件安装</span></a></li>
+                    <li><a href="#" data-nav-section="services"><span>功能介绍</span></a></li>
+                    <li><a href="#" data-nav-section="press"><span>教学视频</span></a></li>
                     <li><a href="#" data-nav-section="testimonials"><span>常见问题</span></a></li>
-                    <li><a href="#" data-nav-section="pricing"><span>云免服务器</span></a></li>
-                    <li><a href="index/admin" class="btn btn-primary btn-sm">登录</a></li>
-                    <li><a target="_blank" href="" class="btn btn-primary btn-sm">注册</a></li>
+                    <li><a href="<%=basePath%>user/machine/list"><span>在线虚拟机</span></a></li>
+                    <c:if test="${sessionScope.sessionUser!=null}">
+                        <li><a href="index/logout" class="icon colored-2">${sessionScope.sessionUser.nickname}</a></li>
+                    </c:if>
+                    <c:if test="${sessionScope.sessionUser==null}">
+                        <li><a href="index/login" class="btn btn-primary btn-sm">登录</a></li>
+                        <li><a href="index/register" class="btn btn-primary btn-sm">注册</a></li>
+                    </c:if>
                 </ul>
             </div>
         </nav>
@@ -94,10 +94,15 @@
                     <div class="col-md-8 col-md-offset-2 text-center">
                         <div class="fh5co-owl-text-wrap">
                             <div class="fh5co-owl-text">
-                                <h1 class="fh5co-lead to-animate">超实惠云免服务器4G冲浪新时代</h1>
-                                <h2 class="fh5co-sub-lead to-animate">抵制高价流量，让你使用专用的云免服务器，安全快捷！ </h2>
+                                <h1 class="fh5co-lead to-animate">超轻松在线学习</h1>
+                                <h2 class="fh5co-sub-lead to-animate">使用在线虚拟机直接学习，无需搭建任何环境</h2>
                                 <p class="to-animate-2">
-                                    <a href="#" class="btn btn-primary btn-lg" data-nav-section="pricing">现在马上联系，获得技术支持</a>
+                                    <c:if test="${sessionScope.sessionUser==null}">
+                                        <a href="index/register" class="btn btn-primary btn-lg">马上加入</a>
+                                    </c:if>
+                                    <c:if test="${sessionScope.sessionUser!=null}">
+                                        <a href="#" class="btn btn-primary btn-lg" data-nav-section="pricing">开始学习</a>
+                                    </c:if>
                                 </p>
                             </div>
                         </div>
@@ -111,9 +116,9 @@
                     <div class="col-md-7 col-sm-7">
                         <div class="fh5co-owl-text-wrap">
                             <div class="fh5co-owl-text">
-                                <h1 class="fh5co-lead to-animate">支持IOS6-IOS10系统</h1>
-                                <h2 class="fh5co-sub-lead to-animate">一次安装永久支持续费，VPN连接200M服务器转接</h2>
-                                <p class="to-animate-2"><a href="ios.html" class="btn btn-primary btn-lg">查看安装流程</a></p>
+                                <h1 class="fh5co-lead to-animate">使用方便，操作简单</h1>
+                                <h2 class="fh5co-sub-lead to-animate">只要有浏览器即可直接学习，无需安装任何其它插件</h2>
+                                <p class="to-animate-2"><a href="ios.html" class="btn btn-primary btn-lg">查看使用流程</a></p>
                             </div>
                         </div>
                     </div>
@@ -126,9 +131,9 @@
                     <div class="col-md-7 col-md-push-1 col-md-push-5 col-sm-7 col-sm-push-1 col-sm-push-5">
                         <div class="fh5co-owl-text-wrap">
                             <div class="fh5co-owl-text">
-                                <h1 class="fh5co-lead to-animate">安卓系统完美支持</h1>
-                                <h2 class="fh5co-sub-lead to-animate">操作人性化，流量软件上手很简单，使用仅需简单操作几步</h2>
-                                <p class="to-animate-2"><a href="and.html" class="btn btn-primary btn-lg">查看安装流程</a></p>
+                                <h1 class="fh5co-lead to-animate">轻松教学</h1>
+                                <h2 class="fh5co-sub-lead to-animate">每个人都是老师，分享自己的教学视频</h2>
+                                <p class="to-animate-2"><a href="and.html" class="btn btn-primary btn-lg">发布教学</a></p>
                             </div>
                         </div>
                     </div>
@@ -139,16 +144,16 @@
     </div>
 </div>
 
-<div class="copyrights">Collect from <a href="#" >ZT云流量</a></div>
+<%--<div class="copyrights">Collect from <a href="#" >ZT云流量</a></div>--%>
 
 <div id="fh5co-our-services" data-section="services">
     <div class="container">
         <div class="row row-bottom-padded-sm">
             <div class="col-md-12 section-heading text-center">
-                <h2 class="to-animate">产品介绍</h2>
+                <h2 class="to-animate">功能介绍</h2>
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 to-animate">
-                        <h3>ZT云流量是一个让用户体验超低的价格，高品质的流量服务，坚决让运营商让利惠民，我们将以实力赢得大家的青睐！</h3>
+                        <h3>基于web的在线学习，让学习者更方便的直接学习，省去复杂的环境搭建环节</h3>
                     </div>
                 </div>
             </div>
@@ -182,7 +187,7 @@
                 <div class="box to-animate">
                     <div class="icon colored-3"><span><i class="icon-user"></i></span></div>
                     <h3>操作简单</h3>
-                    <p>提供会员中心查询流量，在线充值流量服务，随时了解使用情况</p>
+                    <p>打开浏览器即可直接进行编程</p>
                 </div>
                 <div class="box to-animate">
                     <div class="icon colored-6"><span><i class="icon-eye"></i></span></div>
@@ -400,7 +405,9 @@
         </div>
     </div>
 </footer>
-
+<div id="go_top" title="回到顶部" style="position: fixed;z-index: 1000;right: 30px;bottom: 30px;display: none;">
+    <img src="static/img/go_top" width="29px" height="65px">
+</div>
 
 
 
@@ -444,6 +451,34 @@
 <script src="static/home/js/fancybox_app.js" type="text/javascript"></script>
 <!-- Add mousewheel plugin (this is optional) -->
 <script src="static/home/js/jquery.mousewheel-3.0.6.pack.js" type="text/javascript"></script>
+<script src="static/js/plugin/layer.js" type="text/javascript"></script>
 </body>
+<script>
+    <%--$("#login").click(function () {--%>
+        <%--layer.open({--%>
+            <%--type: 2,--%>
+<%--//            title: '很多时候，我们想最大化看，比如像这个页面。',--%>
+<%--//            shadeClose: true,--%>
+            <%--shade: 0.3,--%>
+            <%--maxmin: true, //开启最大化最小化按钮--%>
+            <%--area: ['100%', '600px'],--%>
+            <%--content: ['<%=basePath%>static/login/index.html','no']--%>
+        <%--});--%>
+    <%--});--%>
+
+    $(function () {
+        $(window).scroll(function(){
+            if ($(window).scrollTop()>100){
+                $("#go_top").fadeIn(500);
+            }else{
+                $("#go_top").fadeOut(300);
+            }
+        });
+        $("#go_top").click(function () {
+            $('body,html').animate({scrollTop:0},500);
+        });
+    });
+</script>
+
 </html>
 

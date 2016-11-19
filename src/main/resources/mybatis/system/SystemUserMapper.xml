@@ -23,6 +23,10 @@
         </collection>
     </resultMap>
 
+    <insert id="registerUser"  useGeneratedKeys="true" keyProperty="userId" parameterType="hash">
+        INSERT INTO `sys_user`(nickname,username,password,locked) VALUES (#{nickname},#{username},#{password},#{locked})
+    </insert>
+
     <insert id="add" parameterType="hash">
         INSERT INTO `sys_user`(nickname,username,locked) VALUES (#{nickname},#{username},#{locked})
     </insert>
@@ -98,6 +102,7 @@
         SELECT
         u.USER_ID,
         u.USERNAME,
+        u.nickname,
         u.PASSWORD,
         r.ROLE_ID,
         r.ROLE_NAME,

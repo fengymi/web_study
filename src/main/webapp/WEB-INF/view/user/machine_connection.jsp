@@ -39,14 +39,18 @@
             color: #b9a876;
         }
         .trigger_bar{
-            height: 5px;position: absolute;left: 0;top:0;z-index: 10001;width: 100%;
+            height: 5px;position: absolute;top:0;z-index: 10001;
+            width: 60%;
+            left: 50%;
+            margin-left: -30%;
         }
         .show_bar{
             position: absolute;
-            left: 0;
             top: 0;
             z-index: 10000;
-            width: 100%;
+            width: 60%;
+            left: 50%;
+            margin-left: -30%;
             display: none;
             text-align: center;
             color: #ccc;

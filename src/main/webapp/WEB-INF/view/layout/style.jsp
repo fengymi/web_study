@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<link rel="shortcut icon" href="static/admin/favicon.ico">
+<link rel="shortcut icon" href="static/img/favicon.ico">
 <link href="static/admin/css/bootstrap.min.css" rel="stylesheet">
 <link href="static/admin/css/font-awesome.min.css" rel="stylesheet">
 <link href="static/admin/css/animate.css" rel="stylesheet">
