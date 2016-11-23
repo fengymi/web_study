@@ -29,7 +29,7 @@ public class FileController extends BaseController {
 
     @RequestMapping(value = "/upload",produces = "application/json;charset=UTF-8",method = RequestMethod.POST)
     @ResponseBody
-    public String uploadFile(@RequestParam(value="file") MultipartFile attach)throws IOException {
+    public FastDFSFile uploadFile(@RequestParam(value="file") MultipartFile attach)throws IOException {
         FastDFSFile file = new FastDFSFile();
         String [] fileInfo = getFileNameAndExt(attach.getOriginalFilename());
         file.setName(fileInfo[0]);
@@ -37,8 +37,8 @@ public class FileController extends BaseController {
         file.setContent(attach.getBytes());
         file.setLength(attach.getSize());
         file.setAuthor(((User)getSession().getAttribute(Constant.SESSION_USER)).getId());
-        fileManagerService.uploadFile(file);
-        return "{\"aa\":\"bb\"}";
+        FastDFSFile fileResult = fileManagerService.uploadFile(file);
+        return fileResult;
     }
 
     /**

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fym.dao.course.CourseDao">
+
+    <insert id="addCourse"  useGeneratedKeys="true" keyProperty="course_id"  parameterType="hash">
+        INSERT INTO
+          course(course_name,course_author,course_language,img_url,img_id,resource_id,resource_url,course_desc)
+          VALUES (#{course_name},#{course_author},#{course_language},#{img_url},#{img_id},#{resource_id},#{resource_url},#{course_desc})
+    </insert>
+
+    <delete id="deleteCourse">
+        DELETE FROM course WHERE course_id=#{0}
+    </delete>
+
+    <select id="getCourse" resultMap="courseInfo">
+        SELECT c.*,l.name as `language`,
+            cl.*
+        FROM course c
+        LEFT JOIN `language` l
+        ON
+          c.course_language=l.l_id
+        LEFT JOIN `curriculum` cl
+        ON
+          c.course_id=cl.c_id
+        WHERE c.course_id=#{0} order by cl.curriculum_num
+    </select>
+
+
+    <resultMap id="courseInfo" type="com.fym.entity.CourseEntity" autoMapping="true">
+        <id column="course_id" property="course_id" />
+        <collection property="courseItems" column="curriculum_id" ofType="com.fym.entity.CurriculumEntity" autoMapping="true">
+
+        </collection>
+    </resultMap>
+</mapper>

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fym.dao.system.FileManagerDao">
 
-    <insert id="addFile" parameterType="com.fym.entity.utils.FastDFSFile">
+    <insert id="addFile"  useGeneratedKeys="true" keyProperty="file_id"  parameterType="com.fym.entity.utils.FastDFSFile">
         INSERT INTO file(`name`,`group`,remote_name,ext,`length`,author_id)
           VALUES (#{name},#{group},#{remote_name},#{ext},#{length},#{author})
     </insert>

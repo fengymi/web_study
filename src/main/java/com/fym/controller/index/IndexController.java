@@ -80,7 +80,7 @@ public class IndexController extends BaseController{
     }
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ModelAndView loginAuth(String username,String password){
-        ModelAndView mv = new ModelAndView("redirect:/index");
+        ModelAndView mv = new ModelAndView("redirect:/");
         String msg = loginVerify(username,MD5Util.MD5(password));
         if(msg==null){
             return mv;
@@ -119,7 +119,7 @@ public class IndexController extends BaseController{
         userManager.setAddRoles(new int[]{3});
         systemUserRoleDao.addRoleForUser(userManager);
         SecurityUtils.getSubject().getSession().setAttribute(Constant.SESSION_USER,userService.findUserByUsername(username));
-        mv.setViewName("redirect:/index");
+        mv.setViewName("redirect:/");
         return mv;
     }
 
@@ -130,7 +130,7 @@ public class IndexController extends BaseController{
         SecurityUtils.getSubject().logout();
         getSession().removeAttribute(Constant.SESSION_USER);
         redirectAttributes.addFlashAttribute("message", "您已安全退出");
-        return "redirect:/index";
+        return "redirect:/";
     }
 
     /**

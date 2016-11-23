@@ -20,6 +20,7 @@
             <bean class="com.fym.interceptor.GlobalInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+    <mvc:view-controller path="/" view-name="index"/>
 
     <!--允许返回json-->
     <bean id="mappingJacksonHttpMessageConverter"

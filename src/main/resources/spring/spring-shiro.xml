@@ -17,6 +17,7 @@
     <bean id="designShiro" class="com.fym.interceptor.shiro.DesignPermissionInit">
         <property name="definitions">
             <value>
+                /=anon
                 /index=anon
                 /index/** = anon
                 /static/** = anon

@@ -454,17 +454,6 @@
 <script src="static/js/plugin/layer.js" type="text/javascript"></script>
 </body>
 <script>
-    <%--$("#login").click(function () {--%>
-        <%--layer.open({--%>
-            <%--type: 2,--%>
-<%--//            title: '很多时候，我们想最大化看，比如像这个页面。',--%>
-<%--//            shadeClose: true,--%>
-            <%--shade: 0.3,--%>
-            <%--maxmin: true, //开启最大化最小化按钮--%>
-            <%--area: ['100%', '600px'],--%>
-            <%--content: ['<%=basePath%>static/login/index.html','no']--%>
-        <%--});--%>
-    <%--});--%>
 
     $(function () {
         $(window).scroll(function(){

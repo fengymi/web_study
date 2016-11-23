@@ -17,7 +17,7 @@
                                 </span>
                     </a>
                 </div>
-                <div class="logo-element">hAdmin
+                <div class="logo-element">webAdmin
                 </div>
             </li>
             <c:forEach var="menu" items="${sessionScope.sessionUser.menus}">

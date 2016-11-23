@@ -63,15 +63,15 @@ public class FileManagerService {
         return files;
     }
 
-    public boolean uploadFile(FastDFSFile file) {
+    public FastDFSFile uploadFile(FastDFSFile file) {
         String[] fileInfo =fileManager.uploadFile(file,null);
         if(fileInfo==null||fileInfo.length!=2){
-            return false;
+            return null;
         }
         file.setGroup(fileInfo[0]);
         file.setRemote_name(fileInfo[1]);
         fileManagerDao.addFile(file);
-        return true;
+        return file;
     }
 
     public ResponseEntity<byte[]> downloadFile(Object fileId){
