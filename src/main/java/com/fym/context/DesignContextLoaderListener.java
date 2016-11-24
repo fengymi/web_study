@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSessionListener;
 
 public class DesignContextLoaderListener extends ContextLoaderListener implements HttpSessionListener,HttpSessionAttributeListener {
 
+
     private SessionManager sessionManager;
 
     public DesignContextLoaderListener() {
@@ -34,6 +35,8 @@ public class DesignContextLoaderListener extends ContextLoaderListener implement
         SpringBeanGetter.setContext(applicationContext);
         //初始化代理服务器
         ProxyServer.getProxy().init();
+        //设置文件主机
+        event.getServletContext().setAttribute(Constant.FILE_HOST_NAME,(Constant.FILE_HOST+":"+Constant.FILE_PORT));
     }
 
     @Override

@@ -64,79 +64,51 @@
         var table_data = $("#table_data");
         $.jgrid.defaults.styleUI = 'Bootstrap';
         table_data.jqGrid(getJqGirdInit({
-            url : '<%=basePath%>file/manager/get_data',
-            editurl:"<%=basePath%>file/manager/delete/files",
-            sortname:"file_id",
+            url : '<%=basePath%>course_manager/get_data',
+            <%--editurl:"<%=basePath%>course_manager/delete",--%>
+            sortname:"course_id",
             caption: "${title}",
-            multiselect:true,
+//            multiselect:true,
             colModel: [
                 {
                     label:"id",
-                    name: 'file_id',
-                    index: 'file_id',
+                    name: 'course_id',
+                    index: 'course_id',
                     align: 'center',
                     key:true
                 },{
-                    label:"文件名",
-                    name: 'name',
-                    index: 'name',
+                    label:"课程名称",
+                    name: 'course_name',
+                    index: 'course_name',
                     align: 'center'
                 },{
-                    label:"类型",
-                    name: 'ext',
-                    index: 'ext',
+                    label:"主讲人",
+                    name: 'course_author',
+                    index: 'course_author',
                     align: 'center'
                 },{
-                    label:"上传时间",
-                    name: 'upload_time',
-                    index: 'upload_time',
-                    align: 'center',
-                    formatter : function(value){
-                        return getDate(value,true);
-                    }
-                },
-                {
-                    label:'上传者',
-                    name: 'author.nickname',
-                    index: 'author_id',
+                    label:"语言类型",
+                    name: 'language',
+                    index: 'course_language',
                     align: 'center'
-                },
-                {
-                    label:'大小',
-                    name: 'length',
-                    index: 'length',
-                    align: 'center',
-                    formatter: function (cellValue) {
-                        return getFileSize(cellValue);
-                    }
                 },{
-                    label:'状态',
-                    name: 'status',
-                    index: 'status',
-                    align: 'center',
-                    formatter: function (cellValue) {
-                        var label_class = "label-info";
-                        var label_text = "正常";
-
-                        if(cellValue!=1){
-                            label_class = "label-danger";
-                            label_text = "异常";
-                        }
-
-                        return '<span class="label '+label_class+'">'+label_text+'</span>';
-                    },
-                    edittype:'select',
-                    editoptions:{value:"1:正常;0:异常"},
-                    editable: true
+                    label:"发布人",
+                    name: 'user.nickname',
+                    index: 'c_user_id',
+                    align: 'center'
+                },{
+                    label:"章节数",
+                    name: 'courseItems.length',
+                    sortable: false,
+                    editable: false,
+                    align: 'center'
                 },{
                     label:'操作',
                     align: 'center',
                     sortable: false,
                     editable: false,
                     formatter: function (cellValue, options, rowObject) {
-                        var oper = '<a title="下载文件" class="J_menuItem btn btn-white btn-bitbucket" href="file/download/'+rowObject.file_id+'"><i class="fa fa-download"></i></a>&nbsp;&nbsp;';
-                        oper += '<a title="查看详情" class="J_menuItem btn btn-white btn-bitbucket" href="javascript:;"><i class="fa fa-search"></i></a>';
-
+                        var oper = '<a title="查看详情" href="course_manager/info/'+rowObject.course_id+'" class="J_menuItem btn btn-white btn-bitbucket" href="javascript:;"><i class="fa fa-search"></i></a>';
                         return oper;
                     }
                 }
@@ -146,7 +118,7 @@
         table_data.jqGrid('navGrid', '#pager_list', {
             edit: false,
             add: false,
-            del: true,
+            del: false,
             search:false
         });
 
@@ -157,27 +129,6 @@
 
         initGrid();
     });
-
-    function changeStatus(obj,css,text) {
-        var status  = $(obj).attr("status");
-        $(obj).attr("status",status^1);
-        $(obj).addClass(css[status^1]);
-        $(obj).removeClass(css[status]);
-        $(obj).html(text[status^1]);
-    }
-    /**
-     * 计算文件大小
-     * @type {string[]}
-     */
-    var sizeUnit = ["B","KB","MB","GB","TB"];//文件大小单位
-    function getFileSize(fileSize) {
-        var index = 0;
-        while(fileSize/1024>1){
-            fileSize = (fileSize/1024).toFixed(2);
-            index++;
-        }
-        return fileSize+sizeUnit[index<sizeUnit.length?index:sizeUnit.length];
-    }
 </script>
 
 

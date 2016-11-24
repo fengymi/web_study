@@ -4,8 +4,8 @@
 
     <insert id="addCourse"  useGeneratedKeys="true" keyProperty="course_id"  parameterType="hash">
         INSERT INTO
-          course(course_name,course_author,course_language,img_url,img_id,resource_id,resource_url,course_desc)
-          VALUES (#{course_name},#{course_author},#{course_language},#{img_url},#{img_id},#{resource_id},#{resource_url},#{course_desc})
+          course(course_name,c_user_id,course_author,course_language,img_url,img_id,resource_id,resource_url,course_desc)
+          VALUES (#{course_name},#{userId},#{course_author},#{course_language},#{img_url},#{img_id},#{resource_id},#{resource_url},#{course_desc})
     </insert>
 
     <delete id="deleteCourse">
@@ -13,12 +13,7 @@
     </delete>
 
     <select id="getCourse" resultMap="courseInfo">
-        SELECT c.*,l.name as `language`,
-            cl.*
-        FROM course c
-        LEFT JOIN `language` l
-        ON
-          c.course_language=l.l_id
+        <include refid="base-select" />
         LEFT JOIN `curriculum` cl
         ON
           c.course_id=cl.c_id
@@ -26,10 +21,44 @@
     </select>
 
 
+    <select id="getAll" resultMap="courseInfo">
+        <include refid="base-select"/>
+        LEFT JOIN `curriculum` cl
+        ON
+        c.course_id=cl.c_id
+        <if test="extend.userId!=null">
+            WHERE c.c_user_id=#{extend.userId}
+        </if>
+        <if test="sidx!=null and sidx!=''">
+            ORDER BY ${sidx} ${order}
+        </if>
+    </select>
+
+    <sql id="base-select">
+        SELECT c.*,l.name as `language`,
+            su.username,su.nickname,su.user_id,
+            cl.*
+        FROM course c
+        LEFT JOIN `language` l
+        ON
+          c.course_language=l.l_id
+        INNER JOIN `sys_user` su
+        ON su.user_id=c.c_user_id
+    </sql>
+
     <resultMap id="courseInfo" type="com.fym.entity.CourseEntity" autoMapping="true">
         <id column="course_id" property="course_id" />
-        <collection property="courseItems" column="curriculum_id" ofType="com.fym.entity.CurriculumEntity" autoMapping="true">
-
+        <association property="user" column="user_id" javaType="com.fym.entity.User" autoMapping="true">
+            <id property="id" column="user_id"/>
+        </association>
+        <collection property="courseItems" column="curriculum_id" ofType="com.fym.entity.CurriculumEntity">
+            <id property="curriculum_id" column="curriculum_id"/>
+            <result property="c_id" column="c_num"/>
+            <result property="curriculum_num" column="curriculum_num"/>
+            <result property="name" column="name"/>
+            <result property="desc" column="desc"/>
+            <result property="video_id" column="video_id"/>
+            <result property="video_url" column="video_url"/>
         </collection>
     </resultMap>
 </mapper>

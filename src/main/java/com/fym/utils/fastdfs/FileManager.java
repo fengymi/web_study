@@ -94,12 +94,19 @@ public class FileManager {
         HttpHeaders headers = new HttpHeaders();
         String logId = UUID.randomUUID().toString();
         TrackerServer trackerServer = null;
+
         try {
             //获取TrackerServer连接
             trackerServer = connectionPool.checkout(logId);
             StorageClient1 storageClient = new StorageClient1(trackerServer,null);
             content = storageClient.download_file(file.getGroup(), file.getRemote_name());
-            headers.setContentDispositionFormData("attachment",  new String((file.getName()+"."+file.getExt()).getBytes("UTF-8"),"iso-8859-1"));
+            String fileInfo;
+            if(file.getName()==null){
+                fileInfo = System.currentTimeMillis()+"";
+            }else {
+                fileInfo = new String((file.getName()+"."+file.getExt()).getBytes("UTF-8"),"iso-8859-1");
+            }
+            headers.setContentDispositionFormData("attachment",  fileInfo);
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         } catch (Exception e) {
             logger.error(e.getMessage());

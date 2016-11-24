@@ -15,7 +15,7 @@ public class ProxyServer {
     private final Logger logger = LoggerFactory.getLogger(ProxyServer.class);
 
     private static final boolean NEED_RESET_USER = true; //系统重启时,是否需要重置已经连接的用户
-    private static ProxyServer proxyServer;
+    private volatile static ProxyServer proxyServer;
     private ServerService serverService;
     private List<ProxyServerEntity> servers;
     private int index;

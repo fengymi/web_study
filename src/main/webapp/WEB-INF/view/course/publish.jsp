@@ -55,7 +55,9 @@
                                     <div class="col-sm-9">
                                         <select class="form-control" name="course_language" style="height: 36px;">
                                             <option value="">请选择相应的开发语言</option>
-                                            <option value="1">Java</option>
+                                            <c:forEach var="language" items="${languages}">
+                                                <option value="${language.l_id}">${language.name}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
@@ -152,7 +154,7 @@
     });
     uploader.on( 'uploadSuccess', function( file,response ) {
         $("input[name='img_id']").val(response.file_id);
-        $("input[name='img_url']").val(response.group+"/"+response.remote_name+"."+response.ext);
+        $("input[name='img_url']").val(response.group+"/"+response.remote_name);
         var $img_nav = $("#img_nav");
         $img_nav.fadeOut(100);
         $img_nav.find("span").html("0%");

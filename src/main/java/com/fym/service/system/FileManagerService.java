@@ -79,4 +79,14 @@ public class FileManagerService {
         if(file==null) return null; //找不到该文件
         return fileManager.downloadFile(file);
     }
+    public ResponseEntity<byte[]> downloadFile(String filePath){
+        FastDFSFile file = new FastDFSFile();
+        int index = filePath.indexOf("/");
+        if(index==-1){
+            return null;
+        }
+        file.setGroup(filePath.substring(0,index));
+        file.setRemote_name(filePath.substring(index+1));
+        return fileManager.downloadFile(file);
+    }
 }

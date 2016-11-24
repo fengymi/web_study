@@ -31,23 +31,26 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>${title}</h5>
+                    <div class="ibox-tools">
+                        <button type="button" class="btn btn-success btn-xs">删除该课程</button>
+                    </div>
                 </div>
                 <div class="ibox-content">
                     <div class="row form-body form-horizontal m-t">
                         <div class="col-md-12">
                             <form action="course_manager/publish" method="post">
-                                <input type="hidden" name="img_url" />
-                                <input type="hidden" name="img_id" />
+                                <input type="hidden" name="img_url" value="${course.img_url}" />
+                                <input type="hidden" name="img_id"  value="${course.img_id}" />
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">课程名称：</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="course_name" class="form-control" placeholder="请输入课程名称" required>
+                                        <input type="text" name="course_name" value="${course.course_name}" class="form-control" placeholder="请输入课程名称" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">主讲人：</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="course_author" class="form-control" placeholder="课程主讲人" required>
+                                        <input type="text" name="course_author" value="${course.course_author}" class="form-control" placeholder="课程主讲人" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -55,25 +58,27 @@
                                     <div class="col-sm-9">
                                         <select class="form-control" name="course_language" style="height: 36px;">
                                             <option value="">请选择相应的开发语言</option>
-                                            <option value="1">Java</option>
+                                            <c:forEach var="language" items="${languages}">
+                                                <option value="${language.l_id}" <c:if test="${language.name==course.language}">selected</c:if> >${language.name}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">课程描述：</label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control" name="course_desc" maxlength="1000" placeholder="对该课程的相应介绍" rows="4"></textarea>
+                                        <textarea class="form-control" name="course_desc" maxlength="1000" placeholder="对该课程的相应介绍" rows="4">${course.course_desc}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">课程封面：</label>
                                     <div class="col-sm-9">
-                                        <div id="picker">选择文件</div>
+                                        <div id="picker">封面修改</div>
                                         <div style="position: relative;width: 216px;height: 120px;border: 1px dashed #c0c0c0;border-radius: 5px;">
-                                            <div id="img_nav" style="position: absolute;left: 0;top:0;width: 100%;height: 100%;text-align: center;line-height: 120px;background:rgba(0, 0, 0, 0.3);color: #ffffff">
-                                                <span>请选择文件</span>
+                                            <div id="img_nav" style="position: absolute;left: 0;top:0;width: 100%;height: 100%;text-align: center;line-height: 120px;background:rgba(0, 0, 0, 0.3);color: #ffffff;display: none">
+                                                <span></span>
                                             </div>
-                                            <img id="img" style="height: 100%;width:100%">
+                                            <img id="img" src="common/download?filePath=${course.img_url}" style="height: 100%;width:100%">
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +86,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label"></label>
                                     <div class="col-sm-9">
-                                        <button  class="btn btn-primary" type="submit">发布课程</button>
+                                        <button  class="btn btn-primary" type="submit">课程修改</button>
                                     </div>
                                 </div>
                             </form>
@@ -105,8 +110,8 @@
         // 内部根据当前运行是创建，可能是input元素，也可能是flash.
         pick: {
             id:'#picker',
-            label:"选择封面",
-            innerHTML: "选择封面",
+            label:"封面修改",
+            innerHTML: "封面修改",
             multiple:true
         },
         // 只允许选择图片文件。

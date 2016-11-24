@@ -19,6 +19,7 @@
             <value>
                 /=anon
                 /index=anon
+                /common/**=anon
                 /index/** = anon
                 /static/** = anon
             </value>

@@ -1,7 +1,5 @@
 package com.fym.entity;
 
-import com.fym.utils.data.HashPageData;
-
 import java.util.List;
 
 public class CourseEntity {
@@ -14,6 +12,8 @@ public class CourseEntity {
     private String resource_url;
     private Integer resource_id;
     private String course_desc;
+
+    private User user;
     private List<CurriculumEntity> courseItems;
 
     public Integer getCourse_id() {
@@ -88,6 +88,14 @@ public class CourseEntity {
         this.course_desc = course_desc;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public List<CurriculumEntity> getCourseItems() {
         return courseItems;
     }
@@ -95,4 +103,5 @@ public class CourseEntity {
     public void setCourseItems(List<CurriculumEntity> courseItems) {
         this.courseItems = courseItems;
     }
+
 }

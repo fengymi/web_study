@@ -7,7 +7,7 @@ public class CurriculumEntity {
     private String name;
     private String desc;
     private String video_url;
-    private Integer vedio_id;
+    private Integer video_id;
 
     public Integer getCurriculum_id() {
         return curriculum_id;
@@ -57,11 +57,11 @@ public class CurriculumEntity {
         this.video_url = video_url;
     }
 
-    public Integer getVedio_id() {
-        return vedio_id;
+    public Integer getVideo_id() {
+        return video_id;
     }
 
-    public void setVedio_id(Integer vedio_id) {
-        this.vedio_id = vedio_id;
+    public void setVideo_id(Integer video_id) {
+        this.video_id = video_id;
     }
 }
