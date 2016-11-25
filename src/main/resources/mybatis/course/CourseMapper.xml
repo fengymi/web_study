@@ -59,6 +59,8 @@
             <result property="desc" column="desc"/>
             <result property="video_id" column="video_id"/>
             <result property="video_url" column="video_url"/>
+            <result property="resource_id" column="resource_id"/>
+            <result property="resource_url" column="resource_url"/>
         </collection>
     </resultMap>
 </mapper>

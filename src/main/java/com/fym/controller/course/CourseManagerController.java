@@ -74,4 +74,20 @@ public class CourseManagerController extends BaseController{
         mv.setViewName("redirect:/course_manager/info/"+courseInfo.get("course_id"));
         return mv;
     }
+
+    @RequestMapping(value = "/course_update",params = "application/json;charset=UTF-8",method = RequestMethod.POST)
+    @ResponseBody
+    public Object courseUpdate(){
+        HashPageData courseInfo = new HashPageData(getRequest());
+        System.out.println(courseInfo);
+        return "";
+    }
+
+    @RequestMapping(value = "/add_item",params = "application/json;charset=UTF-8",method = RequestMethod.POST)
+    @ResponseBody
+    public Object addCourseItem(){
+        HashPageData courseInfo = new HashPageData(getRequest());
+        System.out.println(courseInfo);
+        return "";
+    }
 }

@@ -8,6 +8,8 @@ public class CurriculumEntity {
     private String desc;
     private String video_url;
     private Integer video_id;
+    private String resource_url;
+    private Integer resource_id;
 
     public Integer getCurriculum_id() {
         return curriculum_id;
@@ -63,5 +65,21 @@ public class CurriculumEntity {
 
     public void setVideo_id(Integer video_id) {
         this.video_id = video_id;
+    }
+
+    public String getResource_url() {
+        return resource_url;
+    }
+
+    public void setResource_url(String resource_url) {
+        this.resource_url = resource_url;
+    }
+
+    public Integer getResource_id() {
+        return resource_id;
+    }
+
+    public void setResource_id(Integer resource_id) {
+        this.resource_id = resource_id;
     }
 }

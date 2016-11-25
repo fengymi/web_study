@@ -36,7 +36,7 @@ public class DesignContextLoaderListener extends ContextLoaderListener implement
         //初始化代理服务器
         ProxyServer.getProxy().init();
         //设置文件主机
-        event.getServletContext().setAttribute(Constant.FILE_HOST_NAME,(Constant.FILE_HOST+":"+Constant.FILE_PORT));
+        event.getServletContext().setAttribute(Constant.FILE_HOST_NAME,(Constant.FILE_PROTOCOL+"://"+Constant.FILE_HOST+":"+Constant.FILE_PORT));
     }
 
     @Override

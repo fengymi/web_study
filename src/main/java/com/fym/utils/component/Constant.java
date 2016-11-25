@@ -13,6 +13,7 @@ public interface Constant {
     String SESSION_USER_PERMISSION = "permission";
 
     //文件系统信息
+    String FILE_PROTOCOL = "http";
     String FILE_HOST_NAME = "fileHost";
     String FILE_HOST = "www.fengymi.cn";
     int FILE_PORT = 8888;
