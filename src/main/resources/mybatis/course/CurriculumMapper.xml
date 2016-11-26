@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fym.dao.course.CurriculumDao">
+    <insert id="add" keyColumn="curriculum_id" keyProperty="curriculum_id" useGeneratedKeys="true" parameterType="com.fym.entity.CurriculumEntity">
+        INSERT INTO
+            curriculum(c_id,curriculum_num,`name`,video_url,video_id,resource_url,resource_id,`desc`)
+            VALUES (#{c_id},#{curriculum_num},#{name},#{video_url},#{video_id},#{resource_url},#{resource_id},#{desc})
+    </insert>
+    <update id="update">
+        UPDATE curriculum SET
+            c_id=#{c_id},curriculum_num=#{curriculum_num},`name`=#{name},video_url=#{video_url},video_id=#{video_id},
+            resource_url=#{resource_url},resource_id=#{resource_id},`desc`=#{desc}
+        where curriculum_id=#{curriculum_id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM curriculum WHERE curriculum_id=#{0}
+    </delete>
+
+</mapper>

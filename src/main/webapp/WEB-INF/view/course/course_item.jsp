@@ -56,6 +56,12 @@
             border: 0;
             width: 90%;
         }
+        .course_item input:active{
+            line-height: 30px;
+            text-align: center;
+            border: 0;
+            width: 90%;
+        }
 
         .file-progress-content{
             width: 80%;height:30px;float: left;
@@ -92,13 +98,13 @@
                 <div class="ibox-title">
                     <h5>${title}</h5>
                     <div class="ibox-tools">
-                        <button type="button" class="btn btn-success btn-xs">删除该课程</button>
+                        <button onclick="deleteCourse()" type="button" class="btn btn-success btn-xs">删除该课程</button>
                     </div>
                 </div>
                 <div class="ibox-content">
                     <div class="row form-body form-horizontal m-t">
                         <div class="col-md-12">
-                            <form action="course_manager/course_update" method="post">
+                            <form id="course_update" action="course_manager/course_update" method="post">
                                 <input type="hidden" name="img_url" value="${course.img_url}" />
                                 <input type="hidden" name="img_id"  value="${course.img_id}" />
                                 <input type="hidden" name="course_id"  value="${course.course_id}" />
@@ -143,9 +149,11 @@
                                         </div>
                                     </div>
                                 </div>
+                            </form>
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">章节：</label>
-                                    <div style="display: none">
+                                    <div style="position: absolute; opacity: 0; filter:Alpha(opacity=0);">
                                         <div id="file_button"></div>
                                     </div>
                                     <div class="col-sm-10">
@@ -165,75 +173,86 @@
                                                     <c:forEach var="courseItem" items="${course.courseItems}">
                                                         <tr>
                                                             <td>
-                                                                <input name="curriculum_num" value="${courseItem.curriculum_num}" type="number" required/>
+                                                                <input name="curriculum_num" value="${courseItem.curriculum_num}" type="number"/>
                                                             </td>
-                                                            <td><input name="name" value="${courseItem.name}" required /></td>
+                                                            <td><input name="name" value="${courseItem.name}" /></td>
                                                             <td><input name="desc" value="${courseItem.desc}" /></td>
                                                             <td>
                                                                 <input type="hidden" name="video_url" value="${courseItem.video_url}" />
                                                                 <input type="hidden" name="video_id" value="${courseItem.video_id}" />
-                                                                <c:if test="${courseItem.video_url==null}">
-                                                                    <button class="btn btn-success" title="上传" type="button" onclick="changeButton(this)">
-                                                                        <i class="fa fa-upload"></i>
-                                                                    </button>
-                                                                </c:if>
-                                                                <c:if test="${courseItem.video_url!=null}">
-                                                                    <button class="btn btn-info" title="预览/下载" type="button" onclick="lookFile('${courseItem.video_url}')">
-                                                                        <i class="fa fa-eye"></i>
-                                                                    </button>
-                                                                    <button class="btn btn-success" title="重新上传" type="button" onclick="changeButton(this)">
-                                                                        <i class="fa fa-refresh"></i>
-                                                                    </button>
-                                                                </c:if>
+                                                                <div>
+                                                                    <c:if test="${courseItem.video_id==null}">
+                                                                        <button class="btn btn-success" title="上传" type="button" onclick="changeButton(this)">
+                                                                            <i class="fa fa-upload"></i>
+                                                                        </button>
+                                                                    </c:if>
+                                                                    <c:if test="${courseItem.video_id!=null}">
+                                                                        <button class="btn btn-info" title="预览/下载" type="button" onclick="lookFile('${courseItem.video_url}')">
+                                                                            <i class="fa fa-eye"></i>
+                                                                        </button>
+                                                                        <button class="btn btn-success" title="重新上传" type="button" onclick="changeButton(this)">
+                                                                            <i class="fa fa-refresh"></i>
+                                                                        </button>
+                                                                    </c:if>
+                                                                </div>
                                                             </td>
                                                             <td>
                                                                 <input type="hidden" name="resource_url" value="${courseItem.resource_url}" />
                                                                 <input type="hidden" name="resource_id" value="${courseItem.resource_id}" />
-                                                                <c:if test="${courseItem.video_url==null}">
-                                                                    <button class="btn btn-success" title="上传" type="button" onclick="changeButton(this)">
-                                                                        <i class="fa fa-upload"></i>
-                                                                    </button>
-                                                                </c:if>
-                                                                <c:if test="${courseItem.video_url!=null}">
-                                                                    <button class="btn btn-info" title="预览/下载" type="button" onclick="lookFile('${courseItem.resource_url}')">
-                                                                        <i class="fa fa-eye"></i>
-                                                                    </button>
-                                                                    <button class="btn btn-success" title="重新上传" type="button" onclick="changeButton(this)">
-                                                                        <i class="fa fa-refresh"></i>
-                                                                    </button>
-                                                                </c:if>
+                                                                <div>
+                                                                    <c:if test="${courseItem.resource_id==null}">
+                                                                        <button class="btn btn-success" title="上传" type="button" onclick="changeButton(this)">
+                                                                            <i class="fa fa-upload"></i>
+                                                                        </button>
+                                                                    </c:if>
+                                                                    <c:if test="${courseItem.resource_id!=null}">
+                                                                        <button class="btn btn-info" title="预览/下载" type="button" onclick="lookFile('${courseItem.resource_url}')">
+                                                                            <i class="fa fa-eye"></i>
+                                                                        </button>
+                                                                        <button class="btn btn-success" title="重新上传" type="button" onclick="changeButton(this)">
+                                                                            <i class="fa fa-refresh"></i>
+                                                                        </button>
+                                                                    </c:if>
+                                                                </div>
                                                             </td>
                                                             <td>
-                                                                <button class="btn btn-primary" type="button" onclick="addCourseItem(this)">
-                                                                    <i class="fa fa-arrow-up"></i>&nbsp;&nbsp;提交
+                                                                <button class="btn btn-primary" title="修改" type="button" onclick="addCourseItem(this,${courseItem.curriculum_id})">
+                                                                    <i class="fa fa-arrow-up"></i>
+                                                                </button>
+                                                                <button class="btn btn-danger" title="删除" type="button" onclick="deleteCourseItem(this,${courseItem.curriculum_id})">
+                                                                    <i class="fa fa-trash"></i>
                                                                 </button>
                                                             </td>
                                                         </tr>
                                                     </c:forEach>
                                                     <tr>
-                                                        <td><input name="curriculum_num" value="1" type="number" required/></td>
-                                                        <td><input name="name" value="java环境搭建" required /></td>
-                                                        <td><input name="desc" value="环境搭建教程" /></td>
+                                                        <td><input name="curriculum_num" type="number"/></td>
+                                                        <td><input name="name" /></td>
+                                                        <td><input name="desc" /></td>
                                                         <td>
-                                                            <button class="btn btn-success" title="上传" type="button" onclick="changeButton(this)">
-                                                                <i class="fa fa-upload"></i>
-                                                            </button>
+                                                            <input type="hidden" name="video_url" value="">
+                                                            <input type="hidden" name="video_id" value="">
+                                                            <div>
+                                                                <button class="btn btn-success" title="上传" type="button" onclick="changeButton(this)">
+                                                                    <i class="fa fa-upload"></i>
+                                                                </button>
+                                                            </div>
                                                         </td>
                                                         <td>
-                                                            <button class="btn btn-info" title="预览/下载" type="button" onclick="lookFile()">
-                                                                <i class="fa fa-eye"></i>
-                                                            </button>
-                                                            <button class="btn btn-success" title="重新上传" type="button" onclick="changeButton(this)">
-                                                                <i class="fa fa-refresh"></i>
-                                                            </button>
+                                                            <input type="hidden" name="resource_url" value="">
+                                                            <input type="hidden" name="resource_id" value="">
+                                                            <div>
+                                                                <button class="btn btn-success" title="上传" type="button" onclick="changeButton(this)">
+                                                                    <i class="fa fa-upload"></i>
+                                                                </button>
+                                                            </div>
                                                         </td>
                                                         <td>
-                                                            <button class="btn btn-primary" type="button">
-                                                                <i class="fa fa-arrow-up"></i>&nbsp;&nbsp;提交
+                                                            <button class="btn btn-primary" title="提交" type="button" onclick="addCourseItem(this)">
+                                                                <i class="fa fa-arrow-up"></i>
                                                             </button>
                                                         </td>
                                                     </tr>
-
                                                 </tBody>
                                             </table>
                                         </div>
@@ -243,10 +262,9 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <button  class="btn btn-primary" type="submit">课程修改</button>
+                                        <button  class="btn btn-primary" type="button" onclick="$('#course_update').submit()">课程修改</button>
                                     </div>
                                 </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -276,6 +294,9 @@
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     });
+    if(""!="${message}"){
+        toastr["info"]("${message}");
+    }
     var uploader = WebUploader.create({
         // swf文件路径
         swf: '<%=basePath%>static/swf/Uploader.swf',
@@ -331,7 +352,7 @@
     });
     uploader.on( 'uploadSuccess', function( file,response ) {
         $("input[name='img_id']").val(response.file_id);
-        $("input[name='img_url']").val(response.group+"/"+response.remote_name+"."+response.ext);
+        $("input[name='img_url']").val(response.group+"/"+response.remote_name);
         var $img_nav = $("#img_nav");
         $img_nav.fadeOut(100);
         $img_nav.find("span").html("0%");
@@ -372,33 +393,39 @@
     // 当有文件添加进来的时候
     fileUpload.on( 'fileQueued', function( file ) {
         $td.attr("id","td_"+file.id);
-        $td.html(wait_up);
+        $td.find("div").html(wait_up);
     });
 
     fileUpload.on( 'uploadError', function( file ) {
         toastr["error"](file.name+"上传失败");
-        $("#td_"+file.id).html(getUpAfterInfo());
+        $("#td_"+file.id).find("div").html(getUpAfterInfo());
     });
 
     //上传成功
     fileUpload.on( 'uploadSuccess', function( file,response ) {
         var $now_td = $("#td_"+file.id);
+        var inputs = $now_td.children("input");
+        var _url = response.group+"/"+response.remote_name;
+        $(inputs[0]).val(_url);
+        $(inputs[1]).val(response.file_id);
+
         toastr["info"](file.name+"上传成功");
-        $now_td.html(getUpAfterInfo(response.group+"/"+response.remote_name));
+        $now_td.find("div").html(getUpAfterInfo(_url));
     });
 
     // 文件上传过程中创建进度条实时显示。
     fileUpload.on( 'uploadProgress', function( file, percentage ) {
         var $now_td = $("#td_"+file.id);
-        $now_td.find(".progress-bar").css("width",percentage*100+"%");
-        $now_td.find(".file-progress-text").find("span").html((percentage*100).toFixed(0)+"%");
+        $now_td.find("div").find(".progress-bar").css("width",percentage*100+"%");
+        $now_td.find("div").find(".file-progress-text").find("span").html((percentage*100).toFixed(0)+"%");
     });
 
     function changeButton(obj) {
-        $td=$(obj).parent("td");
+        $td=$(obj).parents("td");
         if(!$file_button){
-            $file_button=$("#file_button").find("div").eq(1).find("input");
+
         }
+        $file_button=$("#file_button").find("div").eq(1).find("input");
         $file_button.click();
     }
 
@@ -412,38 +439,141 @@
     }
 
     function lookFile(fileId) {
-        fileId = "group1/M00/00/01/cxxD0Vg2msmAALE4AC_ghog0QZM505.mp4";
+//        fileId = fileId||"group1/M00/00/01/cxxD0Vg2msmAALE4AC_ghog0QZM505.mp4";
         if(fileId.substring(fileId.lastIndexOf(".")+1).toLowerCase()=="mp4"){
-
+            layer.open({
+                type: 2,
+                title: false,
+                shade: 0.8,
+                area: ['630px','360px'],
+                closeBtn: 0,
+                fixed:true,
+                resize:false,
+                shadeClose: true,
+                content: ['<%=basePath%>static/video.jsp?filePath='+fileId+'&imgUrl='+$("input[name='img_url']").val(),'no']
+            });
+        }else {
+            //询问框
+            layer.confirm('该文件暂不支持预览，是否下载？', {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                location.href="${applicationScope.fileHost}/"+fileId;
+                console.log("hello");
+                layer.closeAll();
+            }, function(){
+            });
         }
-        layer.open({
-            type: 2,
-            title: false,
-            shade: 0.8,
-            area: ['630px','360px'],
-            closeBtn: 0,
-            fixed:true,
-            resize:false,
-            shadeClose: true,
-            content: ['<%=basePath%>static/video.jsp?filePath='+fileId+'&imgUrl='+$("input[name='img_url']").val(),'no']
-        });
     }
 
-    function addCourseItem(obj) {
+    function addCourseItem(obj,id) {
         var $tr = $(obj).parents("tr");
         var inputs = $tr.find("input");
-        var data = "course_id=${course.course_id}";
+        if($(inputs[0]).val().trim()==""||$(inputs[1]).val().trim()==""){
+            toastr["error"]("序号和标题不能为空");
+            return;
+        }
+        var data = "c_id=${course.course_id}";
         for(var i=0;i<inputs.length;i++){
             data += "&"+$(inputs[i]).attr("name")+"="+$(inputs[i]).val()
         }
-        $.ajax({
-            url:"course_manager/add_item",
-            method:"post",
-            dataType:"text",
-            data:data,
-            success:function () {
+        if(id){
+            data += "&curriculum_id="+id;
+        }
 
+        $.ajax({
+            url:"course_manager/edit_item",
+            method:"post",
+            data:data,
+            success:function (data) {
+                if(data.result==true){
+                    if(id){
+                        toastr["success"]("修改成功");
+                    }else {
+//                        var $td = );
+                        $tr.parents("tbody").append(addNewTr());
+                        $(obj).parents("td").html(addAfterButton(data.id));
+                        toastr["success"]("添加成功");
+                    }
+                }
             }
+        });
+    }
+
+    function deleteCourseItem(obj,id) {
+
+        layer.confirm('确定要删除吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            var $tr = $(obj).parents("tr");
+            $.ajax({
+                url:"course_manager/delete_item",
+                method:"post",
+                data:{id:id},
+                success:function (data) {
+                    if(data==true){
+                        $tr.remove();
+                        toastr["success"]("删除成功");
+                    }
+                }
+            });
+        }, function(){
+        });
+
+    }
+
+    function addAfterButton(id) {
+        return  '   <button class="btn btn-primary" title="提交" type="button" onclick="addCourseItem(this,'+id+')">'+
+                '       <i class="fa fa-arrow-up"></i>'+
+                '   </button>'+
+                '   <button class="btn btn-danger" title="删除" type="button" onclick="deleteCourseItem(this,'+id+')">'+
+                '       <i class="fa fa-trash"></i>'+
+                '   </button>';
+    }
+    /**
+     * 添加完数据，重新添加一行
+     * @returns {string}
+     */
+    function addNewTr() {
+        return  '<tr>'+
+                '   <td><input name="curriculum_num" type="number" required/></td>'+
+                '   <td><input name="name" required /></td>'+
+                '   <td><input name="desc" /></td>'+
+                '   <td>'+
+                '       <input type="hidden" name="video_url">'+
+                '       <input type="hidden" name="video_id">'+
+                '       <div>'+
+                '           <button class="btn btn-success" title="上传" type="button" onclick="changeButton(this)">'+
+                '               <i class="fa fa-upload"></i>'+
+                '           </button>'+
+                '       </div>'+
+                '   </td>'+
+                '   <td>'+
+                '       <input type="hidden" name="resource_url">'+
+                '       <input type="hidden" name="resource_id">'+
+                '       <div>'+
+                '           <button class="btn btn-success" title="上传" type="button" onclick="changeButton(this)">'+
+                '               <i class="fa fa-upload"></i>'+
+                '           </button>'+
+                '       </div>'+
+                '   </td>'+
+                '   <td>'+
+                '       <button class="btn btn-primary" title="提交" type="button" onclick="addCourseItem(this)">'+
+                '           <i class="fa fa-arrow-up"></i>'+
+                '       </button>'+
+                '   </td>'+
+                '</tr>';
+    }
+
+    /**
+     * 课程删除
+     */
+    function deleteCourse() {
+
+        layer.confirm('确定要删除吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            location.href="course_manager/course_delete/${course.course_id}";
+        }, function(){
         });
     }
 </script>

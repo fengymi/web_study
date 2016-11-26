@@ -1,9 +1,7 @@
 package com.fym.service.course;
 
-import com.alibaba.fastjson.JSON;
 import com.fym.dao.course.CourseDao;
 import com.fym.entity.CourseEntity;
-import com.fym.entity.FastDFSEntity;
 import com.fym.entity.utils.PageEntity;
 import com.fym.utils.data.HashPageData;
 import com.github.pagehelper.PageHelper;
@@ -13,10 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-
-import static com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValue;
-import static com.alibaba.fastjson.serializer.SerializerFeature.WriteNullListAsEmpty;
-import static com.alibaba.fastjson.serializer.SerializerFeature.WriteNullStringAsEmpty;
 
 @Service
 public class CourseService {
@@ -31,7 +25,8 @@ public class CourseService {
      */
     public List<CourseEntity> getAllCourse(PageEntity page){
         List<CourseEntity> courses = null;
-        PageHelper.startPage(page.getPageNum(), page.getPageSize());
+        if(page!=null&&!page.isNotPage())
+            PageHelper.startPage(page.getPageNum(), page.getPageSize());
         try {
             courses = courseDao.getAll(page);
         } catch (Exception e) {
@@ -48,6 +43,18 @@ public class CourseService {
     public HashPageData addCourse(HashPageData courseInfo){
         courseDao.addCourse(courseInfo);
         return courseInfo;
+    }
+
+    /**
+     * 修改某个课程信息
+     * @param courseInfo 课程信息参数
+     */
+    public void updateCourse(HashPageData courseInfo){
+        courseDao.updateCourse(courseInfo);
+    }
+
+    public void deleteCourse(Integer id){
+        courseDao.deleteCourse(id);
     }
 
     public CourseEntity getCourse(Object courseId){

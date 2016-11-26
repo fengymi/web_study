@@ -80,7 +80,8 @@
                     label:"文件名",
                     name: 'name',
                     index: 'name',
-                    align: 'center'
+                    align: 'center',
+                    sorttype:'string'
                 },{
                     label:"类型",
                     name: 'ext',
@@ -156,6 +157,7 @@
         });
 
         initGrid();
+//        table_data.jqGrid('filterToolbar',{searchOperators : true});
     });
 
     function changeStatus(obj,css,text) {

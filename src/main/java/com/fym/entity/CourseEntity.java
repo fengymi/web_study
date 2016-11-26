@@ -9,8 +9,6 @@ public class CourseEntity {
     private String language;
     private String img_url;
     private Integer img_id;
-    private String resource_url;
-    private Integer resource_id;
     private String course_desc;
 
     private User user;
@@ -62,22 +60,6 @@ public class CourseEntity {
 
     public void setImg_id(Integer img_id) {
         this.img_id = img_id;
-    }
-
-    public String getResource_url() {
-        return resource_url;
-    }
-
-    public void setResource_url(String resource_url) {
-        this.resource_url = resource_url;
-    }
-
-    public Integer getResource_id() {
-        return resource_id;
-    }
-
-    public void setResource_id(Integer resource_id) {
-        this.resource_id = resource_id;
     }
 
     public String getCourse_desc() {

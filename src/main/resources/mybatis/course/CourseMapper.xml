@@ -4,9 +4,16 @@
 
     <insert id="addCourse"  useGeneratedKeys="true" keyProperty="course_id"  parameterType="hash">
         INSERT INTO
-          course(course_name,c_user_id,course_author,course_language,img_url,img_id,resource_id,resource_url,course_desc)
-          VALUES (#{course_name},#{userId},#{course_author},#{course_language},#{img_url},#{img_id},#{resource_id},#{resource_url},#{course_desc})
+          course(course_name,c_user_id,course_author,course_language,img_url,img_id,course_desc)
+          VALUES (#{course_name},#{userId},#{course_author},#{course_language},#{img_url},#{img_id},#{course_desc})
     </insert>
+    <update id="updateCourse">
+        UPDATE course
+          SET course_name=#{course_name},course_author=#{course_author},course_language=#{course_language},
+              img_url=#{img_url},img_id=#{img_id},course_desc=#{course_desc}
+          where
+              course_id=#{course_id}
+    </update>
 
     <delete id="deleteCourse">
         DELETE FROM course WHERE course_id=#{0}

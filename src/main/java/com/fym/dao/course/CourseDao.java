@@ -10,6 +10,8 @@ public interface CourseDao {
 
     void addCourse(HashPageData courseInfo);
 
+    void updateCourse(HashPageData courseInfo);
+
     void deleteCourse(Object course_id);
 
     CourseEntity getCourse(Object course_id);

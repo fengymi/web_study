@@ -3,8 +3,10 @@ package com.fym.controller.course;
 import com.alibaba.fastjson.JSON;
 import com.fym.controller.BaseController;
 import com.fym.entity.CourseEntity;
+import com.fym.entity.CurriculumEntity;
 import com.fym.entity.User;
 import com.fym.service.course.CourseService;
+import com.fym.service.course.CurriculumService;
 import com.fym.service.course.LanguageService;
 import com.fym.utils.component.Constant;
 import com.fym.utils.data.HashPageData;
@@ -29,6 +31,8 @@ public class CourseManagerController extends BaseController{
     private CourseService courseService;
     @Resource
     private LanguageService languageService;
+    @Resource
+    private CurriculumService curriculumService;
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public ModelAndView list(){
@@ -54,6 +58,7 @@ public class CourseManagerController extends BaseController{
     public ModelAndView addItem(@PathVariable Object course_id){
         ModelAndView mv = new ModelAndView("course/course_item");
         mv.addObject("title","课程详细信息");
+
         mv.addObject("languages",languageService.getAll());
         CourseEntity courseEntity = courseService.getCourse(course_id);
         mv.addObject("course",courseEntity);
@@ -66,28 +71,46 @@ public class CourseManagerController extends BaseController{
         ModelAndView mv = new ModelAndView();
         if(courseInfo.get("course_name")==null){
             mv.setViewName("redirect:/course_manager/publish");
-            redirectAttributes.addAttribute("message","课程名不能为空");
+            redirectAttributes.addFlashAttribute("message","课程名不能为空");
             return mv;
         }
         courseInfo.put("userId",((User)(getSession().getAttribute(Constant.SESSION_USER))).getId());
         courseService.addCourse(courseInfo);
+        redirectAttributes.addFlashAttribute("message","课程添加成功");
         mv.setViewName("redirect:/course_manager/info/"+courseInfo.get("course_id"));
         return mv;
     }
 
-    @RequestMapping(value = "/course_update",params = "application/json;charset=UTF-8",method = RequestMethod.POST)
-    @ResponseBody
-    public Object courseUpdate(){
-        HashPageData courseInfo = new HashPageData(getRequest());
-        System.out.println(courseInfo);
-        return "";
+    @RequestMapping(value = "/course_delete/{id}")
+    public ModelAndView courseDelete(@PathVariable Integer id){
+        ModelAndView mv = new ModelAndView("redirect:/course_manager/list");
+        courseService.deleteCourse(id);
+        return mv;
     }
 
-    @RequestMapping(value = "/add_item",params = "application/json;charset=UTF-8",method = RequestMethod.POST)
+    @RequestMapping(value = "/course_update",produces = "application/json;charset=UTF-8",method = RequestMethod.POST)
     @ResponseBody
-    public Object addCourseItem(){
+    public ModelAndView courseUpdate(RedirectAttributes attributes){
         HashPageData courseInfo = new HashPageData(getRequest());
-        System.out.println(courseInfo);
-        return "";
+        ModelAndView mv = new ModelAndView("redirect:/course_manager/info/"+courseInfo.getString("course_id"));
+        attributes.addFlashAttribute("message","修改成功");
+        courseService.updateCourse(courseInfo);
+        return mv;
+    }
+
+    @RequestMapping(value = "/edit_item", produces = "application/json;charset=UTF-8",method = RequestMethod.POST)
+    @ResponseBody
+    public Object editCourseItem(CurriculumEntity curriculum){
+        int result = curriculumService.edit(curriculum);
+
+        return "{\"result\":"+(result>0)+",\"id\":"+curriculum.getCurriculum_id()+"}";
+    }
+
+    @RequestMapping(value = "/delete_item", produces = "application/json;charset=UTF-8",method = RequestMethod.POST)
+    @ResponseBody
+    public Object deleteCourseItem(Integer id){
+        System.out.println(id);
+        int result = curriculumService.delete(id);
+        return result>0;
     }
 }

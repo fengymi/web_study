@@ -68,7 +68,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="#" data-nav-section="home"><span>网站首页</span></a></li>
                     <li><a href="#" data-nav-section="services"><span>功能介绍</span></a></li>
-                    <li><a href="#" data-nav-section="press"><span>教学视频</span></a></li>
+                    <li><a href="<%=basePath%>common/course_list"><span>教学视频</span></a></li>
                     <li><a href="#" data-nav-section="testimonials"><span>常见问题</span></a></li>
                     <li><a href="<%=basePath%>user/machine/list"><span>在线虚拟机</span></a></li>
                     <c:if test="${sessionScope.sessionUser!=null}">
