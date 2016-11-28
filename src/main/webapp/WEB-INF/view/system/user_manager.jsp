@@ -26,7 +26,7 @@
                 <div class="ibox-title">
                     <h5>${title}</h5>
                     <div class="ibox-tools">
-                        <button type="button" class="btn btn-success btn-xs">修改密码</button>
+                        <button onclick="changePassword()" type="button" class="btn btn-success btn-xs">修改密码</button>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -94,6 +94,7 @@
     <%@include file="../layout/main_js.jsp"%>
 <script src="static/js/plugin/chosen.jquery.min.js" type="text/javascript"></script>
 <script src="static/js/design/design.js" type="text/javascript"></script>
+<script src="static/plugin/layer/layer.js"></script>
     <script type="text/javascript">
         initToast();
         initSelector();
@@ -113,6 +114,28 @@
                 }
             });
             return false;
+        }
+
+        function changePassword() {
+            layer.prompt({
+                formType: 1,
+                value: '',
+                title: '修改密码'
+            }, function(value, index, elem){
+                $.ajax({
+                    url:"system/user/chang_password",
+                    method:"post",
+                    data:{password:value,userId:${user.id}},
+                    success:function (data) {
+                        if(data.result){
+                            toastr["success"](data.message);
+                        }else {
+                            toastr["error"](data.message);
+                        }
+                    }
+                });
+                layer.close(index);
+            });
         }
     </script>
 </body>

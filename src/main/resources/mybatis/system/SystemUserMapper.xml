@@ -36,6 +36,9 @@
     <update id="update" parameterType="hash">
         UPDATE `sys_user` SET nickname=#{nickname},locked=#{locked} WHERE user_id=#{id}
     </update>
+    <update id="changePassword">
+        UPDATE `sys_user` SET password=#{0} WHERE user_id=#{1}
+    </update>
 
     <select id="getAllUsers" resultType="hash">
         SELECT * FROM `sys_user`

@@ -9,11 +9,13 @@ import com.fym.entity.utils.UserManager;
 import com.fym.service.system.SystemRoleService;
 import com.fym.service.system.SystemUserService;
 import com.fym.utils.component.CalcTools;
+import com.fym.utils.component.Constant;
 import com.fym.utils.component.OperObject;
 import com.fym.utils.data.HashPageData;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -89,6 +91,29 @@ public class SystemUserController extends BaseController{
         systemUserService.updateUser(userManager);
         return "修改成功";
     }
+
+    @RequestMapping(value = "/chang_password",produces="application/json;charset=UTF-8",method = RequestMethod.POST)
+    @ResponseBody
+    public Object changePassword(String password,Integer userId){
+        HashPageData resultInfo = new HashPageData();
+        int result = systemUserService.changePassword(password,userId);
+        switch (result){
+            case Constant.SUCCESS_CODE:
+                resultInfo.put("result",true);
+                resultInfo.put("message","修改成功");
+                break;
+            case Constant.PASSWORD_NULL:
+                resultInfo.put("result",false);
+                resultInfo.put("message","密码不能为空");
+                break;
+            default:
+                resultInfo.put("result",false);
+                resultInfo.put("message","发生错误");
+                break;
+        }
+        return resultInfo;
+    }
+
 
     @RequestMapping("/get_data")
     @ResponseBody

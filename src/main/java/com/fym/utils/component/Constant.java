@@ -5,6 +5,7 @@ package com.fym.utils.component;
  */
 public interface Constant {
     int SUCCESS_CODE = 0;
+    int PASSWORD_NULL = -1;
 
     int MACHINE_USER_USED = 0; //使用中
     int MACHINE_USER_USE = 1; //可以使用

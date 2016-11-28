@@ -51,7 +51,7 @@
     <!--[if lt IE 9]>
     <script src="static/home/js/respond.min.js"></script>
     <![endif]-->
-
+    <link rel="stylesheet" href="https://i.icomoon.io/public/temp/fc1349aa04/UntitledProject/style.css">
 </head>
 <body>
 
@@ -62,15 +62,14 @@
             <div class="navbar-header">
                 <!-- Mobile Toggle Menu Button -->
                 <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
-                <a class="navbar-brand" href="index"><img src="static/img/logo.png" />${title}</a>
+                <a class="navbar-brand" href=""><img src="static/img/logo.png" />${title}</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="#" data-nav-section="home"><span>网站首页</span></a></li>
                     <li><a href="#" data-nav-section="services"><span>功能介绍</span></a></li>
-                    <li><a href="<%=basePath%>common/course_list"><span>教学视频</span></a></li>
-                    <li><a href="#" data-nav-section="testimonials"><span>常见问题</span></a></li>
-                    <li><a href="<%=basePath%>user/machine/list"><span>在线虚拟机</span></a></li>
+                    <li><a href="common/course_list"><span>教学视频</span></a></li>
+                    <li><a href="user/machine/list" target="_blank"><span>在线虚拟机</span></a></li>
                     <c:if test="${sessionScope.sessionUser!=null}">
                         <li><a href="index/logout" class="icon colored-2">${sessionScope.sessionUser.nickname}</a></li>
                     </c:if>
@@ -101,7 +100,7 @@
                                         <a href="index/register" class="btn btn-primary btn-lg">马上加入</a>
                                     </c:if>
                                     <c:if test="${sessionScope.sessionUser!=null}">
-                                        <a href="#" class="btn btn-primary btn-lg" data-nav-section="pricing">开始学习</a>
+                                        <a href="common/course_list" class="btn btn-primary btn-lg" data-nav-section="pricing">开始学习</a>
                                     </c:if>
                                 </p>
                             </div>
@@ -143,8 +142,6 @@
 
     </div>
 </div>
-
-<%--<div class="copyrights">Collect from <a href="#" >ZT云流量</a></div>--%>
 
 <div id="fh5co-our-services" data-section="services">
     <div class="container">
@@ -198,196 +195,12 @@
         </div>
     </div>
 </div>
-
-<div id="fh5co-press" data-section="press">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 section-heading text-center">
-                <h2 class="single-animate animate-press-1">软件安装</h2>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 subtext single-animate animate-press-2">
-                        <h3>云流量无需等待，秒连接！全面兼容，安卓/IOS系统零风险！</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8 col-md-offset-2">
-            <div class="row row-bottom-padded-lg">
-                <div class="col-md-6 text-center to-animate">
-                    <div class="person">
-                        <a href="ios.html"><img src="static/home/picture/person2.jpg" class="img-responsive img-rounded" alt="Person"></a>
-                        <a href="ios.html"><h3 class="name">IOS系统</h3></a>
-                        <div class="position">切换ID安装即可快速使用</div>
-                    </div>
-                </div>
-                <div class="col-md-6 text-center to-animate">
-                    <div class="person">
-                        <a href="and.html"><img src="static/home/picture/person3.jpg" class="img-responsive img-rounded" alt="Person"></a>
-                        <a href="and.html"><h3 class="name">安卓系统</h3></a>
-                        <div class="position">一键下载即可安装使用</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="fh5co-testimonials" data-section="testimonials">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 section-heading text-center">
-                <h2 class="to-animate">常见问题</h2>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 subtext to-animate">
-                        <h3>每实际使用1G流量仅扣几M套餐内流量，通过客户端使用的云节流功能，从而实现随时随地无限免费流量上网！</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="box-testimony to-animate">
-                    <blockquote>
-                        <span class="quote"><span><i class="icon-quote-left"></i></span></span>
-                        <p>A、可能由于服务器连接过于频繁，请关闭软件重新登录重新连接即可<br>
-                            B、可能你的手机CPU过热，重启你的手机然后重新登录重新连接即可<br>
-                            C、可能是我们的服务器出现问题了，停止使用然后联系客服即可<br>
-                            D、每个地区所用线路不一样，使用过程中发现会扣掉自身流量套餐的流量，尝试更改手机网络接入点改为wap或者net试一下</p>
-                    </blockquote>
-                    <p class="author">账号正常，连接时却一直连接不上</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="box-testimony to-animate">
-                    <blockquote>
-                        <span class="quote"><span><i class="icon-quote-left"></i></span></span>
-                        <p>因为需要登录苹果美国版商店进行下载软件才可进行云流量的使用，中国苹果商店没有上架该软甲！</p>
-                    </blockquote>
-                    <p class="author">为什么要退出的苹果ID？</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="box-testimony to-animate">
-                    <blockquote>
-                        <span class="quote"><span><i class="icon-quote-left"></i></span></span>
-                        <p>A、由于4G手机数据和通话不在一个网络模式下的原因，用户在接打电话是会断开数据通信，所以在通话之后，需要重新连接软件，然后再继续上网；<br>B、锁屏熄屏或者手机清理后台都有可能造成软件掉线，从而不能使用大猫哥流量；<br>C、用户在观看视频的同时请留意屏幕左上角的小钥匙是否还显示，以防掉线完全消耗你自身的流量，具体消耗比例以测试为准。</p>
-                    </blockquote>
-                    <p class="author">为什么有时候断线连接不上？</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="box-testimony to-animate">
-                    <blockquote>
-                        <span class="quote"><span><i class="icon-quote-left"></i></span></span>
-                        <p>A、本软件在每次登陆或者连接时可能需要损耗50K左右手机套餐流量，手机自带的软件在后台运行会消耗少量流量。<br>
-                            B、在使用过程中如果遇到掉线又重新连接，掉线重新连接需要一定的时间。<br>
-                            C、本软件在部分城市存在盲区包括个别手机品牌型号不能兼容导致不能使用，首次使用时一定要先做测试，确认不会消耗你手机流量套餐的流量后再继续使用。</p>
-                    </blockquote>
-                    <p class="author">使用本软件为什么会消耗本机流量？</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="box-testimony to-animate">
-                    <blockquote>
-                        <span class="quote"><span><i class="icon-quote-left"></i></span></span>
-                        <p>1、关闭你的wifi，开启你的手机流量数据，把所有正在运行的软件都关闭<br>2、如果手机双卡双待，请切换到您用来上网的手机卡。<br>3、不支持手机开热点。</p>
-                    </blockquote>
-                    <p class="author">请问有什么注意事项？</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="box-testimony to-animate">
-                    <blockquote>
-                        <span class="quote"><span><i class="icon-quote-left"></i></span></span>
-                        <p>A、拨打电话时，手机网络会自行中断，通话完成之后软件会自动重新连接，可能有部分手机需要手动重新连接软件。<br>
-                            B、部分手机自带一键清理功能，或者安装360，手机管家，手机助手等此类软件，请将流量库设置为白名单，可以避免部分掉线问题<br>
-                            C、请不要随便恢复手机出厂设置，也不要随便清理手机数据，由此造成的损失自行承担。</p>
-                    </blockquote>
-                    <p class="author">软件在使用的过程中会发生掉线？</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="fh5co-pricing" data-section="pricing">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 section-heading text-center">
-                <h2 class="single-animate animate-pricing-1">云免服务器+免流系统搭建</h2>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 subtext single-animate animate-pricing-2">
-                        <h3>是否已经心动不已？马上合作加盟吧！</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 col-sm-6 to-animate">
-                <div class="price-box popular">
-                    <div class="popular-text">云免服务器30M独享+免流系统搭建</div>
-                    <div class="price">258<small>元</small></div>
-                    <p>每月免费2000G流量</p>
-                    <hr>
-                    <ul class="pricing-info">
-                        <li>续费元65/月</li>
-                    </ul>
-                    <a href="http://wpa.qq.com/msgrd?v=1&uin=61383668&site=houdao.com&menu=yes" class="btn btn-primary btn-block" class="btn btn-default btn-sm">立即订购</a>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 to-animate">
-                <div class="price-box popular">
-                    <div class="popular-text">云免服务器200M独享+免流系统搭建</div>
-                    <div class="price">358<small>元起</small></div>
-                    <p>每月免费2000G流量</p>
-                    <hr>
-                    <ul class="pricing-info">
-                        <li>续费元130/月</li>
-                    </ul>
-                    <a href="http://wpa.qq.com/msgrd?v=1&uin=61383668&site=houdao.com&menu=yes" class="btn btn-primary btn-block" class="btn btn-default btn-sm">立即订购</a>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 to-animate">
-                <div class="price-box popular">
-                    <div class="popular-text">云免服务器200M独享+免流系统搭建</div>
-                    <div class="price">358<small>元</small></div>
-                    <p>每月免费2000G流量</p>
-                    <hr>
-                    <ul class="pricing-info">
-                        <li>续费元130/月</li>
-
-                    </ul>
-                    <a href="http://wpa.qq.com/msgrd?v=1&uin=61383668&site=houdao.com&menu=yes" class="btn btn-primary btn-block" class="btn btn-default btn-sm">立即订购</a>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 to-animate">
-                <div class="price-box popular">
-                    <div class="popular-text">云免服务器200M独享+免流系统搭建</div>
-                    <div class="price">358<small>元</small></div>
-                    <p>每月免费2000G流量</p>
-                    <hr>
-                    <ul class="pricing-info">
-                        <li>续费元130/月</li>
-
-                    </ul>
-                    <a href="http://wpa.qq.com/msgrd?v=1&uin=61383668&site=houdao.com&menu=yes" class="btn btn-primary btn-block" class="btn btn-default btn-sm">立即订购</a>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <a href="http://wpa.qq.com/msgrd?v=1&uin=61383668&site=houdao.com&menu=yes" class="btn btn-primary btn-block">马上成为老板</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 <hr>
 <footer id="footer" role="contentinfo">
     <div class="container">
         <div class="row row-bottom-padded-sm">
             <div class="col-md-12">
-                <p class="copyright text-center">&copy; 2016 <a href="./">ZT云流量</a>. All Rights Reserved.</p>
+                <p class="copyright text-center">&copy; 2016 <a href="">在线学习</a></p>
             </div>
         </div>
         <div class="row hide">

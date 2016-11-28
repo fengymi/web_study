@@ -1,6 +1,7 @@
 package com.fym.controller.common;
 
 import com.fym.controller.BaseController;
+import com.fym.entity.CourseEntity;
 import com.fym.entity.utils.PageEntity;
 import com.fym.service.course.CourseService;
 import com.fym.service.system.FileManagerService;
@@ -34,7 +35,18 @@ public class CommonController extends BaseController{
     @RequestMapping(value = "/course_list")
     public ModelAndView courseList(){
         ModelAndView mv = new ModelAndView("home/course_list");
+        mv.addObject("title","视频学习");
         mv.addObject("courses",courseService.getAllCourse(new PageEntity().setNotPage(true)));
+        return mv;
+    }
+
+    @RequestMapping(value = "/course_info/{courseId}")
+    public ModelAndView courseInfo(@PathVariable Integer courseId){
+        ModelAndView mv = new ModelAndView("home/course_info");
+        mv.addObject("title","课程详细信息");
+
+        CourseEntity courseEntity = courseService.getCourse(courseId);
+        mv.addObject("course",courseEntity);
         return mv;
     }
 }

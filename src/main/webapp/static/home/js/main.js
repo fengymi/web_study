@@ -50,8 +50,8 @@
 			autoplayTimeout: 5000,
 			autoplayHoverPause: true,
 		    navText: [	
-		      "<i class='icon-arrow-left2 owl-direction'></i>",
-		      "<i class='icon-arrow-right2 owl-direction'></i>"
+		      "<i class='icon-arrow-left'></i>",
+		      "<i class='icon-arrow-right'></i>"
 	     	]
 		});
 

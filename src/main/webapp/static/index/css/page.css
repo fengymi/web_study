@@ -62,8 +62,8 @@
 .page_n em{ font-family:Simsun; padding:0 8px}
 .kc_list_t{ background:#f9f9f9; border:#ddd solid 1px; overflow:hidden; _display:inline-block}
 .kc_list_t .l{ float:left; background:#fff; padding:0px}
-.kc_list_t .l img{ width:510px; height:286px;}
-.kc_list_t .r{ float:right; width:640px; padding:20px 20px 0 0; line-height:30px; font-size:14px} 
+.kc_list_t .l img{ width:630px; height:360px;}
+.kc_list_t .r{ float:right; width:520px; padding:20px 20px 0 0; line-height:30px; font-size:14px}
 .kc_list_t .r h1{ font-size:18px; font-weight:normal; padding-bottom:10px; line-height:26px}
 .kc_list_t .r em{ color:#666}
 .kc_list_t .r .btn{ float:left;}

@@ -25,4 +25,6 @@ public interface SystemUserDao extends BaseOper {
     void delete(HashPageData data);
     void update(HashPageData data);
 
+    void changePassword(String password,Integer userId);
+
 }

@@ -8,6 +8,8 @@ import com.fym.entity.User;
 import com.fym.entity.utils.OperEntity;
 import com.fym.entity.utils.PageEntity;
 import com.fym.entity.utils.UserManager;
+import com.fym.utils.component.Constant;
+import com.fym.utils.component.MD5Util;
 import com.fym.utils.component.OperObject;
 import com.fym.utils.data.HashPageData;
 import com.github.pagehelper.PageHelper;
@@ -74,6 +76,14 @@ public class SystemUserService {
             systemUserRoleDao.deleteUserRole(manager);
         if(manager.getAddRoles().length>0)
             systemUserRoleDao.addRoleForUser(manager);
+    }
+
+    public int changePassword(String password,Integer userId){
+        if(password==null||password.trim().equals("")){
+            return Constant.PASSWORD_NULL;
+        }
+        systemUserDao.changePassword(MD5Util.MD5(password),userId);
+        return Constant.SUCCESS_CODE;
     }
 
     /**

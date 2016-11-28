@@ -15,12 +15,12 @@
                     ${sessionScope.sessionUser.nickname}
                 </a>
                 <ul class="dropdown-menu dropdown-alerts">
-                    <li>
-                        <a href="static/admin/mailbox.html">
-                            <span><i class="fa fa-envelope fa-fw"></i>&nbsp;个人信息</span>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
+                    <%--<li>--%>
+                        <%--<a href="static/admin/mailbox.html">--%>
+                            <%--<span><i class="fa fa-envelope fa-fw"></i>&nbsp;个人信息</span>--%>
+                        <%--</a>--%>
+                    <%--</li>--%>
+                    <%--<li class="divider"></li>--%>
                     <li>
                         <a href="index/logout">
                             <span><i class="fa fa-sign-out fa-fw"></i>&nbsp;退出登录</span>
