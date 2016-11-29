@@ -115,7 +115,7 @@
         accept: {
             title: 'Images',
             extensions: 'gif,jpg,jpeg,bmp,png',
-            mimeTypes: 'image/*'
+            mimeTypes: 'image/jpg,image/jpeg,image/png'
         },
         auto:true, // 自动上传
         thumb:{ //缩略图

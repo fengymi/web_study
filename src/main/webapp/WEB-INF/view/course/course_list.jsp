@@ -118,7 +118,7 @@
         table_data.jqGrid('navGrid', '#pager_list', {
             edit: false,
             add: false,
-            del: false,
+            del: true,
             search:false
         });
 
