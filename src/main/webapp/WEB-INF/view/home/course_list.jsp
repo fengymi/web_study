@@ -4,7 +4,50 @@
 
 <link href="static/index/css/page.css" rel="stylesheet" type="text/css">
 <style>
+    input,button,select,textarea{outline:none}
     p{margin: 0 !important;}
+    .search{
+        float: right;margin-right: 40px;
+    }
+    input{margin: 0;padding: 0;}
+
+    .selector{
+        height: 30px;
+        min-width: 200px;
+        margin-right: 5px;
+        padding-left: 15px;
+        padding-right: 5px;
+        line-height: 30px;
+        border-radius: 15px;
+        border: 1px;
+        background-color: #f3f9ea;
+    }
+    .selector option{
+        margin:0;
+        float:left;
+        height: 26px;
+        padding: 5px 0 5px 20px;/*当时解决输入框光标顶满input框的问题是这么解决的 如果设置了行高就会顶满没有行高的话光标高度=文字的font-size */
+        border: none;
+        outline: none;
+        color:#6d6d6d;
+        -webkit-appearance:none; /*去除系统默认的样式*/
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);   /* 点击去除高亮的颜色*/
+        background-color: #fff;/*当input框禁止输入的时候会有一个灰色的底色 项目需要我设置了 白色底 跟页面背景一个颜色。*/
+    }
+
+    .search input{
+        margin-right: 5px;
+        padding-left: 15px;
+        line-height: 30px;
+        border-radius: 15px;
+        border: 1px;
+    }
+    .search span{
+        color: #00a2d4;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+    }
 </style>
 <div class="page">
     <div class="blank10"></div>
@@ -14,7 +57,7 @@
         <div class="down_banner">
             <div class="images">
                 <ul>
-                    <c:forEach var="course" varStatus="status" items="${courses}" begin="0" end="${courses.size()>5?5:courses.size()}">
+                    <c:forEach var="course" varStatus="status" items="${hots}" begin="0" end="${hots.size()>5?5:hots.size()}">
                         <li class="no${(status.index+2)%5}">
                             <a href="common/course_info/${course.course_id}" target="_blank">
                                 <img src="${applicationScope.fileHost}/${course.img_url}">
@@ -32,7 +75,7 @@
             <div class="btnbox"><a class="leftbut"></a> <a class="rightbut"></a></div>
             <div class="dotlz">
                 <ul>
-                    <c:forEach items="${courses}" varStatus="status" begin="0" end="${courses.size()>5?5:courses.size()}">
+                    <c:forEach items="${hots}" varStatus="status" begin="0" end="${hots.size()>5?5:hots.size()}">
                         <li class="<c:if test="${status.index==(courses.size()/2-0.5)}">cur</c:if>"></li>
                     </c:forEach>
                     <%--<li class="cur"></li>--%>
@@ -42,14 +85,19 @@
         <!--banner END-->
         <div class="blank10"></div>
         <div id="filter" style="text-align: left;">
-            <a href="http://www.bjsxt.com/download.html" class="active">全部</a>
-            <select >
-                <option value="1">java</option>
-                <option value="1">android</option>
-                <option value="1">c</option>
-                <option value="1">c++</option>
-            </select>
-
+            <form id="search" action="common/course_list" method="post">
+                <a href="common/course_list" class="active">全部</a>
+                <select name="language" class="selector" >
+                    <option value="" selected></option>
+                    <c:forEach var="language" items="${languages}">
+                        <option value="${language.l_id}" <c:if test="${language.l_id==page.getExtend('language')}">selected</c:if > >${language.name}</option>
+                    </c:forEach>
+                </select>
+                <div class="search" style="">
+                    <input name="search_key" placeholder="请输入关键字" value="${page.getExtend("search_key")}" />
+                    <span class="icon-magnifier" onclick="$('#search').submit()">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                </div>
+            </form>
         </div>
         <div id="list_container">
             <ul>

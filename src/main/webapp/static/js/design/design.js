@@ -149,15 +149,13 @@ function setUpdateData(data) {
     var oldIds = data.oldIds||[];
     var addIds = [];
     var delIds = [];
-    var selectedIdsStr = selectedIds.toString();
-    var oldIdsStr = oldIds.toString();
     for(var i in oldIds){
-        if(selectedIdsStr.indexOf(oldIds[i])==-1){
+        if($.inArray(oldIds[i]+"",selectedIds)==-1){
             delIds.push(oldIds[i]);
         }
     }
     for(i in selectedIds){
-        if(oldIdsStr.indexOf(selectedIds[i])==-1){
+        if($.inArray(parseInt(selectedIds[i]),oldIds)==-1){
             addIds.push(selectedIds[i]);
         }
     }

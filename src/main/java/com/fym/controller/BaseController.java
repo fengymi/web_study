@@ -2,6 +2,7 @@ package com.fym.controller;
 
 import com.fym.entity.utils.OperEntity;
 import com.fym.entity.utils.PageEntity;
+import com.fym.utils.component.Constant;
 import com.fym.utils.data.HashPageData;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -47,7 +48,8 @@ public class BaseController {
             page.setPageNum(Integer.parseInt(request.getParameter("pageNum")+""));
             page.setPageSize(Integer.parseInt(request.getParameter("pageSize")+""));
         }catch (Exception e){
-            return null;
+            page.setPageNum(Constant.PAGE_NUM);
+            page.setPageSize(Constant.PAGE_SIZE);
         }
         page.setOrder(request.getParameter("order"));
         page.setSidx(request.getParameter("sidx"));

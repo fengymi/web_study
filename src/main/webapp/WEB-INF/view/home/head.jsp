@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="static/home/css/bootstrap.css">
 
     <link rel="stylesheet" href="static/home/css/style_1_1.css">
+    <!-- Simple Line Icons -->
+    <link rel="stylesheet" href="static/home/css/simple-line-icons.css">
 
     <!-- Styleswitcher ( This style is for demo purposes only, you may delete this anytime. ) -->
     <link rel="stylesheet" id="theme-switch" href="static/home/css/style_1_1.css">

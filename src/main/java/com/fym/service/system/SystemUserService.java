@@ -78,12 +78,35 @@ public class SystemUserService {
             systemUserRoleDao.addRoleForUser(manager);
     }
 
-    public int changePassword(String password,Integer userId){
+    public HashPageData changePassword(String password,Integer userId){
         if(password==null||password.trim().equals("")){
-            return Constant.PASSWORD_NULL;
+            return passwordInfo(Constant.PASSWORD_NULL);
         }
-        systemUserDao.changePassword(MD5Util.MD5(password),userId);
-        return Constant.SUCCESS_CODE;
+
+        return passwordInfo(systemUserDao.changePassword(MD5Util.MD5(password),userId));
+    }
+
+    private HashPageData passwordInfo(int result){
+        HashPageData resultInfo = new HashPageData();
+        switch (result){
+            case Constant.SUCCESS_CODE:
+                resultInfo.put("result",true);
+                resultInfo.put("message","修改成功");
+                break;
+            case Constant.PASSWORD_NULL:
+                resultInfo.put("result",false);
+                resultInfo.put("message","密码不能为空");
+                break;
+            case Constant.NO_USER:
+                resultInfo.put("result",false);
+                resultInfo.put("message","用户不存在");
+                break;
+            default:
+                resultInfo.put("result",false);
+                resultInfo.put("message","发生错误");
+                break;
+        }
+        return resultInfo;
     }
 
     /**

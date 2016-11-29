@@ -33,12 +33,26 @@
         LEFT JOIN `curriculum` cl
         ON
         c.course_id=cl.c_id
+        WHERE 1=1
         <if test="extend.userId!=null">
-            WHERE c.c_user_id=#{extend.userId}
+            AND c.c_user_id=#{extend.userId}
         </if>
-        <if test="sidx!=null and sidx!=''">
+        <if test="extend.search_key!=null and extend.search_key!=''">
+            and (
+            (c.course_name    like CONCAT('%','${extend.search_key}','%' ) ) or
+            (c.course_author  like CONCAT('%','${extend.search_key}','%' ) ) or
+            (c.course_desc    like CONCAT('%','${extend.search_key}','%' ) )
+            )
+        </if>
+        <if test="extend.language!=null and extend.language!=''">
+            and course_language=#{extend.language}
+        </if>
+        <if test="(sidx!=null and sidx!='') and (order!=null and order!='')">
             ORDER BY ${sidx} ${order}
         </if>
+    </select>
+    <select id="getHots" resultType="com.fym.entity.CourseEntity">
+        SELECT * FROM course c  ORDER BY c.course_id desc limit 0,5
     </select>
 
     <sql id="base-select">

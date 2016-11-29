@@ -51,7 +51,21 @@
     <!--[if lt IE 9]>
     <script src="static/home/js/respond.min.js"></script>
     <![endif]-->
-    <link rel="stylesheet" href="https://i.icomoon.io/public/temp/fc1349aa04/UntitledProject/style.css">
+    <style type="text/css">
+        .user_info{
+            display: none;
+            position: fixed;
+            background-color: #fff4f4;
+        }
+        .user_info div{
+            text-align: center;
+        }
+        .user_info div:hover{
+            background-color: #efe3d3;
+            cursor: pointer;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -71,7 +85,16 @@
                     <li><a href="common/course_list"><span>教学视频</span></a></li>
                     <li><a href="user/machine/list" target="_blank"><span>在线虚拟机</span></a></li>
                     <c:if test="${sessionScope.sessionUser!=null}">
-                        <li><a href="index/logout" class="icon colored-2">${sessionScope.sessionUser.nickname}</a></li>
+                        <li><a href="javascript:;" onclick="changeUserInfo()" class="icon colored-2">${sessionScope.sessionUser.nickname}</a>
+                            <div id="user_info" class="user_info">
+                                <div>
+                                    <a href="javascript:;" onclick="changePassword()" class="icon colored-2">修改密码</a>
+                                </div>
+                                <div>
+                                    <a href="index/logout" class="icon colored-2">退出登录</a>
+                                </div>
+                            </div>
+                        </li>
                     </c:if>
                     <c:if test="${sessionScope.sessionUser==null}">
                         <li><a href="index/login" class="btn btn-primary btn-sm">登录</a></li>
@@ -251,6 +274,14 @@
             $('#colour-variations').toggleClass('sleep');
         });
     });
+    function changeUserInfo() {
+        var $user = $("#user_info");
+        if($user.css("display")=="none"){
+            $user.fadeIn(200);
+        }else {
+            $user.fadeOut(200);
+        }
+    }
 </script>
 <!-- End demo purposes only -->
 

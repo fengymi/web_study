@@ -4,6 +4,7 @@ import com.fym.controller.BaseController;
 import com.fym.entity.CourseEntity;
 import com.fym.entity.utils.PageEntity;
 import com.fym.service.course.CourseService;
+import com.fym.service.course.LanguageService;
 import com.fym.service.system.FileManagerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,8 @@ public class CommonController extends BaseController{
     private FileManagerService fileManagerService;
     @Resource
     private CourseService courseService;
+    @Resource
+    private LanguageService languageService;
 
     /**
      * 文件下载
@@ -35,8 +38,15 @@ public class CommonController extends BaseController{
     @RequestMapping(value = "/course_list")
     public ModelAndView courseList(){
         ModelAndView mv = new ModelAndView("home/course_list");
+        PageEntity page = getPage()
+                .setExtend("language",getRequest().getParameter("language"))
+                .setExtend("search_key",getRequest().getParameter("search_key"));
+
         mv.addObject("title","视频学习");
-        mv.addObject("courses",courseService.getAllCourse(new PageEntity().setNotPage(true)));
+        mv.addObject("languages",languageService.getAll());
+        mv.addObject("page",page);
+        mv.addObject("hots",courseService.getHots());
+        mv.addObject("courses",courseService.getAllCourse(page));
         return mv;
     }
 

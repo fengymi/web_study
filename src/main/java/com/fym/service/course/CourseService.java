@@ -34,6 +34,13 @@ public class CourseService {
         }
         return courses;
     }
+    /**
+     * 获取前5个最新课程
+     * @return 5个课程
+     */
+    public List<CourseEntity> getHots(){
+        return courseDao.getHots();
+    }
 
     /**
      * 发布一个课程

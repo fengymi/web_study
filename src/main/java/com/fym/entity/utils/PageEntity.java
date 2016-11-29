@@ -47,7 +47,7 @@ public class PageEntity {
     }
 
     public void setSidx(String sidx) { //存在sql注入
-        this.sidx = (sidx==null||sidx.trim().equals("")?"id":sidx);
+        this.sidx = sidx;
     }
 
     public String getOrder() {

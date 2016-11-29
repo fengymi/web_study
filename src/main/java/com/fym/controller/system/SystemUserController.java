@@ -95,23 +95,7 @@ public class SystemUserController extends BaseController{
     @RequestMapping(value = "/chang_password",produces="application/json;charset=UTF-8",method = RequestMethod.POST)
     @ResponseBody
     public Object changePassword(String password,Integer userId){
-        HashPageData resultInfo = new HashPageData();
-        int result = systemUserService.changePassword(password,userId);
-        switch (result){
-            case Constant.SUCCESS_CODE:
-                resultInfo.put("result",true);
-                resultInfo.put("message","修改成功");
-                break;
-            case Constant.PASSWORD_NULL:
-                resultInfo.put("result",false);
-                resultInfo.put("message","密码不能为空");
-                break;
-            default:
-                resultInfo.put("result",false);
-                resultInfo.put("message","发生错误");
-                break;
-        }
-        return resultInfo;
+        return systemUserService.changePassword(password,userId);
     }
 
 

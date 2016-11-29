@@ -4,10 +4,17 @@
 <style type="text/css">
     .user_info{
         display: none;
+        position: fixed;
+        background-color: #fff4f4;
     }
     .user_info div{
         text-align: center;
     }
+    .user_info div:hover{
+        background-color: #efe3d3;
+        cursor: pointer;
+    }
+
 </style>
 <header role="banner" id="fh5co-header" class="navbar-fixed-top fh5co-animated slideInDown">
     <div class="container">
@@ -25,10 +32,10 @@
                     <li class="active"><a href="<%=basePath%>common/course_list"><span>教学视频</span></a></li>
                     <li><a href="<%=basePath%>user/machine/list" target="_blank"><span>在线虚拟机</span></a></li>
                     <c:if test="${sessionScope.sessionUser!=null}">
-                        <li><a href="javascript:;" class="icon colored-2">${sessionScope.sessionUser.nickname}</a>
-                            <div class="user_info">
+                        <li><a href="javascript:;" onclick="changeUserInfo()" class="icon colored-2">${sessionScope.sessionUser.nickname}</a>
+                            <div id="user_info" class="user_info">
                                 <div>
-                                    <a href="index/logout" class="icon colored-2">修改密码</a>
+                                    <a href="javascript:;" onclick="changePassword()" class="icon colored-2">修改密码</a>
                                 </div>
                                 <div>
                                     <a href="index/logout" class="icon colored-2">退出登录</a>
@@ -45,4 +52,32 @@
         </nav>
         <!-- </div> -->
     </div>
+    <script src="static/plugin/layer/layer.js"></script>
+    <script >
+        function changeUserInfo() {
+            var $user = $("#user_info");
+            if($user.css("display")=="none"){
+                $user.fadeIn(200);
+            }else {
+                $user.fadeOut(200);
+            }
+        }
+        function changePassword() {
+            layer.prompt({
+                formType: 1,
+                value: '',
+                title: '修改密码'
+            }, function(value, index, elem){
+                $.ajax({
+                    url:"user/chang_password",
+                    method:"post",
+                    data:{password:value},
+                    success:function (data) {
+                        alert(data.message);
+                    }
+                });
+                layer.close(index);
+            });
+        }
+    </script>
 </header>
