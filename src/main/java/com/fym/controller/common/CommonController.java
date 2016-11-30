@@ -40,13 +40,14 @@ public class CommonController extends BaseController{
         ModelAndView mv = new ModelAndView("home/course_list");
         PageEntity page = getPage()
                 .setExtend("language",getRequest().getParameter("language"))
-                .setExtend("search_key",getRequest().getParameter("search_key"));
+                .setExtend("search_key",getRequest().getParameter("search_key"))
+                .setNotPage(true);
 
         mv.addObject("title","视频学习");
         mv.addObject("languages",languageService.getAll());
         mv.addObject("page",page);
         mv.addObject("hots",courseService.getHots());
-        mv.addObject("courses",courseService.getAllCourse(page));
+        mv.addObject("courses",courseService.getAllCourseList(page));
         return mv;
     }
 

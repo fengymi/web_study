@@ -11,8 +11,8 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
                                     <span class="block m-t-xs" style="font-size:20px;">
-                                        <i class="fa fa-area-chart"></i>
-                                        <strong class="font-bold">webAdmin</strong>
+                                        <i class="fa fa-book"></i>
+                                        <strong class="font-bold">Admin</strong>
                                     </span>
                                 </span>
                     </a>

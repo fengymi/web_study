@@ -30,6 +30,6 @@ public class SystemCourseController extends BaseController{
     @RequestMapping("/get_data")
     @ResponseBody
     public Object getList(){
-        return JSON.toJSON(new PageInfo<>(courseService.getAllCourse(getPage())));
+        return JSON.toJSON(new PageInfo<>(courseService.getAllCourseList(getPage())));
     }
 }

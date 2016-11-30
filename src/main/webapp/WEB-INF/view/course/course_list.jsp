@@ -93,12 +93,12 @@
                     align: 'center'
                 },{
                     label:"发布人",
-                    name: 'user.nickname',
+                    name: 'nickname',
                     index: 'c_user_id',
                     align: 'center'
                 },{
                     label:"章节数",
-                    name: 'courseItems.length',
+                    name: 'courseItemsCount',
                     sortable: false,
                     editable: false,
                     align: 'center'

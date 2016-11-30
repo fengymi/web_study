@@ -9,10 +9,28 @@ public class CourseEntity {
     private String language;
     private String img_url;
     private Integer img_id;
+    private Integer courseItemsCount;
     private String course_desc;
+    private String nickname;
 
     private User user;
     private List<CurriculumEntity> courseItems;
+
+    public Integer getCourseItemsCount() {
+        return courseItemsCount;
+    }
+
+    public void setCourseItemsCount(Integer courseItemsCount) {
+        this.courseItemsCount = courseItemsCount;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public Integer getCourse_id() {
         return course_id;
@@ -86,4 +104,19 @@ public class CourseEntity {
         this.courseItems = courseItems;
     }
 
+    @Override
+    public String toString() {
+        return "CourseEntity{" +
+                "course_id=" + course_id +
+                ", course_name='" + course_name + '\'' +
+                ", course_author='" + course_author + '\'' +
+                ", language='" + language + '\'' +
+                ", img_url='" + img_url + '\'' +
+                ", img_id=" + img_id +
+                ", courseItemsCount=" + courseItemsCount +
+                ", course_desc='" + course_desc + '\'' +
+                ", user=" + user +
+                ", courseItems=" + courseItems +
+                '}';
+    }
 }

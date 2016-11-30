@@ -43,7 +43,7 @@ public class CourseManagerController extends BaseController{
     @RequestMapping("/get_data")
     @ResponseBody
     public Object getList(){
-        return JSON.toJSON(new PageInfo<>(courseService.getAllCourse(getPage().setExtend("userId",((User)(getSession().getAttribute(Constant.SESSION_USER))).getId()))));
+        return JSON.toJSON(new PageInfo<>(courseService.getAllCourseList(getPage().setExtend("userId",((User)(getSession().getAttribute(Constant.SESSION_USER))).getId()))));
     }
 
     @RequestMapping(value = "/publish",method = RequestMethod.GET)

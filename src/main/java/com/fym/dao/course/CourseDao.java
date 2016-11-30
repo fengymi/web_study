@@ -18,5 +18,7 @@ public interface CourseDao {
 
     List<CourseEntity> getAll(PageEntity pageEntity);
 
+    List<CourseEntity> getAllList(PageEntity pageEntity);
+
     List<CourseEntity> getHots();
 }

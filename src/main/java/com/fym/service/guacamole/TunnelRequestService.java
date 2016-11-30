@@ -11,6 +11,7 @@ import com.fym.utils.guacamole.request.TunnelRequest;
 import org.glyptodon.guacamole.net.GuacamoleSocket;
 import org.glyptodon.guacamole.net.GuacamoleTunnel;
 import org.glyptodon.guacamole.net.InetGuacamoleSocket;
+import org.glyptodon.guacamole.net.SSLGuacamoleSocket;
 import org.glyptodon.guacamole.protocol.ConfiguredGuacamoleSocket;
 import org.glyptodon.guacamole.protocol.GuacamoleClientInformation;
 import org.glyptodon.guacamole.protocol.GuacamoleConfiguration;
@@ -29,7 +30,6 @@ public class TunnelRequestService {
     private ServerService serverService;
 
     public GuacamoleTunnel createTunnel(HashPageData request){
-        System.out.println(request);
         HashPageData machineUser = serverService.getLoginInfo(request);
         if(machineUser==null) return null;
         //客户端信息(宽,高等信息)
@@ -99,6 +99,8 @@ public class TunnelRequestService {
         config.setParameter("username", userInfo.getString("username"));
         config.setParameter("password", userInfo.getString("password"));
         config.setParameter("name", userInfo.getString("name"));
+        config.setParameter("security", "tls");
+        config.setParameter("ignore-cert","true"); // RDP协议忽略证书（win10）
         return config;
     }
 }

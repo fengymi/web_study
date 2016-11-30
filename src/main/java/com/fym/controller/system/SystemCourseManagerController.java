@@ -21,13 +21,13 @@ public class SystemCourseManagerController extends BaseController{
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public ModelAndView list(){
         ModelAndView mv = new ModelAndView("system/system_course_list");
-        mv.addObject("title","全部课程课程");
+        mv.addObject("title","全部课程");
         return mv;
     }
     @RequestMapping("/get_data")
     @ResponseBody
     public Object getList(){
-        return JSON.toJSON(new PageInfo<>(courseService.getAllCourse(getPage())));
+        return JSON.toJSON(new PageInfo<>(courseService.getAllCourseList(getPage())));
     }
 
 }

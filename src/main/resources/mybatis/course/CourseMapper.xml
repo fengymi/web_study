@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fym.dao.course.CourseDao">
 
-    <insert id="addCourse"  useGeneratedKeys="true" keyProperty="course_id"  parameterType="hash">
+    <insert id="addCourse" useGeneratedKeys="true" keyProperty="course_id" parameterType="hash">
         INSERT INTO
           course(course_name,c_user_id,course_author,course_language,img_url,img_id,course_desc)
           VALUES (#{course_name},#{userId},#{course_author},#{course_language},#{img_url},#{img_id},#{course_desc})
@@ -20,10 +20,10 @@
     </delete>
 
     <select id="getCourse" resultMap="courseInfo">
-        <include refid="base-select" />
+        <include refid="base-select"/>
         LEFT JOIN `curriculum` cl
         ON
-          c.course_id=cl.c_id
+        c.course_id=cl.c_id
         WHERE c.course_id=#{0} order by cl.curriculum_num
     </select>
 
@@ -34,14 +34,11 @@
         ON
         c.course_id=cl.c_id
         WHERE 1=1
-        <if test="extend.userId!=null">
-            AND c.c_user_id=#{extend.userId}
-        </if>
         <if test="extend.search_key!=null and extend.search_key!=''">
             and (
-            (c.course_name    like CONCAT('%','${extend.search_key}','%' ) ) or
-            (c.course_author  like CONCAT('%','${extend.search_key}','%' ) ) or
-            (c.course_desc    like CONCAT('%','${extend.search_key}','%' ) )
+            (c.course_name like CONCAT('%','${extend.search_key}','%' ) ) or
+            (c.course_author like CONCAT('%','${extend.search_key}','%' ) ) or
+            (c.course_desc like CONCAT('%','${extend.search_key}','%' ) )
             )
         </if>
         <if test="extend.language!=null and extend.language!=''">
@@ -53,6 +50,39 @@
     </select>
     <select id="getHots" resultType="com.fym.entity.CourseEntity">
         SELECT * FROM course c  ORDER BY c.course_id desc limit 0,5
+    </select>
+    <select id="getAllList" resultType="com.fym.entity.CourseEntity">
+        SELECT
+            c.*,COUNT(cl.c_id) as courseItemsCount,
+            su.nickname,
+            l.name as `language`
+
+        FROM course c
+        INNER JOIN `sys_user` su
+        ON su.user_id=c.c_user_id
+
+            LEFT JOIN `language` l
+                ON    c.course_language=l.l_id
+		    LEFT JOIN `curriculum` cl
+			    ON    c.course_id=cl.c_id
+        WHERE 1=1
+        <if test="extend.search_key!=null and extend.search_key!=''">
+            and (
+            (c.course_name like CONCAT('%','${extend.search_key}','%' ) ) or
+            (c.course_author like CONCAT('%','${extend.search_key}','%' ) ) or
+            (c.course_desc like CONCAT('%','${extend.search_key}','%' ) )
+            )
+        </if>
+        <if test="extend.language!=null and extend.language!=''">
+            and course_language=#{extend.language}
+        </if>
+        <if test="extend.userId!=null">
+            AND c.c_user_id=#{extend.userId}
+        </if>
+        GROUP BY c.course_id
+        <if test="(sidx!=null and sidx!='') and (order!=null and order!='')">
+            ORDER BY ${sidx} ${order}
+        </if>
     </select>
 
     <sql id="base-select">
@@ -68,7 +98,7 @@
     </sql>
 
     <resultMap id="courseInfo" type="com.fym.entity.CourseEntity" autoMapping="true">
-        <id column="course_id" property="course_id" />
+        <id column="course_id" property="course_id"/>
         <association property="user" column="user_id" javaType="com.fym.entity.User" autoMapping="true">
             <id property="id" column="user_id"/>
         </association>

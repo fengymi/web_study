@@ -105,9 +105,9 @@
                     <li class="hvr-float"><a href="common/course_info/${course.course_id}">
                         <div class="img"><img src="${applicationScope.fileHost}/${course.img_url}"><b>主讲：${course.course_author}</b></div>
                         <p>${course.course_name}</p></a>
-                        <span><font class="fl">
+                        <span><%--<font class="fl">
                             已有12757人在学习
-                        </font><em>${course.language}</em></span>
+                        </font>--%><em>${course.language}</em></span>
                     </li>
                 </c:forEach>
 

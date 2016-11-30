@@ -35,6 +35,22 @@ public class CourseService {
         return courses;
     }
     /**
+     * 获取全部课程列表
+     * @return 全部课程
+     */
+    public List<CourseEntity> getAllCourseList(PageEntity page){
+        List<CourseEntity> courses = null;
+        if(page!=null&&!page.isNotPage())
+            PageHelper.startPage(page.getPageNum(), page.getPageSize());
+        try {
+            courses = courseDao.getAllList(page);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+
+        return courses;
+    }
+    /**
      * 获取前5个最新课程
      * @return 5个课程
      */

@@ -44,7 +44,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    图标拾取：<input id="icon_picker" />
+                    点击图标获取相应的代码
                 </div>
                 <div class="ibox-content icons-box">
                     <section id="new">
@@ -1938,13 +1938,19 @@
 
 <!-- 自定义js -->
 <script src="static/admin/js/content.js"></script>
+<script src="static/plugin/layer/layer.js"></script>
 <script>
     $(function(){
-        var $input = $("#icon_picker");
         $("div.fa-hover").each(function(){
             $(this).click(function () {
-                console.log($(this).find("i"));
-                $input.val($(this).find("i").prop("outerHTML"));
+                var icon = $(this).find("i").prop("outerHTML");
+                layer.prompt({
+                    formType: 2,
+                    value: icon,
+                    title: '图标信息',
+                    btn: []
+
+                });
                 return false;
             });
         });
