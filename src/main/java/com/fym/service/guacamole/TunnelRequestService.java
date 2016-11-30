@@ -99,7 +99,7 @@ public class TunnelRequestService {
         config.setParameter("username", userInfo.getString("username"));
         config.setParameter("password", userInfo.getString("password"));
         config.setParameter("name", userInfo.getString("name"));
-        config.setParameter("security", "tls");
+        config.setParameter("security", "nla");     //win10必须这个 小写
         config.setParameter("ignore-cert","true"); // RDP协议忽略证书（win10）
         return config;
     }
