@@ -27,8 +27,8 @@ public class TutorialGuacamoleTunnelServlet
 //        config.setProtocol("ssh");
 //        config.setParameter("hostname", "115.159.55.209");
 //        config.setParameter("port", "22");
-//        config.setParameter("username", "root");
-//        config.setParameter("password", "feng1234");
+//        config.setParameter("username", "ssh_user1");
+//        config.setParameter("password", "123456");
 //        //window7
 //        config.setParameter("hostname", "192.168.182.130");
 //        config.setProtocol("rdp");

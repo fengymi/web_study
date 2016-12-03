@@ -59,7 +59,7 @@ public class ProxyServer {
      * @return 可用代理服务器
      */
     public ProxyServerEntity getProxyServer(){
-        if(servers==null||servers.size()==0) {
+        if(servers==null||servers.isEmpty()) {
             logger.info("代理服务器不存在");
             return null;
         }
@@ -73,7 +73,7 @@ public class ProxyServer {
         logger.debug("开始初始化代理服务器");
         index = 0;
         servers = serverService.getCanUseServers();
-        if (servers==null||servers.size()==0){
+        if (servers==null||servers.isEmpty()){
             logger.error("代理服务器不存在,将无法使用虚拟机");
         }
         logger.debug("代理服务器初始化完成");
