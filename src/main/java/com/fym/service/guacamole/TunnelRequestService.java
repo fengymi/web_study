@@ -11,7 +11,6 @@ import com.fym.utils.guacamole.request.TunnelRequest;
 import org.glyptodon.guacamole.net.GuacamoleSocket;
 import org.glyptodon.guacamole.net.GuacamoleTunnel;
 import org.glyptodon.guacamole.net.InetGuacamoleSocket;
-import org.glyptodon.guacamole.net.SSLGuacamoleSocket;
 import org.glyptodon.guacamole.protocol.ConfiguredGuacamoleSocket;
 import org.glyptodon.guacamole.protocol.GuacamoleClientInformation;
 import org.glyptodon.guacamole.protocol.GuacamoleConfiguration;
@@ -32,12 +31,14 @@ public class TunnelRequestService {
     public GuacamoleTunnel createTunnel(HashPageData request){
         HashPageData machineUser = serverService.getLoginInfo(request);
         if(machineUser==null) return null;
+        //获取代理服务器信息
+        ProxyServerEntity proxyServer = ProxyServer.getProxy().getProxyServer();
+        if(proxyServer==null) return null;
+
         //客户端信息(宽,高等信息)
         GuacamoleClientInformation clientInfo = getClientInformation(request);
         //配置连接信息
         GuacamoleConfiguration config = getConfig(machineUser);
-        //获取代理服务器信息
-        ProxyServerEntity proxyServer = ProxyServer.getProxy().getProxyServer();
 
         GuacamoleSocket socket = null;
         try {
