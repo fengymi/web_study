@@ -1,15 +1,20 @@
 package com.fym.controller.admin;
 
 
+import com.fym.service.user.UserCountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import java.util.Random;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    @Resource
+    private UserCountService userCountService;
 
 
     @RequestMapping("/home")
@@ -17,8 +22,10 @@ public class AdminController {
         return "admin/home";
     }
     @RequestMapping("/index")
-    public String index(){
-        return "admin/index";
+    public ModelAndView index(){
+        ModelAndView mv = new ModelAndView("admin/index");
+        mv.addObject("userNum",userCountService.getAll());
+        return mv;
     }
 
     @RequestMapping("/get_info")

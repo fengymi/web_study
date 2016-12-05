@@ -34,7 +34,9 @@
                     <h5>服务器状态&nbsp;<span id="num"></span></h5>
                 </div>
                 <div class="ibox-content" style="border-top:none;">
-                    <div id="main" style="height:400px;"></div>
+                    <div id="now" style="height:400px;"></div><br />
+
+                    <div id="history" style="height:400px;"></div>
                 </div>
             </div>
         </div>
@@ -46,6 +48,7 @@
 <script src="static/js/design/design.js"></script>
 <!--flotdemo-->
 <script type="text/javascript">
+    var option;
     $(function() {
         $.ajax({
             url: "<%=basePath%>index/get_user_num",
@@ -56,71 +59,187 @@
         });
 
 
-        var myChart = echarts.init(document.getElementById('main'));
+        var history = echarts.init(document.getElementById('history'));
 
-        var xAxis = [];
-        for(var i=0;i<60;i++){
-            xAxis[i] = i+1;
-        }
-        var yAxis = [];
-        myChart.setOption({
-            grid:{
-                containLabel:true
-            },
-            title: {
-                text: '服务器监控'
-            },
-            tooltip: {
-                trigger:"axis",
-                formatter:"时间:{b0}<br/>{a0}:{c0}%"
+        option = {
+            tooltip : {
+                trigger: 'axis'
             },
             legend: {
-                data:['CPU使用率']
+                data:['游客数','在线用户数','连接数']
             },
-            xAxis: {
-                data: xAxis
-            },
-            yAxis: {
-                name:"CPU使用率%",
-                data:[1,2,3,4,5,6,7,8],
-                nameGap:15,
-                interval:5,
-                boundaryGap:[0,0]
-            },
-            series:[{
-                name:'CPU使用率',
-                type:'line',
-                areaStyle: {
-                    normal: {}
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
                 }
+            },
+            calculable : true,
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            xAxis:[{
+                type : 'category',
+                boundaryGap : false
             }],
-            color:["#98F5FF"]
+            series:[
+                {
+                    name:'游客数',
+                    type:'line',
+                    smooth:true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}}
+                },
+                {
+                    name:'在线用户数',
+                    type:'line',
+                    smooth:true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}}
+                },
+                {
+                    name:'连接数',
+                    type:'line',
+                    smooth:true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}}
+                }
+            ]
+        };
+
+        var history_xAxis_data = ['周一','周二','周三','周四','周五','周六','周日'];
+        var history_series_data = [
+            {data:[120, 132, 101, 134, 90, 230, 210]},
+            {data:[220, 182, 191, 234, 290, 330, 310]},
+            {data:[150, 232, 201, 154, 190, 330, 410]}
+        ];
+
+//        option.title = {
+//            text: '用户连接情况',
+//            subtext: '历史记录'
+//        };
+        history.setOption(updateOptions(history_xAxis_data,history_series_data));
+
+        history.setOption({
+            title : {
+                text: '某楼盘销售情况',
+                subtext: '纯属虚构'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['意向','预购','成交']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'成交',
+                    type:'line',
+                    smooth:true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data:[10, 12, 21, 54, 260, 830, 710]
+                },
+                {
+                    name:'预购',
+                    type:'line',
+                    smooth:true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data:[30, 182, 434, 791, 390, 30, 10]
+                },
+                {
+                    name:'意向',
+                    type:'line',
+                    smooth:true,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data:[1320, 1132, 601, 234, 120, 90, 20]
+                }
+            ]
         });
 
-        function updateData() {
-            console.log("开始执行");
-            $.ajax({
-                url:'<%=basePath%>admin/get_info',
-                async:false,
-                success:function (data) {
-                    myChart.setOption({
-                        series: [{
-                            data: data
-                        }]
-                    });
-
-                }
-            });
-
-        }
-        updateData();
-
-//        setInterval(function () {
-//            updateData();
-//        },10000);
+        setInterval(function () {
+            getNowCount();
+        },1000);
 
 
     });
+
+    var now = echarts.init(document.getElementById('now'));
+    var xAxis = [];
+    var series = [{data:[]},{data:[]},{data:[]}];
+    var now_index;
+    var dateTime = new Date().getTime();
+    for(now_index=0;xAxis.length<60;now_index++){
+        xAxis.push(getDate(now_index));
+    }
+
+    function addOne() {
+        var isFull;
+        if(series[0].data.length>=xAxis.length){
+            isFull = true;
+            xAxis.shift();
+            xAxis.push(getDate(now_index));
+        }
+
+        for (var i=0;i<3;i++){
+            series[i].data.push(Math.floor(Math.random()*100));
+            if(isFull){
+                series[i].data.shift();
+            }
+        }
+        now.setOption(updateOptions(xAxis,series));
+    }
+
+    function getNowCount() {
+        $.ajax({
+            url:"index/get_user_num",
+            success:function (data) {
+                addOne();
+            }
+        });
+    }
+
+    function getDate(index) {
+        index = index || 0;
+        var nowTime = new Date(dateTime+index*10*60000);
+        console.log(nowTime);
+        var hours = nowTime.getHours();
+        var minutes = nowTime.getMinutes();
+        return (hours<10?"0"+hours:hours)+":"+(minutes<10?"0"+minutes:minutes)+":00";
+    }
+
+    function updateOptions(xAxis_data,series_data) {
+        option.xAxis[0].data = xAxis_data;
+        for(var i=0;i<series_data.length;i++){
+            option.series[i].data = series_data[i].data;
+        }
+        return option;
+    }
 
 </script>
 </body>

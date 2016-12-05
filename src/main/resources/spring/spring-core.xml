@@ -24,4 +24,5 @@
     <import resource="spring-database.xml"/>
     <import resource="spring-shiro.xml"/>
     <import resource="spring-fastdfs.xml"/>
+    <import resource="spring-task.xml"/>
 </beans>

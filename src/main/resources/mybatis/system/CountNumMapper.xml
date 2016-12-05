@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fym.dao.system.CountNumDao">
+    <insert id="addItem" parameterType="hash">
+        INSERT into count_num(visitor_num,user_num,connection_num) VALUES (#{visitor_num},#{user_num},#{connection_num})
+    </insert>
+    <select id="getAllItems" resultType="com.fym.utils.data.HashPageData">
+        SELECT * FROM count_num limit 0,24
+    </select>
+</mapper>
