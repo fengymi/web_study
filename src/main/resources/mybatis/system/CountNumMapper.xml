@@ -5,6 +5,6 @@
         INSERT into count_num(visitor_num,user_num,connection_num) VALUES (#{visitor_num},#{user_num},#{connection_num})
     </insert>
     <select id="getAllItems" resultType="com.fym.utils.data.HashPageData">
-        SELECT * FROM count_num limit 0,24
+        SELECT * FROM count_num ORDER BY count_id asc limit 0,24
     </select>
 </mapper>

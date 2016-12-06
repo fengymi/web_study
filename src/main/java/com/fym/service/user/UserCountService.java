@@ -6,6 +6,8 @@ import com.fym.utils.data.HashPageData;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -16,7 +18,14 @@ public class UserCountService {
     private CountNumDao countNumDao;
 
     public List<HashPageData> getAll(){
-        return countNumDao.getAllItems();
+
+        SimpleDateFormat simple = new SimpleDateFormat("MM月dd日HH点");
+        List<HashPageData> history = countNumDao.getAllItems();
+        history.parallelStream().forEach((data)->{
+            Timestamp time = (Timestamp) data.get("create_time");
+            data.put("create_time",simple.format(time));
+        });
+        return history;
     }
 
     public void setCount(){

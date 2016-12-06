@@ -31,7 +31,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title" style="border-bottom:none;background:#fff;">
-                    <h5>服务器状态&nbsp;<span id="num"></span></h5>
+                    <h5><span id="num"></span></h5>
                 </div>
                 <div class="ibox-content" style="border-top:none;">
                     <div id="now" style="height:400px;"></div><br />
@@ -50,14 +50,6 @@
 <script type="text/javascript">
     var option;
     $(function() {
-        $.ajax({
-            url: "<%=basePath%>index/get_user_num",
-            success: function (data) {
-                var con = "在线浏览人数:" + data.visitorNum + ";在线用户:" + data.userNum + ";连接数:" + data.connectionNum;
-                $("#num").text(con);
-            }
-        });
-
 
         var history = echarts.init(document.getElementById('history'));
 
@@ -69,7 +61,7 @@
                 data:['游客数','在线用户数','连接数']
             },
             toolbox: {
-                show : true,
+                show : false,
                 feature : {
                     mark : {show: true},
                     dataView : {show: true, readOnly: false},
@@ -110,81 +102,23 @@
             ]
         };
 
-        var history_xAxis_data = ['周一','周二','周三','周四','周五','周六','周日'];
+        var history_xAxis_data = [${xAxis}];
         var history_series_data = [
-            {data:[120, 132, 101, 134, 90, 230, 210]},
-            {data:[220, 182, 191, 234, 290, 330, 310]},
-            {data:[150, 232, 201, 154, 190, 330, 410]}
+            {data:[${visitorNum}]},
+            {data:[${userNum}]},
+            {data:[${connectionNum}]}
         ];
 
-//        option.title = {
-//            text: '用户连接情况',
-//            subtext: '历史记录'
-//        };
+        option.title = {
+            text: '用户连接情况',
+            subtext: '历史记录'
+        };
         history.setOption(updateOptions(history_xAxis_data,history_series_data));
 
-        history.setOption({
-            title : {
-                text: '某楼盘销售情况',
-                subtext: '纯属虚构'
-            },
-            tooltip : {
-                trigger: 'axis'
-            },
-            legend: {
-                data:['意向','预购','成交']
-            },
-            toolbox: {
-                show : true,
-                feature : {
-                    mark : {show: true},
-                    dataView : {show: true, readOnly: false},
-                    magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
-                    restore : {show: true},
-                    saveAsImage : {show: true}
-                }
-            },
-            calculable : true,
-            xAxis : [
-                {
-                    type : 'category',
-                    boundaryGap : false,
-                    data : ['周一','周二','周三','周四','周五','周六','周日']
-                }
-            ],
-            yAxis : [
-                {
-                    type : 'value'
-                }
-            ],
-            series : [
-                {
-                    name:'成交',
-                    type:'line',
-                    smooth:true,
-                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                    data:[10, 12, 21, 54, 260, 830, 710]
-                },
-                {
-                    name:'预购',
-                    type:'line',
-                    smooth:true,
-                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                    data:[30, 182, 434, 791, 390, 30, 10]
-                },
-                {
-                    name:'意向',
-                    type:'line',
-                    smooth:true,
-                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                    data:[1320, 1132, 601, 234, 120, 90, 20]
-                }
-            ]
-        });
-
+        getNowCount();
         setInterval(function () {
             getNowCount();
-        },1000);
+        },60000);
 
 
     });
@@ -193,25 +127,35 @@
     var xAxis = [];
     var series = [{data:[]},{data:[]},{data:[]}];
     var now_index;
-    var dateTime = new Date().getTime();
+    var dateTime = (new Date().getTime())-60*60000;
     for(now_index=0;xAxis.length<60;now_index++){
         xAxis.push(getDate(now_index));
+        for (var i=0;i<3;i++){
+            series[i].data.push(0);
+        }
     }
 
-    function addOne() {
+    function addOne(data) {
         var isFull;
         if(series[0].data.length>=xAxis.length){
             isFull = true;
             xAxis.shift();
-            xAxis.push(getDate(now_index));
+            xAxis.push(getDate(now_index++));
         }
 
+        series[0].data.push(data.visitorNum);
+        series[1].data.push(data.userNum);
+        series[2].data.push(data.connectionNum);
         for (var i=0;i<3;i++){
-            series[i].data.push(Math.floor(Math.random()*100));
             if(isFull){
                 series[i].data.shift();
             }
         }
+
+        option.title = {
+            text: '用户连接情况',
+            subtext: '当前记录'
+        };
         now.setOption(updateOptions(xAxis,series));
     }
 
@@ -219,15 +163,16 @@
         $.ajax({
             url:"index/get_user_num",
             success:function (data) {
-                addOne();
+                var con = "在线浏览人数:" + data.visitorNum + ";在线用户:" + data.userNum + ";连接数:" + data.connectionNum;
+                $("#num").text(con);
+                addOne(data);
             }
         });
     }
 
     function getDate(index) {
         index = index || 0;
-        var nowTime = new Date(dateTime+index*10*60000);
-        console.log(nowTime);
+        var nowTime = new Date(dateTime+index*60000);
         var hours = nowTime.getHours();
         var minutes = nowTime.getMinutes();
         return (hours<10?"0"+hours:hours)+":"+(minutes<10?"0"+minutes:minutes)+":00";
