@@ -22,7 +22,7 @@ public class SessionManager {
     private GuacamoleTokenSessionService guacamoleTokenSessionService;
 
     public int getVisitorNum() {
-        return visitorNum;
+        return visitorNum-userNum;
     }
     public int getUserNum() {
         return userNum;
