@@ -163,7 +163,7 @@
         $.ajax({
             url:"index/get_user_num",
             success:function (data) {
-                var con = "在线浏览人数:" + data.visitorNum + ";在线用户:" + data.userNum + ";连接数:" + data.connectionNum;
+                var con = "游客数:" + data.visitorNum + ";在线用户:" + data.userNum + ";连接数:" + data.connectionNum;
                 $("#num").text(con);
                 addOne(data);
             }
