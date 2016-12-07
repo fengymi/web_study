@@ -31,13 +31,13 @@ public class AdminController {
         String visitorNum= "";
         String userNum= "";
         String connectionNum= "";
-        for (int i=0;i<history.size();i++) {
+        for (int i=history.size()-1;i>=0;i--) {
             HashPageData data = history.get(i);
             xAxis += "'"+data.getString("create_time")+"'";
             visitorNum += data.getString("visitor_num");
             userNum += data.getString("user_num");
             connectionNum += data.getString("connection_num");
-            if(i!=history.size()-1){
+            if(i!=0){
                 xAxis += ",";
                 visitorNum += ",";
                 userNum += ",";

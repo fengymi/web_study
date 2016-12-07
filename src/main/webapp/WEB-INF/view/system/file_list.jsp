@@ -136,7 +136,7 @@
                     editable: false,
                     formatter: function (cellValue, options, rowObject) {
                         var oper = '<a title="下载文件" class="J_menuItem btn btn-white btn-bitbucket" href="file/download/'+rowObject.file_id+'"><i class="fa fa-download"></i></a>&nbsp;&nbsp;';
-                        oper += '<a title="查看详情" class="J_menuItem btn btn-white btn-bitbucket" href="javascript:;"><i class="fa fa-search"></i></a>';
+//                        oper += '<a title="查看详情" class="J_menuItem btn btn-white btn-bitbucket" href="javascript:;"><i class="fa fa-search"></i></a>';
 
                         return oper;
                     }

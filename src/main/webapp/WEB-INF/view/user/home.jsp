@@ -3,7 +3,6 @@
 <%@include file="../layout/header.jsp"%>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
 
-<!--${sessionScope.user}-->
 <div id="wrapper">
     <%@include file="../layout/nav.jsp"%>
 
