@@ -42,7 +42,7 @@
                     <p class="m-t-md">登录到学习系统后台</p>
                     <input name="username" type="text" class="form-control uname" placeholder="用户名"/>
                     <input name="password" type="password" class="form-control pword m-b" placeholder="密码"/>
-                    <a href="">忘记密码了？</a>
+                    <%--<a href="">忘记密码了？</a>--%>
                     <button class="btn btn-success btn-block">登录</button>
                 </form>
             </div>
