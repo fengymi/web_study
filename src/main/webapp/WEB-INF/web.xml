@@ -72,7 +72,7 @@
 
     <session-config>
         <!--超时单位为分钟-->
-        <session-timeout>300</session-timeout>
+        <session-timeout>60</session-timeout>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
 
