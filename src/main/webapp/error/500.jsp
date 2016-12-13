@@ -17,7 +17,11 @@
 
     <link rel="shortcut icon" href="static/img/favicon.ico">
     <link href="static/error/css/error.css" rel="stylesheet" type="text/css" />
-
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = "<%=basePath%>error/505.jsp";
+        }
+    </script>
 </head>
 <body>
 
