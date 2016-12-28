@@ -1,0 +1,27 @@
+
+
+Guacamole服务器并不能识别任意的远程桌面协议，它仅仅只能识别Guacamole协议。而Guacamole协议实现了现有的所有远程桌面协议，是远程桌面的一个超集。但是我们需要编写一个远程桌面协议和Guacamole协议之间的中间层（guacd）实现协议之间的转换。对与guacd的安装和部署已经介绍过了，这里不再说明。这里将介绍如何搭建一个Guacamole服务器，并且如何在浏览器中访问这个服务器，实现浏览器访问远程桌面。
+1.服务器端实现
+需要的关键jar包：guacamole-common-0.9.9.jar（目前最新版0.9.9）
+		maven引入方式：
+        <dependency>
+            <groupId>org.glyptodon.guacamole</groupId>
+            <artifactId>guacamole-common</artifactId>
+            <version>0.9.9</version>
+        </dependency>
+	搭建Guacamole服务器，我们需要建立一个Guacamole协议，通过该协议实现远程显示渲染和事件传输。Guacamole协议需要一个最关键的对象GuacamoleTunnel。所以我们参考官方文档创建出一个最简单的GuacamoleTunnel对象。
+	    //先创建一个能添加连接远程桌面配置信息的GuacamoleConfiguration对象。
+        GuacamoleConfiguration config = new GuacamoleConfiguration();
+        //配置连接远程桌面的必要信息。
+        config.setProtocol("vnc"); 						//配置连接协议（常见的有vnc、ssh、telnet、rdp）
+        config.setParameter("hostname", "localhost"); 	//远程桌面地址
+        config.setParameter("port", "5901");			//连接端口
+        //需要创建一个能够连接guacd服务的简单socket。
+        InetGuacamoleSocket inetGuacamoleSocket = new InetGuacamoleSocket("host", "port");
+        //封装连接guacd服务的简单socket和连接远程桌面信息config对象，得到一个能够直接连接guacd服务并且访问到远程桌面信息的完整socket
+        GuacamoleSocket socket = new ConfiguredGuacamoleSocket(inetGuacamoleSocket,config);
+		//将刚才得到的完整socket对象封装成一个简单Tunnel
+        GuacamoleTunnel guacamoleTunnel = new SimpleGuacamoleTunnel(socket);
+        //到这里，一个最简单GuacamoleTunnel对象已经成功建立，并由它来建立Guacamole协议
+	        
+
