@@ -55,8 +55,6 @@ public class FileManager {
             //释放TrackerServer连接
             connectionPool.checkIn(trackerServer, logId);
         }
-
-        System.out.println(JSON.toJSONString(uploadResults));
         return uploadResults;
     }
 
