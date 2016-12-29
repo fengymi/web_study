@@ -3,25 +3,109 @@
 Guacamole服务器并不能识别任意的远程桌面协议，它仅仅只能识别Guacamole协议。而Guacamole协议实现了现有的所有远程桌面协议，是远程桌面的一个超集。但是我们需要编写一个远程桌面协议和Guacamole协议之间的中间层（guacd）实现协议之间的转换。对与guacd的安装和部署已经介绍过了，这里不再说明。这里将介绍如何搭建一个Guacamole服务器，并且如何在浏览器中访问这个服务器，实现浏览器访问远程桌面。
 1.服务器端实现
 需要的关键jar包：guacamole-common-0.9.9.jar（目前最新版0.9.9）
-		maven引入方式：
-        <dependency>
-            <groupId>org.glyptodon.guacamole</groupId>
-            <artifactId>guacamole-common</artifactId>
-            <version>0.9.9</version>
-        </dependency>
-	搭建Guacamole服务器，我们需要建立一个Guacamole协议，通过该协议实现远程显示渲染和事件传输。Guacamole协议需要一个最关键的对象GuacamoleTunnel。所以我们参考官方文档创建出一个最简单的GuacamoleTunnel对象。
-	    //先创建一个能添加连接远程桌面配置信息的GuacamoleConfiguration对象。
-        GuacamoleConfiguration config = new GuacamoleConfiguration();
-        //配置连接远程桌面的必要信息。
-        config.setProtocol("vnc"); 						//配置连接协议（常见的有vnc、ssh、telnet、rdp）
-        config.setParameter("hostname", "localhost"); 	//远程桌面地址
-        config.setParameter("port", "5901");			//连接端口
-        //需要创建一个能够连接guacd服务的简单socket。
-        InetGuacamoleSocket inetGuacamoleSocket = new InetGuacamoleSocket("host", "port");
-        //封装连接guacd服务的简单socket和连接远程桌面信息config对象，得到一个能够直接连接guacd服务并且访问到远程桌面信息的完整socket
-        GuacamoleSocket socket = new ConfiguredGuacamoleSocket(inetGuacamoleSocket,config);
-		//将刚才得到的完整socket对象封装成一个简单Tunnel
-        GuacamoleTunnel guacamoleTunnel = new SimpleGuacamoleTunnel(socket);
-        //到这里，一个最简单GuacamoleTunnel对象已经成功建立，并由它来建立Guacamole协议
-	        
+maven引入方式：
+<dependency>
+    <groupId>org.glyptodon.guacamole</groupId>
+    <artifactId>guacamole-common</artifactId>
+    <version>0.9.9</version>
+</dependency>
+搭建Guacamole服务器，我们需要建立一个Guacamole协议，通过该协议实现远程显示渲染和事件传输。Guacamole协议需要一个最关键的对象GuacamoleTunnel。所以我们参考官方文档创建出一个最简单的GuacamoleTunnel对象。
+//先创建一个能添加连接远程桌面配置信息的GuacamoleConfiguration对象。
+GuacamoleConfiguration config = new GuacamoleConfiguration();
+//配置连接远程桌面的必要信息。
+config.setProtocol("vnc"); 						//配置连接协议（常见的有vnc、ssh、telnet、rdp）
+config.setParameter("hostname", "localhost"); 	//远程桌面地址
+config.setParameter("port", "5901");			//连接端口
+//需要创建一个能够连接guacd服务的简单socket。
+InetGuacamoleSocket inetGuacamoleSocket = new InetGuacamoleSocket("host", "port");
+//封装连接guacd服务的简单socket和连接远程桌面信息config对象，得到一个能够直接连接guacd服务并且访问到远程桌面信息的完整socket
+GuacamoleSocket socket = new ConfiguredGuacamoleSocket(inetGuacamoleSocket,config);
+//将刚才得到的完整socket对象封装成一个简单Tunnel
+GuacamoleTunnel guacamoleTunnel = new SimpleGuacamoleTunnel(socket);
+//到这里，一个最简单GuacamoleTunnel对象已经成功建立，并由它来建立Guacamole协议
 
+第二部分
+
+但这并不能满足一个真正的系统需求，接下来将介绍一个能够在实际应用中的Guacamole服务器搭建教程。
+官方提供HTTP和Socket两种方式构建Guacamole服务器，本系统采用HTTP方式的来构建Guacamole服务器
+①.建立一个继承自GuacamoleHTTPTunnelServlet类的Servlet，由它来完成和前端的数据交互。具体代码如图1-1所示
+
+②.实现GuacamoleHTTPTunnelServlet类doConnect的抽象方法，根据自己需求创立相应的GuacamoleTunnel对象。
+根据前端选着的远程桌面的id获取该远程桌面能用的连接账号、密码等信息，如果不存在将返回null；
+HashPageData machineUser = serverService.getLoginInfo(request);
+由ProxyServer.getProxy().getProxyServer()统一获取系统中的可用代理服务器，当系统中存在多个可用代理服务器时，会根据一定的选择算法获取代理服务器，实现负载均衡的效果，同时这样能更好的方便控制获取算法。
+ProxyServerEntity proxyServer = ProxyServer.getProxy().getProxyServer();
+根据用户的一些信息（如：屏幕分辨率、声音类型、视频类型等）进行配置一个适合该用户的系统界面及效果。
+GuacamoleClientInformation clientInfo = getClientInformation(request);
+根据得到的远程桌面信息进行自动连接远程桌面，减少用户手动操作，降低用户使用难度，提高用户体验度。同时也让用户感觉不到Guacamole协议的存在，实现了协议透明。
+GuacamoleConfiguration config = new GuacamoleConfiguration();
+必须设置桌面连接协议，而且必须小写。
+config.setProtocol(userInfo.getString("protocol").toLowerCase());
+设置远程桌面的地址和端口
+config.setParameter("hostname", userInfo.getString("host"));
+config.setParameter("port", userInfo.getString("port"));
+设置连接的账号信息
+config.setParameter("username", userInfo.getString("username"));
+config.setParameter("password", userInfo.getString("password"));
+设置连接后的远程桌面的显示名称
+config.setParameter("name", userInfo.getString("name"));
+对与运行在windows10之上的Guacamole服务器必须配置忽略证书认证信息。
+config.setParameter("security", "nla");
+config.setParameter("ignore-cert","true");
+配置完这些连接信息后，开始建立Guacamole协议。
+建立一个简单的Socket连接，由它完成Guacamole协议的数据传输
+InetGuacamoleSocket inetGuacamoleSocket = new InetGuacamoleSocket(proxyServer.getHost(), proxyServer.getPort());
+加入一些其它的连接配置信息，并重新封装成一个更为强大的Socket连接。
+GuacamoleSocket socket = new ConfiguredGuacamoleSocket(inetGuacamoleSocket,config,clientInfo)；
+将这个Socket重新封装成一个继承于AbstractGuacamoleTunnel类的自己的功能更丰富的DesignGuacamoleHTTPTunnel对象。
+return new DesignGuacamoleHTTPTunnel(socket,machineUser);
+
+2.客户端的实现
+需要的关键js：guacamole_all.js
+maven配置
+<dependency>
+    <groupId>org.glyptodon.guacamole</groupId>
+    <artifactId>guacamole-common-js</artifactId>
+    <version>0.9.9</version>
+    <type>zip</type>
+    <scope>runtime</scope>
+</dependency>
+<build>
+    <plugins>
+        <!-- Overlay guacamole-common-js (zip) -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <configuration>
+                <overlays>
+                    <overlay>
+                        <groupId>org.glyptodon.guacamole</groupId>
+                        <artifactId>guacamole-common-js</artifactId>
+                        <type>zip</type>
+                    </overlay>
+                </overlays>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+当Guacamole服务器搭建完成之后，我们还需要在客户端（浏览器）实现相应的连接及数据传输方式。
+首先我需要得到一个Guacamole客户端，该系统是以HTTP的方式构建的Guacamole服务器，所以同样也创建HTTP协议的Guacamole客户端。
+var client = new Guacamole.Client(new Guacamole.HTTPTunnel("tunnel"));//Guacamole服务器对应的servlet
+为绑定浏览器绑定相应的鼠标和键盘事件，实现在浏览器中操作传输到远程桌面相应的操作 如图
+
+设置远程桌面在浏览器中的布局位置
+var display = document.getElementById("display");
+display.appendChild(guac.getDisplay().getElement());
+配置客户端信息，方便服务器返回最好效果的远程桌面
+height = window.screen.height;
+width = $(document).width();
+data = "GUAC_WIDTH="+width+"&GUAC_HEIGHT="+height+"&machine_id=${clientInfo.machine_id}";
+和服务器建立连接
+try {
+    client.connect(data);
+} catch (error) {
+    initToast["error"]("连接出错");
+    client.disConnection();
+}
+
+这样就完成了Guacamole客户端的配置，一套远程桌面系统也完成了。
