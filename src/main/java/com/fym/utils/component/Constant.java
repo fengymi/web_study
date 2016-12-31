@@ -18,7 +18,8 @@ public interface Constant {
     String FILE_PROTOCOL = "http";
     String FILE_HOST_NAME = "fileHost";
 //    String FILE_HOST = "www.fengymi.cn";
-    String FILE_HOST = "192.168.68.154";
+//    String FILE_HOST = "192.168.68.154";
+    String FILE_HOST = "192.168.157.129";
     int FILE_PORT = 8888;
 
     //默认分页信息
