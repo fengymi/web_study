@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 public class TutorialGuacamoleTunnelServlet
         extends GuacamoleHTTPTunnelServlet {
 
+    private static final long serialVersionUID = 1674055706880996419L;
+
     @Override
     protected GuacamoleTunnel doConnect(HttpServletRequest request)
             throws GuacamoleException {
@@ -25,28 +27,28 @@ public class TutorialGuacamoleTunnelServlet
 //        GuacamoleConfiguration config = new GuacamoleConfiguration();
 //        //tencent
 //        config.setProtocol("ssh");
-//        config.setParameter("hostname", "115.159.55.209");
+//        config.setParameter("hostname", "");
 //        config.setParameter("port", "22");
-//        config.setParameter("username", "ssh_user1");
-//        config.setParameter("password", "123456");
+//        config.setParameter("username", "");
+//        config.setParameter("password", "");
 //        //window7
-//        config.setParameter("hostname", "192.168.182.130");
+//        config.setParameter("hostname", "");
 //        config.setProtocol("rdp");
-//        config.setParameter("port", "3389");
-//        config.setParameter("username", "fengymi");
-//        config.setParameter("password", "feng1234");
+//        config.setParameter("port", "");
+//        config.setParameter("username", "");
+//        config.setParameter("password", "");
 //
 //        config.setProtocol("vnc");
-//        config.setParameter("port", "5900");
-//        config.setParameter("username", "root");
-//        config.setParameter("password", "feng1234");
+//        config.setParameter("port", "");
+//        config.setParameter("username", "");
+//        config.setParameter("password", "");
 //
 //        // Connect to guacd - everything is hard-coded here.
 //        GuacamoleSocket socket = null;
 //        socket = new ConfiguredGuacamoleSocket(
 //                new InetGuacamoleSocket("192.168.182.137", 4822),
 ////                new InetGuacamoleSocket("192.168.182.138", 4822),
-////                new InetGuacamoleSocket("developfym.yundanche.cn", 80),
+////                new InetGuacamoleSocket("", 80),
 ////                new InetGuacamoleSocket("192.168.68.140", 4822),
 //                config
 //        );

@@ -120,7 +120,7 @@ public class ServerService {
      * 获取可以连接的用户
      * @return 虚拟机用户
      */
-    public synchronized HashPageData getLoginInfo(HashPageData hashPageData){
+    public HashPageData getLoginInfo(HashPageData hashPageData){
         HashPageData machineUser = machineUserDao.getOneUser(hashPageData);
         if(machineUser!=null){
             changeUsed(machineUser.get("mu_id"), Constant.MACHINE_USER_USED);
