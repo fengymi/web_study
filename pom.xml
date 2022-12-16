@@ -25,7 +25,7 @@
         <maven.test.skip>true</maven.test.skip>
 
         <!-- spring版本 -->
-        <spring.version>4.1.7.RELEASE</spring.version>
+        <spring.version>5.2.20.RELEASE</spring.version>
         <!-- shiro版本 -->
         <shiro.version>1.2.1</shiro.version>
         <!-- mybatis版本 -->
