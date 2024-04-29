@@ -27,7 +27,7 @@
         <!-- spring版本 -->
         <spring.version>6.0.0</spring.version>
         <!-- shiro版本 -->
-        <shiro.version>1.2.1</shiro.version>
+        <shiro.version>1.13.0</shiro.version>
         <!-- mybatis版本 -->
         <mybatis.version>3.3.0</mybatis.version>
         <!-- 控制日志版本 -->
